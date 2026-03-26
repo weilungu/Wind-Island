@@ -12,14 +12,16 @@ public class InputController : MonoBehaviour
     // [SerializeField] float speed = 5;
     
     // Unity Life Cycle
-    private void Update()
-    {
-        Moves();
-    }
 
-    void Moves()
+    // Self-Method
+    public Vector2 GetMoveInput()
     {
-        vertical = Input.GetAxis("Vertical");
-        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+        horizontal = Input.GetAxisRaw("Horizontal");
+        
+        Vector2 move = new Vector2(horizontal, vertical);
+        move = Vector2.ClampMagnitude(move, 1f);
+        
+        return move;
     }
 }
