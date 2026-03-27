@@ -4,30 +4,40 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
     [Header("Move Input")]
     [SerializeField] float speed; 
     
     [Header("Instance")]
     [SerializeField] InputController inp;
 
-    // Update is called once per frame
-    void Update()
-    {
-        Move();
-    }
-
-    void Move()
-    {
-        Vector2 move = inp.GetMoveInput();
-        if (move != Vector2.zero)
+    
+    
+    #region Unity LifeCycle
+    
+        void Update()
         {
-            float dt = Time.deltaTime;
-
-            // print($"horizontal: {inp.horizontal}");
-            // print($"vertical: {inp.vertical}");
-
-            transform.Translate(inp.GetMoveInput() * speed * dt);
+            Move();
         }
-    }
+    
+    #endregion
+
+    
+    
+    #region Self Methods
+    
+        void Move()
+        {
+            Vector2 move = inp.GetMoveInput();
+            if (move != Vector2.zero)
+            {
+                float dt = Time.deltaTime;
+
+                // print($"horizontal: {inp.horizontal}");
+                // print($"vertical: {inp.vertical}");
+
+                transform.Translate(move * speed * dt);
+            }
+        }
+
+    #endregion
 }
