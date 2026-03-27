@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
         void Update()
         {
             Move();
+            
+            inp.Dash();
         }
     
     #endregion

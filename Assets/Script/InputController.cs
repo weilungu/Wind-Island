@@ -9,7 +9,10 @@ public class InputController : MonoBehaviour
     public float vertical; // 垂直
     public float horizontal; // 水平
 
-
+    // Instance
+    [SerializeField] DashController dash;
+    
+    
     #region Self Methods
 
         public Vector2 GetMoveInput()
@@ -21,6 +24,19 @@ public class InputController : MonoBehaviour
             move = Vector2.ClampMagnitude(move, 1f);
 
             return move;
+        }
+        public void Dash()
+        {
+            if (dash.isDashing)
+            {
+                return;
+            }
+            
+            if (Input.GetKeyDown(KeyCode.LeftShift) && dash.canDash)
+            {
+                print("Dashing");
+                StartCoroutine(dash.DashCoroutine());
+            }
         }
 
     #endregion
