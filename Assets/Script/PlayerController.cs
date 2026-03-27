@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("Move Input")]
     [SerializeField] float speed; 
     
-    [Header("InputController")]
+    [Header("Instance")]
     [SerializeField] InputController inp;
 
     // Update is called once per frame
@@ -19,17 +19,15 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        float dt = Time.deltaTime;
-        
-        if (inp.GetMoveInput() != Vector2.zero)
+        Vector2 move = inp.GetMoveInput();
+        if (move != Vector2.zero)
         {
-            print($"horizontal: {inp.horizontal}");
-            print($"vertical: {inp.vertical}");
+            float dt = Time.deltaTime;
 
-            (float h, float v) = (inp.horizontal, inp.vertical);
-            Vector2 direction = new Vector2(h, v);
+            // print($"horizontal: {inp.horizontal}");
+            // print($"vertical: {inp.vertical}");
 
-            transform.Translate(direction * speed * dt);
+            transform.Translate(inp.GetMoveInput() * speed * dt);
         }
     }
 }

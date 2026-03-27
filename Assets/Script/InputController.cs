@@ -9,8 +9,6 @@ public class InputController : MonoBehaviour
     public float vertical; // 垂直
     public float horizontal; // 水平
     
-    // [SerializeField] float speed = 5;
-    
     // Unity Life Cycle
 
     // Self-Method
