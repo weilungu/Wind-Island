@@ -34,8 +34,10 @@ public class InputController : MonoBehaviour
             
             if (Input.GetKeyDown(KeyCode.LeftShift) && dash.canDash)
             {
+                Vector2 moveDir = new Vector2(horizontal, vertical);
+                
                 print("Dashing");
-                StartCoroutine(dash.DashCoroutine());
+                StartCoroutine(dash.DashRoutine(moveDir));
             }
         }
 

@@ -7,8 +7,8 @@ public class DashController : MonoBehaviour
     [SerializeField] public bool canDash;
     [SerializeField] public bool isDashing;
     
-    [SerializeField] public float dashPower;
-    [SerializeField] public float dashTime;
+    [SerializeField] public float dashSpeed;
+    [SerializeField] public float dashDuration;
     [SerializeField] public float dashCooldown;
     
     
@@ -16,24 +16,22 @@ public class DashController : MonoBehaviour
     [SerializeField] TrailRenderer trail;
     [SerializeField] Rigidbody2D rb;
     
-    public IEnumerator DashCoroutine()
+    public IEnumerator DashRoutine(Vector2 direction)
     {
         canDash = false;
         isDashing = true;
 
-        rb.velocity = new Vector2(transform.localScale.x * dashPower, 0);
+        rb.velocity = direction.normalized * dashSpeed;
         
         trail.emitting = true;
-        yield return new WaitForSeconds(dashTime);
+        yield return new WaitForSeconds(dashDuration);
         trail.emitting = false;
         
         rb.velocity = Vector2.zero;
+        isDashing = false;
         
         yield return new WaitForSeconds(dashCooldown);
         
-        isDashing = false;
         canDash = true;
-        
-        yield break;
     }
 }
