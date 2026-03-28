@@ -13,12 +13,13 @@ public class DashController : MonoBehaviour
     [SerializeField] float dashCooldown;
 
 
-    [Header("Instance")] [SerializeField] Rigidbody2D rb;
+    Rigidbody2D rb;
     InputController inp;
 
     private void Awake()
     {
         inp = GetComponent<InputController>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     public IEnumerator DashRoutine(Vector2 direction)
