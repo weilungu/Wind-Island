@@ -31,19 +31,17 @@ public class DashController : MonoBehaviour
 
         canDash = true;
     }
-
+    
     public void Dash()
     {
-        if (isDashing)
+        if (isDashing || !canDash)
         {
             return;
         }
+    
+        Vector2 moveDir = inp.GetMoveInput();
+        print("Dashing");
+        StartCoroutine(DashRoutine(moveDir));
 
-        if (canDash)
-        {
-            Vector2 moveDir = inp.GetMoveInput();
-            print("Dashing");
-            StartCoroutine(DashRoutine(moveDir));
-        }
     }
 }

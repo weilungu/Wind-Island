@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public enum GameState
+{
+    Dashing
+}
 
 public class StateMachine : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    GameState curState;
+    [SerializeField] DashController dash;
+    
+    public void SetGameState(GameState state)
     {
-        
-    }
+        curState = state;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        switch (curState)
+        {
+            case GameState.Dashing:
+                dash.Dash();
+                break;
+        }
     }
 }

@@ -10,7 +10,7 @@ public class InputController : MonoBehaviour
     public float horizontal; // 水平
 
     // Instance
-    // [SerializeField] DashController dash;
+    [SerializeField] StateMachine fsm;
 
     #region Self Methods
 
@@ -32,6 +32,7 @@ public class InputController : MonoBehaviour
                 Vector2 moveDir = new Vector2(horizontal, vertical);
                 
                 print("Dashing");
+                fsm.SetGameState(GameState.Dashing);
             }
         }
 
