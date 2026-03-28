@@ -8,7 +8,14 @@ public class InputController : MonoBehaviour
     // Inputs of Axis
     public float vertical; // 垂直
     public float horizontal; // 水平
-    
+
+    // Instance
+    DashController dash;
+
+    void Awake()
+    {
+        dash = GetComponent<DashController>();
+    }
 
     #region Self Methods
 
@@ -27,7 +34,7 @@ public class InputController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                Vector2 moveDir = new Vector2(horizontal, vertical);
+                dash.Dash();
                 
                 print("Dashing");
             }
