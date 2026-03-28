@@ -10,9 +10,12 @@ public class InputController : MonoBehaviour
     public float horizontal; // 水平
 
     // Instance
-    [SerializeField] DashController dash;
-    
-    
+    DashController dash;
+    void Awake()
+    {
+        dash = GetComponent<DashController>();
+    }
+
     #region Self Methods
 
         public Vector2 GetMoveInput()
