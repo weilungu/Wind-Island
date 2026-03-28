@@ -4340,7 +4340,6 @@ MonoBehaviour:
   dashSpeed: 5
   dashDuration: 0.2
   dashCooldown: 1
-  trail: {fileID: 1897177389}
   rb: {fileID: 1897177390}
 --- !u!4 &998715240
 Transform:
