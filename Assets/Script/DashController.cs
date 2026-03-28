@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,12 @@ public class DashController : MonoBehaviour
 
 
     [Header("Instance")] [SerializeField] Rigidbody2D rb;
-    [SerializeField] InputController inp;
+    InputController inp;
+
+    private void Awake()
+    {
+        inp = GetComponent<InputController>();
+    }
 
     public IEnumerator DashRoutine(Vector2 direction)
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,14 @@ public class PlayerController : MonoBehaviour
     [Header("Move Input")]
     [SerializeField] float speed; 
     
-    [Header("Instance")]
-    [SerializeField] InputController inp;
+    InputController inp;
 
-    
-    
+    private void Awake()
+    {
+        inp = GetComponent<InputController>();
+    }
+
+
     #region Unity LifeCycle
     
         void Update()
