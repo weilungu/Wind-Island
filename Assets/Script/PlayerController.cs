@@ -6,21 +6,23 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     InputController inp;
+    
     MoveController move;
-
+    DashController dash;
+    
     private void Awake()
     {
         inp = GetComponent<InputController>();
         
         move = GetComponent<MoveController>();
+        dash = GetComponent<DashController>();
     }
 
     
     void Update()
     {
         move.Movement();
-        
-        inp.GetDashInput();
+        dash.Dash();
     }
     
 }

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class DashController : MonoBehaviour
 {
-    [SerializeField] public bool canDash;
-    [SerializeField] public bool isDashing;
+    [SerializeField] bool canDash;
+    [SerializeField] bool isDashing;
 
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDuration;
@@ -14,13 +14,15 @@ public class DashController : MonoBehaviour
 
 
     Rigidbody2D rb;
+    MoveController move;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        move = GetComponent<MoveController>();
     }
 
-    public IEnumerator DashRoutine(Vector2 direction)
+    IEnumerator DashRoutine(Vector2 direction)
     {
         canDash = false;
         isDashing = true;
@@ -44,9 +46,11 @@ public class DashController : MonoBehaviour
             return;
         }
     
-        // Vector2 moveDir = inp.GetMoveInput();
-        print("Dashing");
-        // StartCoroutine(DashRoutine(moveDir));
-
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Vector2 moveDir = move.GetMoveInput();
+            print("Dashing");
+            StartCoroutine(DashRoutine(moveDir));
+        }
     }
 }

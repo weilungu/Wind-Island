@@ -10,7 +10,7 @@ public class MoveController : MonoBehaviour
     
     [SerializeField] float speed;
 
-    Vector2 GetMoveInput()
+    public Vector2 GetMoveInput()
     {
         vertical = Input.GetAxisRaw("Vertical");
         horizontal = Input.GetAxisRaw("Horizontal");
