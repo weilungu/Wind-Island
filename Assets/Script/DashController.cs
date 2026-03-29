@@ -14,11 +14,9 @@ public class DashController : MonoBehaviour
 
 
     Rigidbody2D rb;
-    InputController inp;
 
     private void Awake()
     {
-        inp = GetComponent<InputController>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -46,9 +44,9 @@ public class DashController : MonoBehaviour
             return;
         }
     
-        Vector2 moveDir = inp.GetMoveInput();
+        // Vector2 moveDir = inp.GetMoveInput();
         print("Dashing");
-        StartCoroutine(DashRoutine(moveDir));
+        // StartCoroutine(DashRoutine(moveDir));
 
     }
 }
