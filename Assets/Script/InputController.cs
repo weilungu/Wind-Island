@@ -6,8 +6,8 @@ using UnityEngine;
 public class InputController : MonoBehaviour
 {
     // Inputs of Axis
-    public float vertical; // 垂直
-    public float horizontal; // 水平
+    float vertical; // 垂直
+    float horizontal; // 水平
 
     // Instance
     DashController dash;
@@ -35,8 +35,6 @@ public class InputController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 dash.Dash();
-                
-                print("Dashing");
             }
         }
 
