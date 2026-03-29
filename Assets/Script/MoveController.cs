@@ -8,22 +8,21 @@ public class MoveController : MonoBehaviour
     float vertical;
     float horizontal;
     
+    Vector2 move;
+    
     [SerializeField] float speed;
 
-    Vector2 GetMoveInput()
+    void GetMoveInput()
     {
         vertical = Input.GetAxisRaw("Vertical");
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        Vector2 move = new Vector2(horizontal, vertical);
+        move = new Vector2(horizontal, vertical);
         move = Vector2.ClampMagnitude(move, 1f);
-
-        return move;
     }
 
-    void Movement()
+    public void Movement()
     {
-        Vector2 move = GetMoveInput();
         if (move != Vector2.zero)
         {
             float dt = Time.deltaTime;

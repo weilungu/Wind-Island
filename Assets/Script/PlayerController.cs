@@ -5,45 +5,22 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Move Input")]
-    [SerializeField] float speed; 
-    
     InputController inp;
+    MoveController move;
 
     private void Awake()
     {
         inp = GetComponent<InputController>();
+        
+        move = GetComponent<MoveController>();
     }
 
-
-    #region Unity LifeCycle
     
-        void Update()
-        {
-            Move();
-            
-            inp.GetDashInput();
-        }
+    void Update()
+    {
+        move.Movement();
+        
+        inp.GetDashInput();
+    }
     
-    #endregion
-
-    
-    
-    #region Self Methods
-    
-        void Move()
-        {
-            Vector2 move = inp.GetMoveInput();
-            if (move != Vector2.zero)
-            {
-                float dt = Time.deltaTime;
-
-                // print($"horizontal: {inp.horizontal}");
-                // print($"vertical: {inp.vertical}");
-
-                transform.Translate(move * speed * dt);
-            }
-        }
-
-    #endregion
 }
