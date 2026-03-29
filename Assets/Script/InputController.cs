@@ -5,15 +5,12 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    // Inputs of Axis
-    float vertical; // 垂直
-    float horizontal; // 水平
-        
-        // public void GetDashInput()
-        // {
-        //     if (Input.GetKeyDown(KeyCode.LeftShift))
-        //     {
-        //         dash.Dash();
-        //     }
-        // }
+    // Input of Pressed
+    public bool dashPressed { get; private set; }
+    
+
+    void Update()
+    {
+        dashPressed = Input.GetKey(KeyCode.LeftShift);
+    }
 }

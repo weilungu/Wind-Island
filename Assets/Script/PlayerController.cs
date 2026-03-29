@@ -22,7 +22,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         move.Movement();
-        dash.Dash();
+
+        if (inp.dashPressed)
+        {
+            dash.TryDash();
+        }
     }
     
 }

@@ -39,18 +39,15 @@ public class DashController : MonoBehaviour
         canDash = true;
     }
     
-    public void Dash()
+    public void TryDash()
     {
         if (isDashing || !canDash)
         {
             return;
         }
     
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            Vector2 moveDir = move.GetMoveInput();
-            print("Dashing");
-            StartCoroutine(DashRoutine(moveDir));
-        }
+        Vector2 moveDir = move.GetMoveInput();
+        print("Dashing");
+        StartCoroutine(DashRoutine(moveDir));
     }
 }
