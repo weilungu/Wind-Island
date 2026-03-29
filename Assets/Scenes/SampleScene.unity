@@ -4524,8 +4524,6 @@ MonoBehaviour:
   dashSpeed: 5
   dashDuration: 0.2
   dashCooldown: 1
-  rb: {fileID: 1897177390}
-  inp: {fileID: 0}
 --- !u!114 &1897177392
 MonoBehaviour:
   m_ObjectHideFlags: 0

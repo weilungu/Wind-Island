@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum GameState
 {
-    Dashing
+    Idle,
+    Move,
+    Dash
 }
 
 public class StateMachine : MonoBehaviour
@@ -14,5 +16,17 @@ public class StateMachine : MonoBehaviour
     public void SetGameState(GameState state)
     {
         curState = state;
+
+        switch (state)
+        {
+            case GameState.Idle:
+                break;
+            
+            case GameState.Dash:
+                break;
+            
+            case GameState.Move:
+                break;
+        }
     }
 }
