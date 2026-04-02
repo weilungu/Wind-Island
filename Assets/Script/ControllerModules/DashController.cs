@@ -41,12 +41,12 @@ public class DashController : MonoBehaviour
     
     public void TryDash()
     {
-        if (isDashing || !canDash)
+        Vector2 moveDir = move.GetMoveInput();
+        if (isDashing || !canDash || moveDir.Equals(Vector2.zero))
         {
             return;
         }
     
-        Vector2 moveDir = move.GetMoveInput();
         print("Dashing");
         StartCoroutine(DashRoutine(moveDir));
     }

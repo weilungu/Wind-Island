@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum GameState
+public enum PlayerState
 {
     Idle,
     Move,
@@ -11,21 +11,26 @@ public enum GameState
 
 public class StateMachine : MonoBehaviour
 {
-    GameState curState;
+    PlayerState curState;
+    
+    [SerializeField] PlayerController player;
 
-    public void SetGameState(GameState state)
+    public void SetGameState(PlayerState state)
     {
         curState = state;
 
         switch (state)
         {
-            case GameState.Idle:
+            case PlayerState.Idle:
                 break;
             
-            case GameState.Dash:
+            case PlayerState.Move:
                 break;
             
-            case GameState.Move:
+            case PlayerState.Dash:
+                player.move.enabled = false;
+                player.dash.TryDash();
+                player.move.enabled = true;
                 break;
         }
     }

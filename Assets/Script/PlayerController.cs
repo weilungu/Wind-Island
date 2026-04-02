@@ -7,8 +7,10 @@ public class PlayerController : MonoBehaviour
 {
     InputController inp;
     
-    MoveController move;
-    DashController dash;
+    [HideInInspector] public MoveController move;
+    [HideInInspector] public DashController dash;
+    
+    [SerializeField] StateMachine fsm;
     
     private void Awake()
     {
@@ -25,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
         if (inp.dashPressed)
         {
-            dash.TryDash();
+            fsm.SetGameState(PlayerState.Dash);
         }
     }
     
