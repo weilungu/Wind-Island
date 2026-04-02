@@ -11,6 +11,6 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
-        dashPressed = Input.GetKey(KeyCode.LeftShift);
+        dashPressed = Input.GetKey(KeyCode.Space);
     }
 }
