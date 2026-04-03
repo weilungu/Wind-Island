@@ -10,6 +10,11 @@ public class MoveController : MonoBehaviour
 
     [SerializeField] float speed;
 
+    private void Awake()
+    {
+        inp = GetComponent<InputController>();
+    }
+
     public Vector2 GetMoveInput()
     {
         int vertical=0, horizontal=0;
