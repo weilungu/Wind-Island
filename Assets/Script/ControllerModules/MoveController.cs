@@ -14,25 +14,10 @@ public class MoveController : MonoBehaviour
     {
         inp = GetComponent<InputController>();
     }
-
-    public Vector2 GetMoveInput()
-    {
-        int vertical=0, horizontal=0;
-        if (inp.moveUpPressed || inp.moveDownPressed)
-        {
-            vertical = inp.moveUpPressed ? 1 : -1;
-        }
-        if (inp.moveLeftPressed || inp.moveRightPressed)
-        {
-            horizontal = inp.moveRightPressed ? 1 : -1;
-        }
-        
-        return new Vector2(horizontal, vertical);
-    }
-
+    
     public void Movement()
     {
-        Vector2 move = GetMoveInput();
+        Vector2 move = inp.moveDirection;
         if (move != Vector2.zero)
         {
             float dt = Time.deltaTime;

@@ -14,12 +14,12 @@ public class DashController : MonoBehaviour
 
 
     Rigidbody2D rb;
-    MoveController move;
+    InputController inp;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        move = GetComponent<MoveController>();
+        inp = GetComponent<InputController>();
     }
 
     IEnumerator DashRoutine(Vector2 direction)
@@ -41,7 +41,7 @@ public class DashController : MonoBehaviour
     
     public void TryDash()
     {
-        Vector2 moveDir = move.GetMoveInput();
+        Vector2 moveDir = inp.moveDirection;
         if (isDashing || !canDash || moveDir.Equals(Vector2.zero))
         {
             return;

@@ -5,22 +5,41 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
+    public Vector2 moveDirection { get; private set; }
+    
     // Input of Pressed
     public bool dashPressed { get; private set; }
-    
-    public bool moveUpPressed { get; private set; }
-    public bool moveDownPressed { get; private set; }
-    public bool moveLeftPressed { get; private set; }
-    public bool moveRightPressed { get; private set; }
-
+    public bool movePressed { get; private set; }
 
     void Update()
     {
         dashPressed = Input.GetKey(KeyCode.Space);
+        movePressed = MovePressed();
+    }
 
-        moveUpPressed = Input.GetKey(KeyCode.W);
-        moveDownPressed = Input.GetKey(KeyCode.S);
-        moveLeftPressed = Input.GetKey(KeyCode.A);
-        moveRightPressed = Input.GetKey(KeyCode.D);
+    bool MovePressed()
+    {
+        int dir_vertical=0, dir_horizontal=0;
+
+        bool[] v_Pressed = { Input.GetKey(KeyCode.W), Input.GetKey(KeyCode.S) };
+        bool[] h_Pressed = { Input.GetKey(KeyCode.D), Input.GetKey(KeyCode.A) };
+
+        bool v_movePressed = v_Pressed[0] || v_Pressed[1];
+        bool h_movePressed = h_Pressed[0] || h_Pressed[1];
+
+
+        if (v_movePressed)
+        {
+            dir_vertical = v_Pressed[0] ? 1 : -1;
+        }
+
+        if (h_movePressed)
+        {
+            dir_horizontal = h_Pressed[0] ? 1 : -1;
+        }
+
+        moveDirection = new Vector2(dir_horizontal, dir_vertical);
+
+        return v_movePressed || h_movePressed;
     }
 }
