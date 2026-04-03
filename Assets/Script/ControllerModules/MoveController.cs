@@ -5,25 +5,25 @@ using UnityEngine;
 
 public class MoveController : MonoBehaviour
 {
-    float vertical;
-    float horizontal;
-    
+    // Instant
+    InputController inp;
+
     [SerializeField] float speed;
 
     public Vector2 GetMoveInput()
     {
-        vertical = Input.GetAxisRaw("Vertical");
-        horizontal = Input.GetAxisRaw("Horizontal");
+        // vertical = Input.GetAxisRaw("Vertical");
+        // horizontal = Input.GetAxisRaw("Horizontal");
 
-        Vector2 move = new Vector2(horizontal, vertical);
-        move = Vector2.ClampMagnitude(move, 1f);
-        
-        return move;
+        // Vector2 move = new Vector2(horizontal, vertical);
+        // move = Vector2.ClampMagnitude(move, 1f);
+
+        return Vector2.zero;
     }
 
     public void Movement()
     {
-        Vector2 move = GetMoveInput();
+        Vector2 move = inp.GetMoveInput();
         if (move != Vector2.zero)
         {
             float dt = Time.deltaTime;
