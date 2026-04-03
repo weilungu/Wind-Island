@@ -22,7 +22,7 @@ public class MoveController : MonoBehaviour
         {
             vertical = inp.moveUpPressed ? 1 : -1;
         }
-        else if (inp.moveLeftPressed || inp.moveRightPressed)
+        if (inp.moveLeftPressed || inp.moveRightPressed)
         {
             horizontal = inp.moveRightPressed ? 1 : -1;
         }

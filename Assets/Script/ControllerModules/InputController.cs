@@ -23,19 +23,4 @@ public class InputController : MonoBehaviour
         moveLeftPressed = Input.GetKey(KeyCode.A);
         moveRightPressed = Input.GetKey(KeyCode.D);
     }
-
-    public Vector2 GetMoveInput()
-    {
-        int vertical=0, horizontal=0;
-        if (moveUpPressed || moveDownPressed)
-        {
-            vertical = moveUpPressed ? 1 : -1;
-        }
-        else if (moveLeftPressed || moveRightPressed)
-        {
-            horizontal = moveRightPressed ? 1 : -1;
-        }
-        
-        return new Vector2(horizontal, vertical);
-    }
 }
