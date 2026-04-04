@@ -13,7 +13,7 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
-        dashPressed = Input.GetKey(KeyCode.Space);
+        dashPressed = Input.GetKeyDown(KeyCode.Space);
         movePressed = MovePressed();
     }
 
