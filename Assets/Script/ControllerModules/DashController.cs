@@ -11,12 +11,11 @@ public class DashController : MonoBehaviour
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDuration;
     [SerializeField] float dashCooldown;
-
-    [SerializeField] PlayerState state;
     
     // Instance
     Rigidbody2D rb;
     InputController inp;
+    [SerializeField] StateMachine fsm;
 
     private void Awake()
     {
@@ -30,13 +29,12 @@ public class DashController : MonoBehaviour
         rb.velocity = direction.normalized * dashSpeed;
         
         isDashing = true;
-        // state = PlayerState.Dash;
         yield return new WaitForSeconds(dashDuration);
+        fsm.SetGameState(PlayerState.Idle);
 
         rb.velocity = Vector2.zero;
 
         isDashing = false;
-        // state = PlayerState.Idle;
         yield return new WaitForSeconds(dashCooldown);
 
         canDash = true;
@@ -45,12 +43,12 @@ public class DashController : MonoBehaviour
     public void TryDash()
     {
         Vector2 moveDir = inp.moveDirection;
-        if (isDashing || !canDash || moveDir.Equals(Vector2.zero))
+        if (! (isDashing || !canDash || moveDir.Equals(Vector2.zero)))
         {
+            print("Dashing");
+            StartCoroutine(DashRoutine(moveDir));
             return;
         }
     
-        print("Dashing");
-        StartCoroutine(DashRoutine(moveDir));
     }
 }

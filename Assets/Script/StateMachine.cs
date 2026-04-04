@@ -11,7 +11,7 @@ public enum PlayerState
 
 public class StateMachine : MonoBehaviour
 {
-    PlayerState curState;
+    public PlayerState curState;
     
     [SerializeField] PlayerController player;
 
@@ -28,7 +28,6 @@ public class StateMachine : MonoBehaviour
                 break;
             
             case PlayerState.Dash:
-                player.dash.TryDash();
                 break;
         }
     }

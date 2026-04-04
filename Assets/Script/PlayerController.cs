@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] StateMachine fsm;
     
-    [SerializeField] PlayerState state;
+    // [SerializeField] PlayerState state;
     
     private void Awake()
     {
@@ -24,47 +24,40 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        state = PlayerState.Idle;
         fsm.SetGameState(PlayerState.Idle);
     }
 
     void Update()
     {
-            switch (state)
-            {
-                case PlayerState.Idle:
-                    if (inp.movePressed)
-                    {
-                        state = PlayerState.Move;
-                    }
-                    
-                    break;
-
-                
-                case PlayerState.Move:
-                    move.Movement();
-
-                    if (inp.moveDirection.Equals(Vector2.zero))
-                    {
-                        state = PlayerState.Idle;
-                    }
-                    else if (inp.dashPressed)
-                    {
-                        state = PlayerState.Dash;
-                    }
-                    
-                    break;
-                
-                
-                case PlayerState.Dash:
-                    // dash.TryDash();
-                    break;
-            }
-        
-
-        if (inp.dashPressed)
+        switch (fsm.curState)
         {
-            fsm.SetGameState(PlayerState.Dash);
+            case PlayerState.Idle:
+                if (inp.movePressed)
+                {
+                    fsm.SetGameState(PlayerState.Move);
+                }
+                
+                break;
+
+            
+            case PlayerState.Move:
+                move.Movement();
+
+                if (inp.moveDirection.Equals(Vector2.zero))
+                {
+                    fsm.SetGameState(PlayerState.Idle);
+                }
+                else if (inp.dashPressed)
+                {
+                    fsm.SetGameState(PlayerState.Dash);
+                }
+                
+                break;
+            
+            
+            case PlayerState.Dash:
+                dash.TryDash();
+                break;
         }
     }
     

@@ -4302,6 +4302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5744641ef2f0e04aab8e6f2251fbf85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curState: 0
   player: {fileID: 0}
 --- !u!1 &1716734171
 GameObject:
@@ -4332,6 +4333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5744641ef2f0e04aab8e6f2251fbf85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curState: 0
   player: {fileID: 1897177388}
 --- !u!4 &1716734173
 Transform:
@@ -4573,6 +4575,7 @@ MonoBehaviour:
   dashSpeed: 10
   dashDuration: 0.3
   dashCooldown: 1
+  fsm: {fileID: 1716734172}
 --- !u!114 &1897177392
 MonoBehaviour:
   m_ObjectHideFlags: 0
