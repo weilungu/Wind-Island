@@ -6,13 +6,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     InputController inp;
+    PlayerState prevState;
     
     [HideInInspector] public MoveController move;
     [HideInInspector] public DashController dash;
     
     [SerializeField] StateMachine fsm;
-    
-    // [SerializeField] PlayerState state;
     
     private void Awake()
     {
@@ -25,10 +24,17 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         fsm.SetGameState(PlayerState.Idle);
+        prevState = fsm.curState;
     }
 
     void Update()
     {
+        if (fsm.curState != prevState)
+        {
+            OnStateEnter(fsm.curState);
+            prevState = fsm.curState;
+        }
+
         switch (fsm.curState)
         {
             case PlayerState.Idle:
@@ -56,8 +62,25 @@ public class PlayerController : MonoBehaviour
             
             
             case PlayerState.Dash:
-                dash.TryDash();
+                if (!dash.IsDashing)
+                {
+                    fsm.SetGameState(inp.moveDirection.Equals(Vector2.zero) ? PlayerState.Idle : PlayerState.Move);
+                }
                 break;
+        }
+    }
+
+    void OnStateEnter(PlayerState state)
+    {
+        if (state != PlayerState.Dash)
+        {
+            return;
+        }
+
+        bool started = dash.TryDash();
+        if (!started)
+        {
+            fsm.SetGameState(inp.moveDirection.Equals(Vector2.zero) ? PlayerState.Idle : PlayerState.Move);
         }
     }
     
