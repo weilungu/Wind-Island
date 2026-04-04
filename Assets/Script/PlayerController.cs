@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] StateMachine fsm;
     
+    [SerializeField] PlayerState state;
+    
     private void Awake()
     {
         inp = GetComponent<InputController>();
@@ -20,10 +22,45 @@ public class PlayerController : MonoBehaviour
         dash = GetComponent<DashController>();
     }
 
-    
+    private void Start()
+    {
+        state = PlayerState.Idle;
+        fsm.SetGameState(PlayerState.Idle);
+    }
+
     void Update()
     {
-        move.Movement();
+            switch (state)
+            {
+                case PlayerState.Idle:
+                    if (inp.movePressed)
+                    {
+                        state = PlayerState.Move;
+                    }
+                    
+                    break;
+
+                
+                case PlayerState.Move:
+                    move.Movement();
+
+                    if (inp.moveDirection.Equals(Vector2.zero))
+                    {
+                        state = PlayerState.Idle;
+                    }
+                    else if (inp.dashPressed)
+                    {
+                        state = PlayerState.Dash;
+                    }
+                    
+                    break;
+                
+                
+                case PlayerState.Dash:
+                    // dash.TryDash();
+                    break;
+            }
+        
 
         if (inp.dashPressed)
         {

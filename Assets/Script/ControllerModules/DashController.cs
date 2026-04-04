@@ -12,7 +12,9 @@ public class DashController : MonoBehaviour
     [SerializeField] float dashDuration;
     [SerializeField] float dashCooldown;
 
-
+    [SerializeField] PlayerState state;
+    
+    // Instance
     Rigidbody2D rb;
     InputController inp;
 
@@ -25,15 +27,16 @@ public class DashController : MonoBehaviour
     IEnumerator DashRoutine(Vector2 direction)
     {
         canDash = false;
-        isDashing = true;
-
         rb.velocity = direction.normalized * dashSpeed;
-
+        
+        isDashing = true;
+        // state = PlayerState.Dash;
         yield return new WaitForSeconds(dashDuration);
 
         rb.velocity = Vector2.zero;
-        isDashing = false;
 
+        isDashing = false;
+        // state = PlayerState.Idle;
         yield return new WaitForSeconds(dashCooldown);
 
         canDash = true;

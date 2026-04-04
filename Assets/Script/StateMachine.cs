@@ -28,9 +28,7 @@ public class StateMachine : MonoBehaviour
                 break;
             
             case PlayerState.Dash:
-                player.move.enabled = false;
                 player.dash.TryDash();
-                player.move.enabled = true;
                 break;
         }
     }
