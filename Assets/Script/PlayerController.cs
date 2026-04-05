@@ -49,22 +49,13 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (inp.dashPressed)
                 {
-                    fsm.SetGameState(PlayerState.Dash);
+                    dash.TryDash();
                 }
                 
                 break;
             
             
             case PlayerState.Dash:
-                if (dash.canDash)
-                {
-                    dash.TryDash();
-                }
-                else
-                {
-                    fsm.SetGameState(PlayerState.Idle);
-                    print("can not dash");
-                }
                 break;
         }
     }

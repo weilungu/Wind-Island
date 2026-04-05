@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DashController : MonoBehaviour
 {
-    [SerializeField] public bool canDash { get; private set; } = true;
+    [SerializeField] bool canDash;
     [SerializeField] bool isDashing;
 
     [SerializeField] float dashSpeed;
@@ -30,25 +30,36 @@ public class DashController : MonoBehaviour
         
         isDashing = true;
         yield return new WaitForSeconds(dashDuration);
-        fsm.SetGameState(PlayerState.Idle);
 
         rb.velocity = Vector2.zero;
 
         isDashing = false;
+
+        // 防呆
+        if (! inp.moveDirection.Equals(Vector2.zero)) // 依然移動中
+        {
+            fsm.SetGameState(PlayerState.Move);
+        }
+        else
+        {
+            fsm.SetGameState(PlayerState.Idle);
+        }
+
         yield return new WaitForSeconds(dashCooldown);
 
         canDash = true;
     }
     
-    public void TryDash()
+    public bool TryDash()
     {
         Vector2 moveDir = inp.moveDirection;
-        if (! (isDashing || !canDash || moveDir.Equals(Vector2.zero)))
+        if (isDashing || !canDash || moveDir.Equals(Vector2.zero))
         {
-            print("Dashing");
-            StartCoroutine(DashRoutine(moveDir));
-            return;
+            return false;
         }
-    
+
+        StartCoroutine(DashRoutine(moveDir));
+        fsm.SetGameState(PlayerState.Dash);
+        return true;
     }
 }
