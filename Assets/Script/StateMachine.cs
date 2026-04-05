@@ -11,13 +11,11 @@ public enum PlayerState
 
 public class StateMachine : MonoBehaviour
 {
-    public PlayerState curState;
-    
-    [SerializeField] PlayerController player;
+    public PlayerState playerState;
 
     public void SetGameState(PlayerState state)
     {
-        curState = state;
+        playerState = state;
 
         switch (state)
         {

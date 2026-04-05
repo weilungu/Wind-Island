@@ -7,12 +7,10 @@ public class PlayerController : MonoBehaviour
 {
     InputController inp;
     
-    [HideInInspector] public MoveController move;
-    [HideInInspector] public DashController dash;
+    MoveController move;
+    DashController dash;
     
     [SerializeField] StateMachine fsm;
-    
-    // [SerializeField] PlayerState state;
     
     private void Awake()
     {
@@ -29,7 +27,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        switch (fsm.curState)
+        PlayerAction();
+    }
+    
+    
+    // Self-Methods
+    void PlayerAction()
+    {
+        switch (fsm.playerState)
         {
             case PlayerState.Idle:
                 if (inp.movePressed)
@@ -38,11 +43,11 @@ public class PlayerController : MonoBehaviour
                 }
                 
                 break;
-
+        
             
             case PlayerState.Move:
                 move.Movement();
-
+        
                 if (inp.moveDirection.Equals(Vector2.zero))
                 {
                     fsm.SetGameState(PlayerState.Idle);
@@ -59,5 +64,4 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-    
 }
