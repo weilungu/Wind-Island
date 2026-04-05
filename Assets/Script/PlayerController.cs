@@ -56,7 +56,15 @@ public class PlayerController : MonoBehaviour
             
             
             case PlayerState.Dash:
-                dash.TryDash();
+                if (dash.canDash)
+                {
+                    dash.TryDash();
+                }
+                else
+                {
+                    fsm.SetGameState(PlayerState.Idle);
+                    print("can not dash");
+                }
                 break;
         }
     }

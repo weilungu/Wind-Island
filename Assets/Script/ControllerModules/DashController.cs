@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DashController : MonoBehaviour
 {
-    [SerializeField] bool canDash;
+    [SerializeField] public bool canDash { get; private set; } = true;
     [SerializeField] bool isDashing;
 
     [SerializeField] float dashSpeed;
