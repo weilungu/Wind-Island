@@ -34,8 +34,8 @@ public class DashController : MonoBehaviour
         rb.velocity = Vector2.zero;
 
         isDashing = false;
-
-        // 防呆
+        
+        
         if (! inp.moveDirection.Equals(Vector2.zero)) // 依然移動中
         {
             fsm.SetGameState(PlayerState.Move);
