@@ -1,34 +1,38 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] Transform target;
     [SerializeField] Vector3 offset = new Vector3(0, 0, -10);
-    [SerializeField] float smoothTime = 0.3f;
+    [SerializeField] float smoothTime = 0.2f;
     
-    [Header("Border")]
-    [SerializeField] Vector2 min;
-    [SerializeField] Vector2 max;
+    [Header("Bounds")]
+    [SerializeField] PolygonCollider2D polygonBounds;
     
-    Vector3 velocity = Vector3.zero;
-
+    Vector3 velocity;
     void LateUpdate()
     {
+        if (target.Equals(null)) return;
+        
         Vector3 targetPos = target.position + offset;
         
-        transform.position = Vector3.SmoothDamp(
+        Vector3 smooth = Vector3.SmoothDamp(
             transform.position,
             targetPos,
             ref velocity,
             smoothTime
         );
         
-        float clampedX = Mathf.Clamp(transform.position.x, min.x, max.x);
-        float clampedY = Mathf.Clamp(transform.position.y, min.y, max.y);
+        if (!polygonBounds.Equals(null))
+        {
+            if (!polygonBounds.OverlapPoint(smooth))
+            {
+                Vector2 closest = polygonBounds.ClosestPoint(smooth);
+                smooth.x = closest.x;
+                smooth.y = closest.y;
+            }
+        }
         
-        transform.position = new Vector3(clampedX, clampedY, transform.position.z);
+        transform.position = smooth;
     }
 }
