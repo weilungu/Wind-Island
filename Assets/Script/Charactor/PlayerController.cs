@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        fsm.SetGameState(PlayerState.Idle);
+        fsm.SetGameState(GameState.Idle);
     }
 
     void Update()
@@ -34,23 +34,23 @@ public class PlayerController : MonoBehaviour
     // Self-Methods
     void PlayerAction()
     {
-        switch (fsm.playerState)
+        switch (fsm.gameState)
         {
-            case PlayerState.Idle:
+            case GameState.Idle:
                 if (inp.movePressed)
                 {
-                    fsm.SetGameState(PlayerState.Move);
+                    fsm.SetGameState(GameState.Move);
                 }
                 
                 break;
         
             
-            case PlayerState.Move:
+            case GameState.Move:
                 move.Movement();
         
                 if (inp.moveDirection.Equals(Vector2.zero))
                 {
-                    fsm.SetGameState(PlayerState.Idle);
+                    fsm.SetGameState(GameState.Idle);
                 }
                 else if (inp.dashPressed)
                 {
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
                 break;
             
             
-            case PlayerState.Dash:
+            case GameState.Dash:
                 break;
         }
     }

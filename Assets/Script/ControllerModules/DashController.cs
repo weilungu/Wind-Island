@@ -38,11 +38,11 @@ public class DashController : MonoBehaviour
         
         if (! inp.moveDirection.Equals(Vector2.zero)) // 依然移動中
         {
-            fsm.SetGameState(PlayerState.Move);
+            fsm.SetGameState(GameState.Move);
         }
         else
         {
-            fsm.SetGameState(PlayerState.Idle);
+            fsm.SetGameState(GameState.Idle);
         }
 
         yield return new WaitForSeconds(dashCooldown);
@@ -59,7 +59,7 @@ public class DashController : MonoBehaviour
         }
 
         StartCoroutine(DashRoutine(moveDir));
-        fsm.SetGameState(PlayerState.Dash);
+        fsm.SetGameState(GameState.Dash);
         return true;
     }
 }
