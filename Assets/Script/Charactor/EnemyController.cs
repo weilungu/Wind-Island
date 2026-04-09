@@ -5,11 +5,5 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            print("Player is in range");
-        }
-    }
+
 }

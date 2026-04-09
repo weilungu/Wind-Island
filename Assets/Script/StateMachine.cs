@@ -9,9 +9,17 @@ public enum PlayerState
     Dash
 }
 
+public enum EnemyState
+{
+    Idle,
+    Move,
+    Dash
+}
+
 public class StateMachine : MonoBehaviour
 {
     public PlayerState playerState;
+    public EnemyState enemyState;
 
     public void SetGameState(PlayerState state)
     {
@@ -26,6 +34,22 @@ public class StateMachine : MonoBehaviour
                 break;
             
             case PlayerState.Dash:
+                break;
+        }
+    }
+    public void SetGameState(EnemyState state)
+    {
+        enemyState = state;
+
+        switch (state)
+        {
+            case EnemyState.Idle:
+                break;
+            
+            case EnemyState.Move:
+                break;
+            
+            case EnemyState.Dash:
                 break;
         }
     }
