@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,13 @@ public class DetectionRange : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             enemy.SetTarget(other.transform);
-            print($"Player is in range: {other.transform}");
+        }
+    }
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            enemy.ClearTarget();
         }
     }
 }
