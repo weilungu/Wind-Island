@@ -5,5 +5,12 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-
+    Transform target;
+    bool isChasing = false;
+    
+    public void SetTarget(Transform t)
+    {
+        target = t;
+        isChasing = true;
+    }
 }

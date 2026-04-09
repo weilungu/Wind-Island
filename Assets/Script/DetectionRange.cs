@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class DetectionRange : MonoBehaviour
 {
-    GameObject target;
-    
-    bool isChasing = false;
+    [SerializeField] EnemyController enemy;
     
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            print("Player is in range");
-            
-            target = other.gameObject;
-            isChasing = true;
+            enemy.SetTarget(other.transform);
+            print($"Player is in range: {other.transform}");
         }
     }
 }
