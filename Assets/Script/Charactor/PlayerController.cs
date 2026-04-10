@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         
             
             case GameState.Move:
-                move.Movement();
+                move.Movement(inp.moveDirection);
         
                 if (inp.moveDirection.Equals(Vector2.zero))
                 {
