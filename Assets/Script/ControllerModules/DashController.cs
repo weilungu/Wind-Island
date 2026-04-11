@@ -21,20 +21,51 @@ public class DashController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    // IEnumerator DashRoutine(Vector2 direction)
+    // {
+    //     canDash = false;
+    //     rb.velocity = direction.normalized * dashSpeed;
+    //     
+    //     isDashing = true;
+    //     yield return new WaitForSeconds(dashDuration);
+    //
+    //     rb.velocity = Vector2.zero;
+    //
+    //     isDashing = false;
+    //     
+    //     
+    //     if (! direction.Equals(Vector2.zero)) // 依然移動中
+    //     {
+    //         fsm.SetGameState(GameState.Move);
+    //     }
+    //     else
+    //     {
+    //         fsm.SetGameState(GameState.Idle);
+    //     }
+    //
+    //     yield return new WaitForSeconds(dashCooldown);
+    //
+    //     canDash = true;
+    // }
+
     IEnumerator DashRoutine(Vector2 direction)
     {
         canDash = false;
-        rb.velocity = direction.normalized * dashSpeed;
-        
         isDashing = true;
-        yield return new WaitForSeconds(dashDuration);
 
-        rb.velocity = Vector2.zero;
+        Vector2 dashDir = direction.normalized;
+        float elapsed = 0f;
+
+        while (elapsed < dashDuration)
+        {
+            rb.MovePosition(rb.position + dashDir * dashSpeed * Time.fixedDeltaTime);
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
 
         isDashing = false;
-        
-        
-        if (! direction.Equals(Vector2.zero)) // 依然移動中
+
+        if (!direction.Equals(Vector2.zero))
         {
             fsm.SetGameState(GameState.Move);
         }
