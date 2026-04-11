@@ -10,6 +10,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] PolygonCollider2D polygonBounds;
     
     Vector3 velocity;
+    
     void LateUpdate()
     {
         if (target.Equals(null)) return;
