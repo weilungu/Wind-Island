@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    
+    float h;
+    float v;
+    
+    // Instance
     InputController inp;
     
     MoveController move;
@@ -27,7 +32,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        h = Input.GetAxisRaw("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
         PlayerAction();
+        
+        print($"{h}, {v}");
     }
     
     
@@ -46,15 +55,16 @@ public class PlayerController : MonoBehaviour
         
             
             case GameState.Move:
-                move.Movement(inp.moveDirection);
-        
-                if (inp.moveDirection.Equals(Vector2.zero))
+                Vector2 dir = new Vector2(h, v).normalized;
+                move.Movement(dir);
+                
+                if (dir.Equals(Vector2.zero))
                 {
                     fsm.SetGameState(GameState.Idle);
                 }
                 else if (inp.dashPressed)
                 {
-                    dash.TryDash();
+                    dash.TryDash(dir);
                 }
                 
                 break;

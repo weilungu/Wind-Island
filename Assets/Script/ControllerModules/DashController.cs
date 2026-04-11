@@ -36,7 +36,7 @@ public class DashController : MonoBehaviour
         isDashing = false;
         
         
-        if (! inp.moveDirection.Equals(Vector2.zero)) // 依然移動中
+        if (! direction.Equals(Vector2.zero)) // 依然移動中
         {
             fsm.SetGameState(GameState.Move);
         }
@@ -50,15 +50,15 @@ public class DashController : MonoBehaviour
         canDash = true;
     }
     
-    public bool TryDash()
+    public bool TryDash(Vector2 direction)
     {
-        Vector2 moveDir = inp.moveDirection;
-        if (isDashing || !canDash || moveDir.Equals(Vector2.zero))
+        // Vector2 moveDir = inp.moveDirection;
+        if (isDashing || !canDash || direction.Equals(Vector2.zero))
         {
             return false;
         }
 
-        StartCoroutine(DashRoutine(moveDir));
+        StartCoroutine(DashRoutine(direction));
         fsm.SetGameState(GameState.Dash);
         return true;
     }
