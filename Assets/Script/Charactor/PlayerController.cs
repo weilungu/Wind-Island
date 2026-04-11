@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
         move = GetComponent<MoveController>();
         dash = GetComponent<DashController>();
     }
-
     private void Start()
     {
         fsm.SetGameState(GameState.Idle);
@@ -33,14 +32,23 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        PlayerAction();
+        PlayerActionState();
         
-        print($"{direction}");
+        if (inp.dashPressed)
+        {
+            dash.TryDash(direction);
+        }
+        
+        print(direction);
+    }
+    void FixedUpdate()
+    {
+        MoveState();
     }
     
     
     // Self-Methods
-    void PlayerAction()
+    void PlayerActionState()
     {
         switch (fsm.gameState)
         {
@@ -50,8 +58,16 @@ public class PlayerController : MonoBehaviour
                     fsm.SetGameState(GameState.Move);
                 }
                 break;
-        
             
+            case GameState.Dash:
+                break;
+        }
+    }
+
+    void MoveState()
+    {
+        switch (fsm.gameState)
+        {
             case GameState.Move:
                 horizontal = Input.GetAxisRaw("Horizontal");
                 vertical = Input.GetAxisRaw("Vertical");
@@ -63,14 +79,6 @@ public class PlayerController : MonoBehaviour
                 {
                     fsm.SetGameState(GameState.Idle);
                 }
-                else if (inp.dashPressed)
-                {
-                    dash.TryDash(direction);
-                }
-                break;
-            
-            
-            case GameState.Dash:
                 break;
         }
     }
