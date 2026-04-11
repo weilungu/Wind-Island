@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    public Vector2 moveDirection { get; private set; }
-    
     // Input of Pressed
     public bool dashPressed { get; private set; }
     public bool movePressed { get; private set; }
@@ -14,32 +12,14 @@ public class InputController : MonoBehaviour
     void Update()
     {
         dashPressed = Input.GetKeyDown(KeyCode.Space);
-        movePressed = MovePressed();
-    }
-
-    bool MovePressed()
-    {
-        int dir_vertical=0, dir_horizontal=0;
-
-        bool[] v_Pressed = { Input.GetKey(KeyCode.W), Input.GetKey(KeyCode.S) };
-        bool[] h_Pressed = { Input.GetKey(KeyCode.D), Input.GetKey(KeyCode.A) };
-
-        bool v_movePressed = v_Pressed[0] || v_Pressed[1];
-        bool h_movePressed = h_Pressed[0] || h_Pressed[1];
-
-
-        if (v_movePressed)
-        {
-            dir_vertical = v_Pressed[0] ? 1 : -1;
-        }
-
-        if (h_movePressed)
-        {
-            dir_horizontal = h_Pressed[0] ? 1 : -1;
-        }
-
-        moveDirection = new Vector2(dir_horizontal, dir_vertical);
-
-        return v_movePressed || h_movePressed;
+        
+        movePressed = Input.GetKeyDown(KeyCode.W) ||
+                      Input.GetKeyDown(KeyCode.A) ||
+                      Input.GetKeyDown(KeyCode.S) ||
+                      Input.GetKeyDown(KeyCode.D) ||
+                      Input.GetKeyDown(KeyCode.UpArrow) ||
+                      Input.GetKeyDown(KeyCode.DownArrow) ||
+                      Input.GetKeyDown(KeyCode.LeftArrow) ||
+                      Input.GetKeyDown(KeyCode.RightArrow);
     }
 }

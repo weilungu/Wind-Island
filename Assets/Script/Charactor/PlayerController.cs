@@ -6,8 +6,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     
-    float h;
-    float v;
+    float horizontal;
+    float vertical;
+    Vector2 direction = Vector2.zero;
     
     // Instance
     InputController inp;
@@ -32,11 +33,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
         PlayerAction();
         
-        print($"{h}, {v}");
+        print($"{direction}");
     }
     
     
@@ -50,23 +49,24 @@ public class PlayerController : MonoBehaviour
                 {
                     fsm.SetGameState(GameState.Move);
                 }
-                
                 break;
         
             
             case GameState.Move:
-                Vector2 dir = new Vector2(h, v).normalized;
-                move.Movement(dir);
+                horizontal = Input.GetAxisRaw("Horizontal");
+                vertical = Input.GetAxisRaw("Vertical");
                 
-                if (dir.Equals(Vector2.zero))
+                direction = new Vector2(horizontal, vertical).normalized;
+                move.Movement(direction);
+                
+                if (direction.Equals(Vector2.zero))
                 {
                     fsm.SetGameState(GameState.Idle);
                 }
                 else if (inp.dashPressed)
                 {
-                    dash.TryDash(dir);
+                    dash.TryDash(direction);
                 }
-                
                 break;
             
             
