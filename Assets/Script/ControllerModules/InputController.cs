@@ -13,13 +13,13 @@ public class InputController : MonoBehaviour
     {
         dashPressed = Input.GetKeyDown(KeyCode.Space);
         
-        movePressed = Input.GetKeyDown(KeyCode.W) ||
-                      Input.GetKeyDown(KeyCode.A) ||
-                      Input.GetKeyDown(KeyCode.S) ||
-                      Input.GetKeyDown(KeyCode.D) ||
-                      Input.GetKeyDown(KeyCode.UpArrow) ||
-                      Input.GetKeyDown(KeyCode.DownArrow) ||
-                      Input.GetKeyDown(KeyCode.LeftArrow) ||
-                      Input.GetKeyDown(KeyCode.RightArrow);
+        movePressed = Input.GetKey(KeyCode.W) ||
+                      Input.GetKey(KeyCode.A) ||
+                      Input.GetKey(KeyCode.S) ||
+                      Input.GetKey(KeyCode.D) ||
+                      Input.GetKey(KeyCode.UpArrow) ||
+                      Input.GetKey(KeyCode.DownArrow) ||
+                      Input.GetKey(KeyCode.LeftArrow) ||
+                      Input.GetKey(KeyCode.RightArrow);
     }
 }
