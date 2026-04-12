@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     
     // Instance
     InputController inp;
+    [SerializeField] Animator anim;
     
     MoveController move;
     DashController dash;
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         inp = GetComponent<InputController>();
+        // anim = GetComponent<Animator>();
         
         move = GetComponent<MoveController>();
         dash = GetComponent<DashController>();
@@ -53,10 +55,12 @@ public class PlayerController : MonoBehaviour
         switch (fsm.gameState)
         {
             case GameState.Idle:
+                anim.SetTrigger(AnimParams.Idle);
                 if (inp.movePressed)
                 {
                     fsm.SetGameState(GameState.Move);
                 }
+                print("Idle");
                 break;
             
             case GameState.Dash:
@@ -74,6 +78,8 @@ public class PlayerController : MonoBehaviour
                 
                 direction = new Vector2(horizontal, vertical).normalized;
                 move.Movement(direction);
+                anim.SetTrigger(AnimParams.Move);
+                print("move");
                 
                 if (direction.Equals(Vector2.zero))
                 {
