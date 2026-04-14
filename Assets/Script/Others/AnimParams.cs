@@ -6,5 +6,6 @@ public static class AnimParams
 {
     public static readonly int Move = Animator.StringToHash("Move");
     public static readonly int Idle = Animator.StringToHash("Idle");
+    public static readonly int Attack = Animator.StringToHash("Attack");
     
 }

@@ -7,8 +7,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] int maxHealth = 100;
-
-    public int currentHealth { get; private set; }
+    [field: SerializeField] public int currentHealth { get; private set; } = 100;
     
     // Delegate
     public event Action<int> OnHealthChanged;

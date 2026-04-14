@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     MoveController move;
     DashController dash;
-    Health hp;
+    Health health;
 
     [SerializeField] StateMachine fsm;
 
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
         move = GetComponent<MoveController>();
         dash = GetComponent<DashController>();
 
-        hp = GetComponent<Health>();
+        health = GetComponent<Health>();
     }
 
     private void Start()
@@ -40,24 +40,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         PlayerActionState();
+        MoveState();
 
         if (inp.dashPressed)
         {
             dash.TryDash(direction);
         }
-
-        print(direction);
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            hp.TakeDamage(10);
-            print($"currHP {hp.currentHealth}");
-        }
-    }
-
-    void FixedUpdate()
-    {
-        MoveState();
     }
 
 
@@ -74,8 +62,20 @@ public class PlayerController : MonoBehaviour
                     fsm.SetGameState(GameState.Move);
                 }
 
+                if (inp.attackPressed)
+                {
+                    fsm.SetGameState(GameState.Attack);
+                }
+                break;
+            
+            
+            case GameState.Attack:
+                anim.SetTrigger(AnimParams.Attack);
+
+                fsm.SetGameState(GameState.Move);
                 break;
 
+            
             case GameState.Dash:
                 break;
         }
@@ -93,11 +93,15 @@ public class PlayerController : MonoBehaviour
                 move.Movement(direction);
                 anim.SetBool(AnimParams.Move, true);
                 anim.SetBool(AnimParams.Idle, false);
-
-
+                
                 if (direction.Equals(Vector2.zero))
                 {
                     fsm.SetGameState(GameState.Idle);
+                }
+                
+                if (inp.attackPressed)
+                {
+                    fsm.SetGameState(GameState.Attack);
                 }
 
                 break;

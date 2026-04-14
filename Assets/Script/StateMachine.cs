@@ -6,7 +6,10 @@ public enum GameState
 {
     Idle,
     Move,
-    Dash
+    Dash,
+    Attack,
+    Hurt,
+    Dead
 }
 
 public class StateMachine : MonoBehaviour
