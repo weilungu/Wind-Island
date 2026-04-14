@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         inp = GetComponent<InputController>();
         anim = GetComponent<Animator>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
+        sprite = GetComponent<SpriteRenderer>();
 
         move = GetComponent<MoveController>();
         dash = GetComponent<DashController>();
@@ -92,11 +92,17 @@ public class PlayerController : MonoBehaviour
 
                 direction = new Vector2(horizontal, vertical).normalized;
                 move.Movement(direction);
-
-                if (direction != Vector2.zero) // 方向改變
+                
+                
+                if (direction.x < 0)
                 {
-                    sprite.flipX = direction.x < 0;
+                    sprite.flipX = true;
                 }
+                else if (direction.x > 0)
+                {
+                    sprite.flipX = false;
+                }
+                
                 
                 anim.SetBool(AnimParams.Move, true);
                 anim.SetBool(AnimParams.Idle, false);

@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_0
+      name: player_idle_down_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,7 +118,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_1
+      name: player_idle_down_1
       rect:
         serializedVersion: 2
         x: 48
@@ -139,7 +139,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_2
+      name: player_idle_down_2
       rect:
         serializedVersion: 2
         x: 96
@@ -160,7 +160,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_3
+      name: player_idle_down_3
       rect:
         serializedVersion: 2
         x: 144
@@ -181,7 +181,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_4
+      name: player_idle_down_4
       rect:
         serializedVersion: 2
         x: 193
@@ -202,7 +202,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_5
+      name: player_idle_down_5
       rect:
         serializedVersion: 2
         x: 240
@@ -223,7 +223,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_0
+      name: player_idle_right_0
       rect:
         serializedVersion: 2
         x: 0
@@ -244,7 +244,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_1
+      name: player_idle_right_1
       rect:
         serializedVersion: 2
         x: 48
@@ -265,7 +265,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_2
+      name: player_idle_right_2
       rect:
         serializedVersion: 2
         x: 96
@@ -286,7 +286,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_3
+      name: player_idle_right_3
       rect:
         serializedVersion: 2
         x: 144
@@ -307,7 +307,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_4
+      name: player_idle_right_4
       rect:
         serializedVersion: 2
         x: 192
@@ -328,11 +328,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_5
+      name: player_idle_right_5
       rect:
         serializedVersion: 2
         x: 240
-        y: 384
+        y: 385
         width: 48
         height: 48
       alignment: 0
@@ -349,7 +349,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_12
+      name: player_idle_up_0
       rect:
         serializedVersion: 2
         x: 0
@@ -370,7 +370,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_13
+      name: player_idle_up_1
       rect:
         serializedVersion: 2
         x: 48
@@ -391,7 +391,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_14
+      name: player_idle_up_2
       rect:
         serializedVersion: 2
         x: 96
@@ -412,7 +412,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_15
+      name: player_idle_up_3
       rect:
         serializedVersion: 2
         x: 144
@@ -433,10 +433,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_16
+      name: player_idle_up_4
       rect:
         serializedVersion: 2
-        x: 192
+        x: 193
         y: 336
         width: 48
         height: 48
@@ -454,7 +454,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_17
+      name: player_idle_up_5
       rect:
         serializedVersion: 2
         x: 240
@@ -475,7 +475,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_18
+      name: player_move_down_0
       rect:
         serializedVersion: 2
         x: 0
@@ -496,7 +496,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_19
+      name: player_move_down_1
       rect:
         serializedVersion: 2
         x: 48
@@ -517,7 +517,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_20
+      name: player_move_down_2
       rect:
         serializedVersion: 2
         x: 96
@@ -538,7 +538,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_21
+      name: player_move_down_3
       rect:
         serializedVersion: 2
         x: 144
@@ -559,7 +559,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_22
+      name: player_move_down_4
       rect:
         serializedVersion: 2
         x: 192
@@ -580,7 +580,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_23
+      name: player_move_down_5
       rect:
         serializedVersion: 2
         x: 240
@@ -601,7 +601,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Move_0
+      name: player_move_right_0
       rect:
         serializedVersion: 2
         x: 0
@@ -622,7 +622,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Move_1
+      name: player_move_right_1
       rect:
         serializedVersion: 2
         x: 48
@@ -643,7 +643,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Move_2
+      name: player_move_right_2
       rect:
         serializedVersion: 2
         x: 96
@@ -664,7 +664,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Move_3
+      name: player_move_right_3
       rect:
         serializedVersion: 2
         x: 144
@@ -685,7 +685,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Move_4
+      name: player_move_right_4
       rect:
         serializedVersion: 2
         x: 192
@@ -706,7 +706,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Move_5
+      name: player_move_right_5
       rect:
         serializedVersion: 2
         x: 240
@@ -727,7 +727,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_30
+      name: player_move_up_0
       rect:
         serializedVersion: 2
         x: 0
@@ -748,7 +748,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_31
+      name: player_move_up_1
       rect:
         serializedVersion: 2
         x: 48
@@ -769,7 +769,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_32
+      name: player_move_up_2
       rect:
         serializedVersion: 2
         x: 96
@@ -790,7 +790,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_33
+      name: player_move_up_3
       rect:
         serializedVersion: 2
         x: 144
@@ -811,7 +811,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_34
+      name: player_move_up_4
       rect:
         serializedVersion: 2
         x: 192
@@ -832,7 +832,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_35
+      name: player_move_up_5
       rect:
         serializedVersion: 2
         x: 240
@@ -853,7 +853,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_36
+      name: player_attack_down_0
       rect:
         serializedVersion: 2
         x: 0
@@ -874,7 +874,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_37
+      name: player_attack_down_1
       rect:
         serializedVersion: 2
         x: 48
@@ -895,7 +895,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_38
+      name: player_attack_down_2
       rect:
         serializedVersion: 2
         x: 96
@@ -916,7 +916,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_39
+      name: player_attack_down_3
       rect:
         serializedVersion: 2
         x: 144
@@ -937,7 +937,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_0
+      name: player_attack_right_0
       rect:
         serializedVersion: 2
         x: 0
@@ -958,7 +958,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_1
+      name: player_attack_right_1
       rect:
         serializedVersion: 2
         x: 48
@@ -979,7 +979,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_2
+      name: player_attack_right_2
       rect:
         serializedVersion: 2
         x: 96
@@ -1000,7 +1000,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_3
+      name: player_attack_right_3
       rect:
         serializedVersion: 2
         x: 144
@@ -1021,7 +1021,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_44
+      name: player_attack_up_0
       rect:
         serializedVersion: 2
         x: 0
@@ -1042,7 +1042,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_45
+      name: player_attack_up_1
       rect:
         serializedVersion: 2
         x: 48
@@ -1063,7 +1063,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_46
+      name: player_attack_up_2
       rect:
         serializedVersion: 2
         x: 96
@@ -1084,7 +1084,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_47
+      name: player_attack_up_3
       rect:
         serializedVersion: 2
         x: 144
@@ -1105,7 +1105,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_48
+      name: player_dead_0
       rect:
         serializedVersion: 2
         x: 0
@@ -1126,7 +1126,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_49
+      name: player_dead_1
       rect:
         serializedVersion: 2
         x: 48
@@ -1147,7 +1147,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_50
+      name: player_dead_2
       rect:
         serializedVersion: 2
         x: 96
@@ -1178,57 +1178,57 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Attack_0: 107567930
-      Attack_1: 1239695720
-      Attack_2: 1853254161
-      Attack_3: 142606033
-      Idle_0: 1807041698
-      Idle_1: 947873999
-      Idle_2: 1565447661
-      Idle_3: -23853014
-      Idle_4: 765692856
-      Idle_5: -1487559890
-      Move_0: -1625973480
-      Move_1: 660852416
-      Move_2: -1161161513
-      Move_3: -1436863214
-      Move_4: -575379193
-      Move_5: -1242956625
-      player_0: 1235071887
-      player_1: -653130748
-      player_12: 199030093
-      player_13: 466775588
-      player_14: -653963362
-      player_15: 825209921
-      player_16: 1265230428
-      player_17: 409289947
-      player_18: -495462775
-      player_19: 1469047129
-      player_2: -830190045
-      player_20: -1246712649
-      player_21: 503740479
-      player_22: 1611165641
-      player_23: 1821583030
-      player_3: 1177302140
-      player_30: 1336223187
-      player_31: -877400889
-      player_32: 643638179
-      player_33: -2104253133
-      player_34: -579419678
-      player_35: -1979411911
-      player_36: -2134307677
-      player_37: 1014693930
-      player_38: -448635553
-      player_39: -2136532788
-      player_4: -821796255
-      player_44: -1970215056
-      player_45: 585207929
-      player_46: 265013480
-      player_47: -816081552
-      player_48: -1467909735
-      player_49: 618586403
-      player_5: 1763014788
-      player_50: -831502773
+      player_attack_down_0: -2134307677
+      player_attack_down_1: 1014693930
+      player_attack_down_2: -448635553
+      player_attack_down_3: -2136532788
+      player_attack_right_0: 107567930
+      player_attack_right_1: 1239695720
+      player_attack_right_2: 1853254161
+      player_attack_right_3: 142606033
+      player_attack_up_0: -1970215056
+      player_attack_up_1: 585207929
+      player_attack_up_2: 265013480
+      player_attack_up_3: -816081552
+      player_dead_0: -1467909735
+      player_dead_1: 618586403
+      player_dead_2: -831502773
+      player_idle_down_0: 1235071887
+      player_idle_down_1: -653130748
+      player_idle_down_2: -830190045
+      player_idle_down_3: 1177302140
+      player_idle_down_4: -821796255
+      player_idle_down_5: 1763014788
+      player_idle_right_0: 1807041698
+      player_idle_right_1: 947873999
+      player_idle_right_2: 1565447661
+      player_idle_right_3: -23853014
+      player_idle_right_4: 765692856
+      player_idle_right_5: -1487559890
+      player_idle_up_0: 199030093
+      player_idle_up_1: 466775588
+      player_idle_up_2: -653963362
+      player_idle_up_3: 825209921
+      player_idle_up_4: 1265230428
+      player_idle_up_5: 409289947
+      player_move_down_0: -495462775
+      player_move_down_1: 1469047129
+      player_move_down_2: -1246712649
+      player_move_down_3: 503740479
+      player_move_down_4: 1611165641
+      player_move_down_5: 1821583030
+      player_move_right_0: -1625973480
+      player_move_right_1: 660852416
+      player_move_right_2: -1161161513
+      player_move_right_3: -1436863214
+      player_move_right_4: -575379193
+      player_move_right_5: -1242956625
+      player_move_up_0: 1336223187
+      player_move_up_1: -877400889
+      player_move_up_2: 643638179
+      player_move_up_3: -2104253133
+      player_move_up_4: -579419678
+      player_move_up_5: -1979411911
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
