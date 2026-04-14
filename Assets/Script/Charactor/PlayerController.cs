@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     // Instance
     InputController inp;
     Animator anim;
+    SpriteRenderer sprite;
 
     MoveController move;
     DashController dash;
@@ -23,10 +24,10 @@ public class PlayerController : MonoBehaviour
     {
         inp = GetComponent<InputController>();
         anim = GetComponent<Animator>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
 
         move = GetComponent<MoveController>();
         dash = GetComponent<DashController>();
-
         health = GetComponent<Health>();
     }
 
@@ -91,6 +92,12 @@ public class PlayerController : MonoBehaviour
 
                 direction = new Vector2(horizontal, vertical).normalized;
                 move.Movement(direction);
+
+                if (direction != Vector2.zero) // 方向改變
+                {
+                    sprite.flipX = direction.x < 0;
+                }
+                
                 anim.SetBool(AnimParams.Move, true);
                 anim.SetBool(AnimParams.Idle, false);
                 
