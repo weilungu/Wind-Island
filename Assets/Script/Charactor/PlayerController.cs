@@ -13,18 +13,14 @@ public class PlayerController : MonoBehaviour
     InputController inp;
     Animator anim;
     SpriteRenderer sprite;
+    AttackController attack;
 
     MoveController move;
     DashController dash;
     Health health;
 
-    [Header("Instance")]
+    [Header("Field Instance")]
     [SerializeField] StateMachine fsm;
-
-    [Header("Values")]
-    [SerializeField] Transform attackPoint;
-    [SerializeField] float attackRange;
-    [SerializeField] LayerMask enemyLayers;
     
     private void Awake()
     {
@@ -35,6 +31,7 @@ public class PlayerController : MonoBehaviour
         move = GetComponent<MoveController>();
         dash = GetComponent<DashController>();
         health = GetComponent<Health>();
+        attack = GetComponent<AttackController>();
     }
 
     private void Start()
@@ -47,8 +44,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         inp.MoveInput(ref horizontal, ref vertical);
+        
         PlayerActionState();
 
+        if (fsm.gameState.Equals(GameState.Move))
+        {
+            if (inp.attackPressed)
+            {
+                fsm.SetGameState(GameState.Attack);
+            }
+        }
         if (inp.dashPressed)
         {
             dash.TryDash(direction);
@@ -58,7 +63,6 @@ public class PlayerController : MonoBehaviour
     {
         MoveState();
     }
-
 
     // Self-Methods
     void PlayerActionState()
@@ -83,6 +87,8 @@ public class PlayerController : MonoBehaviour
             case GameState.Attack:
                 anim.SetTrigger(AnimParams.Attack);
 
+                attack.Attack();
+                
                 fsm.SetGameState(GameState.Move);
                 break;
 
@@ -117,11 +123,26 @@ public class PlayerController : MonoBehaviour
                     fsm.SetGameState(GameState.Idle);
                 }
                 
-                if (inp.attackPressed)
-                {
-                    fsm.SetGameState(GameState.Attack);
-                }
                 break;
         }
     }
+
+    // void Attack()
+    // {
+    //     // Detect Enemy in range
+    //     Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+    //     
+    //     // Damage
+    //     foreach (Collider2D enemy in hitEnemies)
+    //     {
+    //         print($"we hit {enemy.name}");
+    //     }
+    // }
+
+    // void OnDrawGizmosSelected()
+    // {
+    //     if (attackPoint.Equals(null)) return;
+    //     
+    //     Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    // }
 }
