@@ -18,8 +18,14 @@ public class PlayerController : MonoBehaviour
     DashController dash;
     Health health;
 
+    [Header("Instance")]
     [SerializeField] StateMachine fsm;
 
+    [Header("Values")]
+    [SerializeField] Transform attackPoint;
+    [SerializeField] float attackRange;
+    [SerializeField] LayerMask enemyLayers;
+    
     private void Awake()
     {
         inp = GetComponent<InputController>();
@@ -40,13 +46,17 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        inp.MoveInput(ref horizontal, ref vertical);
         PlayerActionState();
-        MoveState();
 
         if (inp.dashPressed)
         {
             dash.TryDash(direction);
         }
+    }
+    void FixedUpdate()
+    {
+        MoveState();
     }
 
 
@@ -81,18 +91,14 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-
     void MoveState()
     {
         switch (fsm.gameState)
         {
             case GameState.Move:
-                horizontal = Input.GetAxisRaw("Horizontal");
-                vertical = Input.GetAxisRaw("Vertical");
 
                 direction = new Vector2(horizontal, vertical).normalized;
                 move.Movement(direction);
-                
                 
                 if (direction.x < 0)
                 {
@@ -102,7 +108,6 @@ public class PlayerController : MonoBehaviour
                 {
                     sprite.flipX = false;
                 }
-                
                 
                 anim.SetBool(AnimParams.Move, true);
                 anim.SetBool(AnimParams.Idle, false);
@@ -116,7 +121,6 @@ public class PlayerController : MonoBehaviour
                 {
                     fsm.SetGameState(GameState.Attack);
                 }
-
                 break;
         }
     }

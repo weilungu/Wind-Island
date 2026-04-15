@@ -19,4 +19,10 @@ public class InputController : MonoBehaviour
 
         attackPressed = Input.GetMouseButtonDown(0); // 左鍵
     }
+
+    public void MoveInput(ref float h, ref float v)
+    {
+        h = Input.GetAxisRaw("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
+    }
 }
