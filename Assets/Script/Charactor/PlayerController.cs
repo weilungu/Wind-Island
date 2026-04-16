@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
             case GameState.Attack:
                 anim.SetTrigger(AnimParams.Attack);
 
-                attack.TryAttack(ATK);
+                attack.TryAttack(direction, ATK);
                 
                 fsm.SetGameState(GameState.Move);
                 break;
@@ -109,6 +109,7 @@ public class PlayerController : MonoBehaviour
             case GameState.Move:
 
                 direction = new Vector2(horizontal, vertical).normalized;
+                attack.UpdateAttackDirection(direction);
                 move.Movement(direction);
                 
                 if (direction.x < 0)
