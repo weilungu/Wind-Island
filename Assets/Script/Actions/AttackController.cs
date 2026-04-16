@@ -13,18 +13,26 @@ public class AttackController : MonoBehaviour
     [SerializeField] LayerMask targetLayers;
     
     [Header("Attack Values")]
-    [SerializeField] float attackRange;
+    [SerializeField] float attackRangeX;
+    [SerializeField] float attackRangeY;
     
     Collider2D[] hitResults = new Collider2D[32];
 
     public bool canAttack => Time.time >= nextAttackTime;
 
-    void Attack(int damage)
+    void Attack( Vector2 direction, int damage)
     {
+        Vector2 attackDir = direction.normalized;
+    
+        Vector2 attackOrigin = (Vector2)transform.position + attackDir * attackRangeX;
+
+        
         // Detect Enemy in range
-        int hitCount = Physics2D.OverlapCircleNonAlloc(
-            attackPoint.position,
-            attackRange,
+        int hitCount = Physics2D.OverlapBoxNonAlloc(
+            // attackPoint.position,
+            attackOrigin,
+            new Vector2(attackRangeX, 0),
+            0,
             hitResults,
             targetLayers);
         
@@ -35,20 +43,21 @@ public class AttackController : MonoBehaviour
             hitResults[i].GetComponent<Health>().TakeDamage(damage);
         }
     }
-    public void TryAttack(int damage)
+    public void TryAttack(Vector2 direction, int damage)
     {
         if (!canAttack) return;
 
         float cooldown = attackRate > 0f ? attackRate : 1f;
         nextAttackTime = Time.time + cooldown;
 
-        Attack(damage);
+        Attack(direction, damage);
     }
     
     void OnDrawGizmosSelected()
     {
         if (attackPoint.Equals( null)) return;
         
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        // Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawWireCube(attackPoint.position, new Vector3(attackRangeX, attackRangeY, 1));
     }
 }
