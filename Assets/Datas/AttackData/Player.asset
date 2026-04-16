@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb12cf1b5c2044c4eaf0a72940bef433, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  attackRate: 0.3
+  attackRate: 0.4
   attackRange: 0.85
   damage: 10
-  hitboxSize: {x: 5, y: 5}
+  maxCombo: 3
+  comboCooldown: 1
+  comboResetTime: 1
+  hitboxSize: {x: 0, y: 0}

@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
         if (fsm.gameState.Equals(GameState.Move))
         {
-            if (inp.attackPressed && attack.canAttack)
+            if (inp.attackPressed)
             {
                 fsm.SetGameState(GameState.Attack);
             }
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
                     fsm.SetGameState(GameState.Move);
                 }
 
-                if (inp.attackPressed && attack.canAttack)
+                if (inp.attackPressed)
                 {
                     fsm.SetGameState(GameState.Attack);
                 }
@@ -87,10 +87,13 @@ public class PlayerController : MonoBehaviour
             
             
             case GameState.Attack:
-                anim.SetTrigger(AnimParams.Attack);
+                if (attack.canAttack)
+                {
+                    anim.SetTrigger(AnimParams.Attack);
+                }
 
                 attack.TryAttack(direction);
-                
+
                 fsm.SetGameState(GameState.Move);
                 break;
 
@@ -125,27 +128,7 @@ public class PlayerController : MonoBehaviour
                 {
                     fsm.SetGameState(GameState.Idle);
                 }
-                
                 break;
         }
     }
-
-    // void Attack()
-    // {
-    //     // Detect Enemy in range
-    //     Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-    //     
-    //     // Damage
-    //     foreach (Collider2D enemy in hitEnemies)
-    //     {
-    //         print($"we hit {enemy.name}");
-    //     }
-    // }
-
-    // void OnDrawGizmosSelected()
-    // {
-    //     if (attackPoint.Equals(null)) return;
-    //     
-    //     Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-    // }
 }
