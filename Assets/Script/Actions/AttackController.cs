@@ -6,20 +6,22 @@ using UnityEngine;
 public class AttackController : MonoBehaviour
 {
     float nextAttackTime;
+    [SerializeField] int currCombo;
+    float lastAttackTime;
+    float comboCooldownEndTime;
+    
     Vector2 lastAttackDirection = Vector2.right;
     
     [Header("Field Instance")]
     [SerializeField] Transform attackPoint;
     [SerializeField] LayerMask targetLayers;
     
-    [Header("Attack Values")]
-    [SerializeField] float attackRate = 1f;
-    [SerializeField] float attackRange;
+    [Header("Attack Data")]
+    [SerializeField] AttackData atkData;
     
     Collider2D[] hitResults = new Collider2D[32];
 
-    public bool canAttack => Time.time >= nextAttackTime;
-
+    public bool canAttack => Time.time >= nextAttackTime && Time.time >= comboCooldownEndTime;
     public void UpdateAttackDirection(Vector2 direction)
     {
         Vector2 normalized = direction.normalized;
@@ -29,28 +31,26 @@ public class AttackController : MonoBehaviour
         }
     }
 
-    void Attack( Vector2 direction, int damage)
+    void Attack(Vector2 direction)
     {
         Vector2 attackDir = direction.normalized;
         if (attackDir != Vector2.zero)
         {
             lastAttackDirection = attackDir;
         }
-
-        // Keep attacking toward the previous movement direction while idle.
-        if (attackDir == Vector2.zero)
+        else
         {
             attackDir = lastAttackDirection;
         }
 
-        Vector2 originBase = attackPoint != null ? (Vector2)attackPoint.position : (Vector2)transform.position;
-        Vector2 attackOrigin = originBase + attackDir * attackRange;
+        Vector2 originBase = !attackPoint.Equals(null) ? (Vector2)attackPoint.position : (Vector2)transform.position;
+        Vector2 attackOrigin = originBase + attackDir * atkData.attackRange;
 
         
         // Detect Enemy in range
         int hitCount = Physics2D.OverlapBoxNonAlloc(
             attackOrigin,
-            new Vector2(attackRange, 0),
+            new Vector2(atkData.attackRange, 0),
             0,
             hitResults,
             targetLayers);
@@ -59,25 +59,36 @@ public class AttackController : MonoBehaviour
         for (int i = 0; i < hitCount; i++)
         {
             print($"Hit {hitResults[i].name}");
-            hitResults[i].GetComponent<Health>().TakeDamage(damage);
+            hitResults[i].GetComponent<Health>().TakeDamage(atkData.damage);
         }
     }
-    public void TryAttack(Vector2 direction, int damage)
+    public void TryAttack(Vector2 direction)
     {
         if (!canAttack) return;
+        
+        if (currCombo > 0 && Time.time - lastAttackTime > atkData.comboResetTime)
+        {
+            currCombo = 0;
+        }
 
-        float cooldown = attackRate > 0f ? attackRate : 1f;
-        nextAttackTime = Time.time + cooldown;
+        currCombo++;
+        lastAttackTime = Time.time;
+        nextAttackTime = Time.time + atkData.attackRate;
 
-        Attack(direction, damage);
+        Attack(direction);
+
+        if (currCombo >= atkData.maxCombo)
+        {
+            currCombo = 0;
+            comboCooldownEndTime = Time.time + atkData.comboCooldown;
+        }
     }
     
     void OnDrawGizmosSelected()
     {
         if (attackPoint == null) return;
         
-        Vector2 attackOrigin = (Vector2)attackPoint.position + lastAttackDirection * attackRange;
-        Gizmos.DrawWireSphere(attackOrigin, attackRange);
-        // Gizmos.DrawWireCube(/*attackPoint.position*/ attackOrigin, new Vector3(attackRange, attackRangeY, 1) * lastAttackDirection);
+        Vector2 attackOrigin = (Vector2)attackPoint.position + lastAttackDirection * atkData.attackRange;
+        Gizmos.DrawWireSphere(attackOrigin, atkData.attackRange);
     }
 }

@@ -22,9 +22,6 @@ public class PlayerController : MonoBehaviour
     [Header("Field Instance")]
     [SerializeField] StateMachine fsm;
     
-    [Header("Values")]
-    [SerializeField] int ATK;
-    
     private void Awake()
     {
         inp = GetComponent<InputController>();
@@ -92,7 +89,7 @@ public class PlayerController : MonoBehaviour
             case GameState.Attack:
                 anim.SetTrigger(AnimParams.Attack);
 
-                attack.TryAttack(direction, ATK);
+                attack.TryAttack(direction);
                 
                 fsm.SetGameState(GameState.Move);
                 break;

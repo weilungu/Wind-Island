@@ -6346,7 +6346,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fsm: {fileID: 608735086}
-  ATK: 10
 --- !u!50 &1897177390
 Rigidbody2D:
   serializedVersion: 4
@@ -6565,8 +6564,7 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 64
-  attackRate: 0.3
-  attackRange: 0.85
+  atkData: {fileID: 11400000, guid: b2f70ddbc72b71a4b83826646d79cc69, type: 2}
 --- !u!1 &1931260716
 GameObject:
   m_ObjectHideFlags: 0
