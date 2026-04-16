@@ -10,17 +10,20 @@ public class PlayerController : MonoBehaviour
     Vector2 direction = Vector2.zero;
 
     // Instance
-    InputController inp;
     Animator anim;
     SpriteRenderer sprite;
-    AttackController attack;
 
+    InputController inp;
     MoveController move;
     DashController dash;
+    AttackController attack;
     Health health;
 
     [Header("Field Instance")]
     [SerializeField] StateMachine fsm;
+    
+    [Header("Values")]
+    [SerializeField] int ATK;
     
     private void Awake()
     {
@@ -49,11 +52,12 @@ public class PlayerController : MonoBehaviour
 
         if (fsm.gameState.Equals(GameState.Move))
         {
-            if (inp.attackPressed)
+            if (inp.attackPressed && attack.canAttack)
             {
                 fsm.SetGameState(GameState.Attack);
             }
         }
+        
         if (inp.dashPressed)
         {
             dash.TryDash(direction);
@@ -72,12 +76,13 @@ public class PlayerController : MonoBehaviour
             case GameState.Idle:
                 anim.SetBool(AnimParams.Idle, true);
                 anim.SetBool(AnimParams.Move, false);
+                
                 if (inp.movePressed)
                 {
                     fsm.SetGameState(GameState.Move);
                 }
 
-                if (inp.attackPressed)
+                if (inp.attackPressed && attack.canAttack)
                 {
                     fsm.SetGameState(GameState.Attack);
                 }
@@ -87,7 +92,7 @@ public class PlayerController : MonoBehaviour
             case GameState.Attack:
                 anim.SetTrigger(AnimParams.Attack);
 
-                attack.Attack();
+                attack.TryAttack(ATK);
                 
                 fsm.SetGameState(GameState.Move);
                 break;
