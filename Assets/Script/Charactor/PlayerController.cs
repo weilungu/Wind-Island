@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     [Header("Field Instance")]
     [SerializeField] StateMachine fsm;
     
-    private void Awake()
+    void Awake()
     {
         inp = GetComponent<InputController>();
         anim = GetComponent<Animator>();
@@ -35,15 +35,14 @@ public class PlayerController : MonoBehaviour
         attack = GetComponent<AttackController>();
     }
 
-    private void Start()
+    void Start()
     {
         fsm.SetGameState(GameState.Idle);
-        anim.SetBool(AnimParams.Idle, true);
-        anim.SetBool(AnimParams.Move, false);
-        anim.SetBool(AnimParams.IdleUp, false);
-        anim.SetBool(AnimParams.IdleDown, false);
-        anim.SetBool(AnimParams.MoveUp, false);
-        anim.SetBool(AnimParams.MoveDown, false);
+        
+        anim.SetFloat(AnimParams.MoveX, 0f);
+        anim.SetFloat(AnimParams.MoveY, 0f);
+        anim.SetBool(AnimParams.IsMoving, false);
+        anim.SetBool(AnimParams.Attack, false);
     }
 
     void Update()
@@ -76,18 +75,9 @@ public class PlayerController : MonoBehaviour
         switch (fsm.gameState)
         {
             case GameState.Idle:
-                // Animation
-                anim.SetBool(AnimParams.Idle, true);
-                anim.SetBool(AnimParams.Move, false);
 
-                if (nonZeroDir.y > 0.01f)
-                {
-                    anim.SetBool(AnimParams.IdleUp, true);
-                }
-                else if (nonZeroDir.y < -0.01f)
-                {
-                    anim.SetBool(AnimParams.IdleDown, true);
-                }
+                // Anim
+                SetMoveAnim(false);
 
                 // Transition
                 if (inp.movePressed)
@@ -109,8 +99,9 @@ public class PlayerController : MonoBehaviour
                 }
 
                 attack.TryAttack(direction);
+                attack.UpdateAttackDirection(direction);
 
-                fsm.SetGameState(GameState.Move);
+                fsm.SetGameState(GameState.Move); 
                 break;
 
             
@@ -130,36 +121,13 @@ public class PlayerController : MonoBehaviour
                 attack.UpdateAttackDirection(direction);
                 move.Movement(direction);
                 
-                if (direction.x < 0)
+                if (direction.x != 0)
                 {
-                    sprite.flipX = true;
-                }
-                else if (direction.x > 0)
-                {
-                    sprite.flipX = false;
+                    sprite.flipX = direction.x < 0;
                 }
                 
                 // Animation
-                anim.SetBool(AnimParams.Move, true);
-                anim.SetBool(AnimParams.Idle, false);
-                anim.SetBool(AnimParams.IdleUp, false);
-                anim.SetBool(AnimParams.IdleDown, false);
-
-                if (direction.y > 0.01f) // Move Up
-                {
-                    anim.SetBool(AnimParams.MoveUp, true);
-                    anim.SetBool(AnimParams.MoveDown, false);
-                }
-                else if (direction.y < -0.01f) // Move Down
-                {
-                    anim.SetBool(AnimParams.MoveDown, true);
-                    anim.SetBool(AnimParams.MoveUp, false);
-                }
-                else
-                {
-                    anim.SetBool(AnimParams.MoveUp, false);
-                    anim.SetBool(AnimParams.MoveDown, false);
-                }
+                SetMoveAnim(true);
                 
                 // Transition
                 if (direction.Equals(Vector2.zero))
@@ -168,5 +136,12 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
         }
+    }
+    
+    void SetMoveAnim(bool isMoving)
+    {
+        anim.SetFloat(AnimParams.MoveX, nonZeroDir.x);
+        anim.SetFloat(AnimParams.MoveY, nonZeroDir.y);
+        anim.SetBool(AnimParams.IsMoving, isMoving);
     }
 }
