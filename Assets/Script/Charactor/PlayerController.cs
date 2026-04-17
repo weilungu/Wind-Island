@@ -46,23 +46,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        inp.MoveInput(ref horizontal, ref vertical);
-        
         PlayerActionState();
-
-        if (fsm.gameState.Equals(GameState.Move))
-        {
-            if (inp.attackPressed)
-            {
-                SetMoveAnim(true);
-                fsm.SetGameState(GameState.Attack);
-            }
-        }
-        
-        if (inp.dashPressed)
-        {
-            dash.TryDash(direction);
-        }
+        InputHandler();
     }
     void FixedUpdate()
     {
@@ -140,11 +125,31 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-    
+
+
     void SetMoveAnim(bool isMoving)
     {
         anim.SetFloat(AnimParams.MoveX, nonZeroDir.x);
         anim.SetFloat(AnimParams.MoveY, nonZeroDir.y);
         anim.SetBool(AnimParams.IsMoving, isMoving);
+    }
+
+    void InputHandler()
+    {
+        inp.MoveInput(ref horizontal, ref vertical);
+
+        if (fsm.gameState.Equals(GameState.Move))
+        {
+            if (inp.attackPressed)
+            {
+                SetMoveAnim(true);
+                fsm.SetGameState(GameState.Attack);
+            }
+        }
+        
+        if (inp.dashPressed)
+        {
+            dash.TryDash(direction);
+        }
     }
 }
