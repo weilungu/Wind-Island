@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat(AnimParams.MoveX, 0f);
         anim.SetFloat(AnimParams.MoveY, 0f);
         anim.SetBool(AnimParams.IsMoving, false);
-        anim.SetBool(AnimParams.Attack, false);
     }
 
     void Update()
@@ -55,6 +54,7 @@ public class PlayerController : MonoBehaviour
         {
             if (inp.attackPressed)
             {
+                SetMoveAnim(true);
                 fsm.SetGameState(GameState.Attack);
             }
         }
@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
                 if (inp.attackPressed)
                 {
                     fsm.SetGameState(GameState.Attack);
+                    SetMoveAnim(true);
                 }
                 break;
             
@@ -96,12 +97,13 @@ public class PlayerController : MonoBehaviour
                 if (attack.canAttack)
                 {
                     anim.SetTrigger(AnimParams.Attack);
+                    attack.TryAttack(nonZeroDir);
+                    attack.UpdateAttackDirection(nonZeroDir);
                 }
-
-                attack.TryAttack(direction);
-                attack.UpdateAttackDirection(direction);
-
-                fsm.SetGameState(GameState.Move); 
+                else
+                {
+                    fsm.SetGameState(GameState.Move);
+                }
                 break;
 
             
@@ -133,6 +135,7 @@ public class PlayerController : MonoBehaviour
                 if (direction.Equals(Vector2.zero))
                 {
                     fsm.SetGameState(GameState.Idle);
+                    SetMoveAnim(false);
                 }
                 break;
         }
