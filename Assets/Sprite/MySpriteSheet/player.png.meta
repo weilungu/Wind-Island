@@ -436,7 +436,7 @@ TextureImporter:
       name: player_idle_up_4
       rect:
         serializedVersion: 2
-        x: 193
+        x: 192
         y: 336
         width: 48
         height: 48

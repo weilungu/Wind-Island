@@ -6560,6 +6560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25b8cd557c1a11d4c90f7f1392836e7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currCombo: 0
   attackPoint: {fileID: 810427023}
   targetLayers:
     serializedVersion: 2
