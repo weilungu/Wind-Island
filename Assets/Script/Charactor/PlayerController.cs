@@ -73,7 +73,6 @@ public class PlayerController : MonoBehaviour
                 if (inp.attackPressed)
                 {
                     fsm.SetGameState(GameState.Attack);
-                    SetMoveAnim(true);
                 }
                 break;
             
