@@ -10,24 +10,41 @@ public class PostureBar : MonoBehaviour
     [SerializeField] Image fillRight;
 
     [Header("Values")]
-    // [SerializeField] float mixValue = 0;
     [SerializeField] float maxValue = 100;
     [SerializeField] float values = 0;
-    
 
-    public void AddPosture(float posture)
+    void Update()
     {
-        values += posture;
+        if (Input.GetMouseButtonDown(1))
+        {
+            AddPosture(10);
+        }
+
+        if (Input.GetMouseButtonDown(2))
+        {
+            ResetPosture();
+        }
+    }
+
+    public void UpdatePosture()
+    {
         float fill = values / maxValue;
 
         fillRight.fillAmount = fill;
         fillLeft.fillAmount = fill;
         print(fill);
     }
-
-    void ResetPosture()
+    public void AddPosture(float posture)
+    {
+        if (values >= maxValue) return; 
+        
+        values += posture;
+        UpdatePosture();
+    }
+    public void ResetPosture()
     {
         values = 0;
+        UpdatePosture();
     }
     
     

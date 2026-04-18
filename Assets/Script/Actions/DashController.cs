@@ -5,48 +5,18 @@ using UnityEngine;
 
 public class DashController : MonoBehaviour
 {
-    [SerializeField] bool canDash;
-    [SerializeField] bool isDashing;
-
-    [SerializeField] float dashSpeed;
-    [SerializeField] float dashDuration;
-    [SerializeField] float dashCooldown;
+    [SerializeField] bool canDash = true;
+    [SerializeField] bool isDashing = false;
     
     // Instance
     Rigidbody2D rb;
     [SerializeField] StateMachine fsm;
+    [SerializeField] DashData data;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
-
-    // IEnumerator DashRoutine(Vector2 direction)
-    // {
-    //     canDash = false;
-    //     rb.velocity = direction.normalized * dashSpeed;
-    //     
-    //     isDashing = true;
-    //     yield return new WaitForSeconds(dashDuration);
-    //
-    //     rb.velocity = Vector2.zero;
-    //
-    //     isDashing = false;
-    //     
-    //     
-    //     if (! direction.Equals(Vector2.zero)) // 依然移動中
-    //     {
-    //         fsm.SetGameState(GameState.Move);
-    //     }
-    //     else
-    //     {
-    //         fsm.SetGameState(GameState.Idle);
-    //     }
-    //
-    //     yield return new WaitForSeconds(dashCooldown);
-    //
-    //     canDash = true;
-    // }
 
     IEnumerator DashRoutine(Vector2 direction)
     {
@@ -56,9 +26,9 @@ public class DashController : MonoBehaviour
         Vector2 dashDir = direction.normalized;
         float elapsed = 0f;
 
-        while (elapsed < dashDuration)
+        while (elapsed < data.dashDuration)
         {
-            rb.MovePosition(rb.position + dashDir * dashSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + dashDir * data.dashSpeed * Time.fixedDeltaTime);
             elapsed += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
@@ -74,7 +44,7 @@ public class DashController : MonoBehaviour
             fsm.SetGameState(GameState.Idle);
         }
 
-        yield return new WaitForSeconds(dashCooldown);
+        yield return new WaitForSeconds(data.dashCooldown);
 
         canDash = true;
     }

@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb12cf1b5c2044c4eaf0a72940bef433, type: 3}
-  m_Name: Player
+  m_Script: {fileID: 11500000, guid: a142a1bcd371d354db3c1c54a618cfbf, type: 3}
+  m_Name: Player_Dash
   m_EditorClassIdentifier: 
-  attackRate: 0.3
-  attackRange: 0.85
-  damage: 10
-  maxCombo: 3
-  comboCooldown: 1
-  comboResetTime: 1
-  hitboxSize: {x: 0, y: 0}
+  canDash: 1
+  isDashing: 0
+  dashSpeed: 12
+  dashDuration: 0.3
+  dashCooldown: 0.5
+  posture: 10

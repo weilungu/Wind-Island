@@ -17,10 +17,11 @@ public class AttackController : MonoBehaviour
     [SerializeField] LayerMask targetLayers;
     
     [Header("Attack Data")]
-    [SerializeField] AttackData atkData;
+    [SerializeField] AttackData data;
     
     Collider2D[] hitResults = new Collider2D[32];
 
+    
     public bool canAttack => Time.time >= nextAttackTime && Time.time >= comboCooldownEndTime;
     public void UpdateAttackDirection(Vector2 direction)
     {
@@ -44,13 +45,13 @@ public class AttackController : MonoBehaviour
         }
 
         Vector2 originBase = !attackPoint.Equals(null) ? (Vector2)attackPoint.position : (Vector2)transform.position;
-        Vector2 attackOrigin = originBase + attackDir * atkData.attackRange;
+        Vector2 attackOrigin = originBase + attackDir * data.attackRange;
 
         
         // Detect Enemy in range
         int hitCount = Physics2D.OverlapBoxNonAlloc(
             attackOrigin,
-            new Vector2(atkData.attackRange, 0),
+            data.hitboxSize,
             0,
             hitResults,
             targetLayers);
@@ -59,28 +60,28 @@ public class AttackController : MonoBehaviour
         for (int i = 0; i < hitCount; i++)
         {
             print($"Hit {hitResults[i].name}");
-            hitResults[i].GetComponent<Health>().TakeDamage(atkData.damage);
+            hitResults[i].GetComponent<Health>().TakeDamage(data.damage);
         }
     }
     public void TryAttack(Vector2 direction)
     {
         if (!canAttack) return;
         
-        if (currCombo > 0 && Time.time - lastAttackTime > atkData.comboResetTime)
+        if (currCombo > 0 && Time.time - lastAttackTime > data.comboResetTime)
         {
             currCombo = 0;
         }
 
         currCombo++;
         lastAttackTime = Time.time;
-        nextAttackTime = Time.time + atkData.attackRate;
+        nextAttackTime = Time.time + data.attackRate;
 
         Attack(direction);
 
-        if (currCombo >= atkData.maxCombo)
+        if (currCombo >= data.maxCombo)
         {
             currCombo = 0;
-            comboCooldownEndTime = Time.time + atkData.comboCooldown;
+            comboCooldownEndTime = Time.time + data.comboCooldown;
         }
     }
     
@@ -88,7 +89,8 @@ public class AttackController : MonoBehaviour
     {
         if (attackPoint == null) return;
         
-        Vector2 attackOrigin = (Vector2)attackPoint.position + lastAttackDirection * atkData.attackRange;
-        Gizmos.DrawWireSphere(attackOrigin, atkData.attackRange);
+        Vector2 attackOrigin = (Vector2)attackPoint.position + lastAttackDirection * data.attackRange;
+        Gizmos.DrawWireCube(attackOrigin, 
+                        new Vector3(data.hitboxSize.x, data.hitboxSize.y, 1));
     }
 }
