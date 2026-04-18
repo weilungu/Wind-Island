@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb12cf1b5c2044c4eaf0a72940bef433, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  attackRate: 0.4
+  attackRate: 0.3
   attackRange: 0.85
   damage: 10
   maxCombo: 3
