@@ -3,19 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveController : MonoBehaviour
+public class Movement : MonoBehaviour
 {
     // Instance
     Rigidbody2D rb;
     
-    [SerializeField] float speed;
+     [SerializeField] protected float speed;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Movement(Vector2 direction)
+    public new virtual void Move(Vector2 direction)
     {
         if (direction != Vector2.zero)
         {

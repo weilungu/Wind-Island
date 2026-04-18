@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     Rigidbody2D rb;
+    EnemyMovement move;
     
     Transform target = null;
     bool isChasing = false;
@@ -17,6 +18,7 @@ public class EnemyController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        move = GetComponent<EnemyMovement>();
     }
 
     public void SetTarget(Transform t)
@@ -42,8 +44,6 @@ public class EnemyController : MonoBehaviour
     void Chase()
     {
         faceDir = (target.position - transform.position).normalized;
-        Vector2 velocity = faceDir * speed;
-        
-        transform.Translate(velocity * Time.fixedDeltaTime);
+        move.Move(faceDir);
     }
 }

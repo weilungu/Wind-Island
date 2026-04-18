@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer sprite;
 
     InputController inp;
-    MoveController move;
+    Movement move;
     DashController dash;
     AttackController attack;
     Health health;
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
 
-        move = GetComponent<MoveController>();
+        move = GetComponent<Movement>();
         dash = GetComponent<DashController>();
         health = GetComponent<Health>();
         attack = GetComponent<AttackController>();
@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
                 if (!direction.Equals(Vector2.zero)) nonZeroDir = direction;
                 
                 attack.UpdateAttackDirection(direction);
-                move.Movement(direction);
+                move.Move(direction);
                 
                 if (direction.x != 0)
                 {
