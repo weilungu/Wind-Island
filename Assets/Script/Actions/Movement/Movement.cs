@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public new virtual void Move(Vector2 direction)
+    public virtual void Move(Vector2 direction)
     {
         if (direction != Vector2.zero)
         {
@@ -23,7 +23,6 @@ public class Movement : MonoBehaviour
 
             Vector2 pos = rb.position + direction * f_dt;
             rb.MovePosition(pos);
-            // transform.Translate(direction * speed * dt);
         }
     }
 }

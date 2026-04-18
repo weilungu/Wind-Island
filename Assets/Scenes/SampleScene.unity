@@ -291,7 +291,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 5
 --- !u!114 &260435310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6063,7 +6063,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812645ca9c3971e418bf5b80eb073897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
 --- !u!61 &1162551801
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6136,6 +6135,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &1720086781
 GameObject:
   m_ObjectHideFlags: 0

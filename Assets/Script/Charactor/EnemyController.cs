@@ -5,19 +5,15 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    Rigidbody2D rb;
     EnemyMovement move;
     
     Transform target = null;
     bool isChasing = false;
     
     Vector2 faceDir = Vector2.zero;
-    
-    [SerializeField] float speed = 5;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         move = GetComponent<EnemyMovement>();
     }
 
@@ -36,6 +32,8 @@ public class EnemyController : MonoBehaviour
     {
         if (isChasing && !target.Equals(null))
         {
+            if (move.isBlocked) return;
+            
             print($"Player is in range");
             Chase();
         }
