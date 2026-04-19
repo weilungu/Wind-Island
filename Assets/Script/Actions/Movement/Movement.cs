@@ -1,28 +1,64 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    // Instance
     Rigidbody2D rb;
+    [HideInInspector] public ContactFilter2D filter;
+    [HideInInspector] public RaycastHit2D[] hitResults { get; private set; } = new RaycastHit2D[1];
+
+    [Header("Values")]
+    [SerializeField] float speed = 5;
+    [SerializeField] public float castDistance => _castDistance;
+    [SerializeField] float _castDistance = 0.02f;
     
-     [SerializeField] protected float speed;
+    [SerializeField] LayerMask obstacleLayer;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        
+        filter = new ContactFilter2D();
+        filter.SetLayerMask(obstacleLayer);
+        filter.useLayerMask = true;
+        filter.useTriggers = false;
     }
 
-    public virtual void Move(Vector2 direction)
+    public void Move(Vector2 direction)
     {
-        if (direction != Vector2.zero)
-        {
-            float f_dt = Time.fixedDeltaTime * speed;
+        if (direction.Equals(Vector2.zero)) return;
 
-            Vector2 pos = rb.position + direction * f_dt;
-            rb.MovePosition(pos);
+        float f_dt = Time.fixedDeltaTime * speed;
+        Vector2 move = direction * f_dt;
+        
+        int hitCount = rb.Cast(direction, filter, hitResults, move.magnitude + castDistance);
+        // print($"hitCount: {hitCount}");
+
+        if (hitCount == 0)
+        {
+            rb.MovePosition(rb.position + move);
+        }
+        else
+        {
+            TrySlideMove(move);
+        }
+    }
+
+    void TrySlideMove(Vector2 move)
+    {
+        Vector2 moveX = new Vector2(move.x, 0);
+        if (moveX.magnitude > 0)
+        {
+            int hitX = rb.Cast(moveX.normalized, filter, hitResults, Mathf.Abs(move.x) + castDistance);
+            if (hitX == 0)
+                rb.MovePosition(rb.position + moveX);
+        }
+
+        Vector2 moveY = new Vector2(0, move.y);
+        if (moveY.magnitude > 0)
+        {
+            int hitY = rb.Cast(moveY.normalized, filter, hitResults, Mathf.Abs(move.y) + castDistance);
+            if (hitY == 0)
+                rb.MovePosition(rb.position + moveY);
         }
     }
 }

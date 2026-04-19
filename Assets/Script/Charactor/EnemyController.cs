@@ -5,43 +5,44 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    EnemyMovement move;
+    Movement move;
     
-    Transform target = null;
-    bool isChasing = false;
+    [SerializeField] Transform target;
+    // bool isChasing = false;
     
     Vector2 faceDir = Vector2.zero;
 
     void Awake()
     {
-        move = GetComponent<EnemyMovement>();
+        move = GetComponent<Movement>();
     }
 
     public void SetTarget(Transform t)
     {
         target = t;
-        isChasing = true;
+        // isChasing = true;
     }
     public void ClearTarget()
     {
         target = null;
-        isChasing = false;
+        // isChasing = false;
     }
 
     void FixedUpdate()
     {
-        if (isChasing && !target.Equals(null))
-        {
-            if (move.isBlocked) return;
-            
-            print($"Player is in range");
-            Chase();
-        }
+        // if (isChasing && !target.Equals(null))
+        // {
+        //     print($"Player is in range");
+        //     Chase();
+        // }
+        
+        Chase();
     }
 
     void Chase()
     {
         faceDir = (target.position - transform.position).normalized;
+        
         move.Move(faceDir);
     }
 }

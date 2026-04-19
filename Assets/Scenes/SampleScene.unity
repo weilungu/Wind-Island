@@ -497,7 +497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &260435308
 Transform:
   m_ObjectHideFlags: 0
@@ -5288,7 +5288,7 @@ GameObject:
   - component: {fileID: 1136329072}
   - component: {fileID: 1136329074}
   - component: {fileID: 1136329073}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CollisionObjects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6419,6 +6419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812645ca9c3971e418bf5b80eb073897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 1897177387}
 --- !u!61 &1162551801
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6487,14 +6488,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1162551796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbb21d16c1c512648b585d319f2ac1ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 74447a4ed34d12541860e73cec79ce76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
   speed: 2
+  _castDistance: 0.2
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 256
-  isBlocked: 0
+    m_Bits: 264
 --- !u!1 &1505654640
 GameObject:
   m_ObjectHideFlags: 0
@@ -7016,7 +7031,7 @@ GameObject:
   - component: {fileID: 1897177390}
   - component: {fileID: 1897177394}
   - component: {fileID: 1897177395}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -7060,7 +7075,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897177385}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -7119,7 +7134,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74447a4ed34d12541860e73cec79ce76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
   speed: 5
+  _castDistance: 0.2
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 320
 --- !u!61 &1897177394
 BoxCollider2D:
   m_ObjectHideFlags: 0
