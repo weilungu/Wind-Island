@@ -20,17 +20,17 @@ public class HelathBar : MonoBehaviour // HealthBar 放在 UI
         if (target.Equals(null)) return;
 
         // Subscribe => 若被觸發，直接呼叫 Method
-        target.OnMaxHealthChanged += SetMax;
+        target.OnMaxHealthChanged += SetMaxHealth;
         target.OnHealthChanged += SetHealth;
     }
 
 
-    public void SetHealth(int health)
+    void SetHealth(int health)
     {
         slider.value = health;
     }
 
-    public void SetMax(int health)
+    void SetMaxHealth(int health)
     {
         slider.maxValue = health;
         SetHealth(health);

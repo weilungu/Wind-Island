@@ -403,8 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fillLeft: {fileID: 248266762}
   fillRight: {fileID: 1840597163}
-  maxValue: 100
-  values: 0
+  posture: {fileID: 1897177399}
 --- !u!1 &248266760
 GameObject:
   m_ObjectHideFlags: 0
@@ -7027,6 +7026,7 @@ GameObject:
   - component: {fileID: 1897177393}
   - component: {fileID: 1897177391}
   - component: {fileID: 1897177396}
+  - component: {fileID: 1897177399}
   - component: {fileID: 1897177398}
   - component: {fileID: 1897177390}
   - component: {fileID: 1897177394}
@@ -7303,6 +7303,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   data: {fileID: 11400000, guid: d3b8531b785f13d4bacaaf75ef287c64, type: 2}
+--- !u!114 &1897177399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897177385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72110bb6968a85a4bb1f5b86d268b5a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxValue: 100
+  currValue: 0
 --- !u!1 &1931260716
 GameObject:
   m_ObjectHideFlags: 0

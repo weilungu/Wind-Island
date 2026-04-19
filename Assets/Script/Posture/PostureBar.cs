@@ -6,46 +6,34 @@ using UnityEngine.UI;
 
 public class PostureBar : MonoBehaviour
 {
-    [Header("Images")] [SerializeField] Image fillLeft;
+    [Header("Images")]
+    [SerializeField] Image fillLeft;
     [SerializeField] Image fillRight;
+    
+    [Header("Target")]
+    [SerializeField] Posture posture;
 
-    [Header("Values")]
-    [SerializeField] float maxValue = 100;
-    [SerializeField] float values = 0;
-
-    void Update()
+    void Start()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            AddPosture(10);
-        }
-
-        if (Input.GetMouseButtonDown(2))
-        {
-            ResetPosture();
-        }
+        posture.OnPostureChanged += PostureUpdate;
+        posture.OnPostureReset += ResetPosture;
+        
+        ResetPosture();
     }
 
-    public void UpdatePosture()
+
+    void PostureUpdate(float maxPosture, float currPosture)
     {
-        float fill = values / maxValue;
+        float fill = currPosture / maxPosture;
 
         fillRight.fillAmount = fill;
         fillLeft.fillAmount = fill;
         print(fill);
     }
-    public void AddPosture(float posture)
+    void ResetPosture()
     {
-        if (values >= maxValue) return; 
-        
-        values += posture;
-        UpdatePosture();
+        fillRight.fillAmount = 0;
+        fillLeft.fillAmount = 0;
+        print("reset posture");
     }
-    public void ResetPosture()
-    {
-        values = 0;
-        UpdatePosture();
-    }
-    
-    
 }

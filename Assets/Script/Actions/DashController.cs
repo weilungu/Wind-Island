@@ -52,7 +52,7 @@ public class DashController : MonoBehaviour
     bool TryDashMove(Vector2 dashDir, Vector2 movement)
     {
         int hitCount = rb.Cast(dashDir, move.filter, move.hitResults, movement.magnitude + move.castDistance);
-        print($"dashDir:{dashDir} | hitCount:{hitCount} | distance:{(hitCount > 0 ? move.hitResults[0].distance : -1)}");
+        // print($"dashDir:{dashDir} | hitCount:{hitCount} | distance:{(hitCount > 0 ? move.hitResults[0].distance : -1)}");
         
         if (hitCount == 0)
         {

@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     DashController dash;
     AttackController attack;
     Health health;
+    Posture posture;
 
     [Header("Field Instance")]
     [SerializeField] StateMachine fsm;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
         dash = GetComponent<DashController>();
         health = GetComponent<Health>();
         attack = GetComponent<AttackController>();
+        posture = GetComponent<Posture>();
     }
 
     void Start()
@@ -60,7 +62,6 @@ public class PlayerController : MonoBehaviour
         switch (fsm.gameState)
         {
             case GameState.Idle:
-
                 // Anim
                 SetMoveAnim(false);
 
@@ -74,8 +75,12 @@ public class PlayerController : MonoBehaviour
                 {
                     fsm.SetGameState(GameState.Attack);
                 }
+
+                if (Input.GetMouseButtonDown(1))
+                {
+                    fsm.SetGameState(GameState.Hurt);
+                }
                 break;
-            
             
             case GameState.Attack:
                 if (attack.canAttack)
@@ -90,8 +95,12 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
 
-            
-            case GameState.Dash:
+            case GameState.Hurt:
+                print("Hurt");
+                health.TakeDamage(10);
+                posture.TakePosture(10);
+                
+                fsm.SetGameState(GameState.Idle);
                 break;
         }
     }
@@ -124,7 +133,6 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-
 
     void SetMoveAnim(bool isMoving)
     {
