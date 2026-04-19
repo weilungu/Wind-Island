@@ -1,16 +1,15 @@
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class MoveController : MonoBehaviour
 {
     Rigidbody2D rb;
     [HideInInspector] public ContactFilter2D filter;
     [HideInInspector] public RaycastHit2D[] hitResults { get; private set; } = new RaycastHit2D[1];
+    [HideInInspector] public float castDistance = 0.02f;
 
+    
     [Header("Values")]
     [SerializeField] float speed = 5;
-    [SerializeField] public float castDistance => _castDistance;
-    [SerializeField] float _castDistance = 0.02f;
-    
     [SerializeField] LayerMask obstacleLayer;
 
     void Awake()

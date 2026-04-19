@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    Movement move;
+    MoveController move;
     
     [SerializeField] Transform target;
     // bool isChasing = false;
@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
 
     void Awake()
     {
-        move = GetComponent<Movement>();
+        move = GetComponent<MoveController>();
     }
 
     public void SetTarget(Transform t)

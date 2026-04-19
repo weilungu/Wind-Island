@@ -10,8 +10,7 @@ public class DashController : MonoBehaviour
     
     // Instance
     Rigidbody2D rb;
-    Movement move;
-    float castDistance => move.castDistance;
+    MoveController move;
     
     [SerializeField] StateMachine fsm;
     [SerializeField] DashData data;
@@ -19,7 +18,7 @@ public class DashController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        move = GetComponent<Movement>();
+        move = GetComponent<MoveController>();
     }
     
     IEnumerator DashRoutine(Vector2 direction)

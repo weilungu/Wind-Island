@@ -14,7 +14,7 @@ public class Posture : MonoBehaviour
 
     public void TakePosture(float value)
     {
-        if (value >= maxValue) return;
+        if (currValue >= maxValue) return;
         
         currValue += value;
         print(currValue);

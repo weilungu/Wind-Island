@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer sprite;
 
     InputController inp;
-    Movement move;
+    MoveController move;
     DashController dash;
     AttackController attack;
     Health health;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
 
-        move = GetComponent<Movement>();
+        move = GetComponent<MoveController>();
         dash = GetComponent<DashController>();
         health = GetComponent<Health>();
         attack = GetComponent<AttackController>();

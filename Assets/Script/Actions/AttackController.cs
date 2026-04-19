@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
-    float nextAttackTime;
+    [Header("Debug")]
     [SerializeField] int currCombo;
+    float nextAttackTime;
     float lastAttackTime;
     float comboCooldownEndTime;
     
