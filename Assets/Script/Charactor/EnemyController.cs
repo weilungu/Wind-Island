@@ -6,15 +6,16 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     MoveController move;
+    AttackController attack;
     
     [SerializeField] Transform target;
-    // bool isChasing = false;
     
     Vector2 faceDir = Vector2.zero;
 
     void Awake()
     {
         move = GetComponent<MoveController>();
+        attack = GetComponent<AttackController>();
     }
 
     public void SetTarget(Transform t)
@@ -42,6 +43,7 @@ public class EnemyController : MonoBehaviour
     void Chase()
     {
         faceDir = (target.position - transform.position).normalized;
+        attack.UpdateAttackDirection(faceDir);
         
         move.Move(faceDir);
     }

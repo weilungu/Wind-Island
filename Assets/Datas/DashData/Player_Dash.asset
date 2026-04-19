@@ -16,5 +16,5 @@ MonoBehaviour:
   isDashing: 0
   dashSpeed: 12
   dashDuration: 0.3
-  dashCooldown: 0.5
+  dashCooldown: 0.2
   posture: 10

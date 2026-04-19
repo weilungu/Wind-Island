@@ -11,7 +11,7 @@ public class AttackController : MonoBehaviour
     float lastAttackTime;
     float comboCooldownEndTime;
     
-    Vector2 lastAttackDirection = Vector2.right;
+    Vector2 lastDirection = Vector2.right;
     
     [Header("Field Instance")]
     [SerializeField] Transform attackPoint;
@@ -29,25 +29,22 @@ public class AttackController : MonoBehaviour
         Vector2 normalized = direction.normalized;
         if (normalized != Vector2.zero)
         {
-            lastAttackDirection = normalized;
+            lastDirection = normalized;
         }
     }
 
     void Attack(Vector2 direction)
     {
         Vector2 attackDir = direction.normalized;
-        if (attackDir != Vector2.zero)
-        {
-            lastAttackDirection = attackDir;
-        }
-        else
-        {
-            attackDir = lastAttackDirection;
-        }
+        
+        if (attackDir != Vector2.zero) lastDirection = attackDir;
+        else attackDir = lastDirection;
 
-        Vector2 originBase = !attackPoint.Equals(null) ? (Vector2)attackPoint.position : (Vector2)transform.position;
+        Vector2 originBase = !attackPoint.Equals(null)
+            ? (Vector2)attackPoint.position
+            : (Vector2)transform.position;
+        
         Vector2 attackOrigin = originBase + attackDir * data.attackRange;
-
         
         // Detect Enemy in range
         int hitCount = Physics2D.OverlapBoxNonAlloc(
@@ -90,7 +87,7 @@ public class AttackController : MonoBehaviour
     {
         if (attackPoint == null) return;
         
-        Vector2 attackOrigin = (Vector2)attackPoint.position + lastAttackDirection * data.attackRange;
+        Vector2 attackOrigin = (Vector2)attackPoint.position + lastDirection * data.attackRange;
         Gizmos.DrawWireCube(attackOrigin, 
                         new Vector3(data.hitboxSize.x, data.hitboxSize.y, 1));
     }
