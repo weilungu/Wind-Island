@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -23,15 +20,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("Field Instance")]
     [SerializeField] StateMachine fsm;
-    
+
     void Awake()
     {
-        inp = GetComponent<InputController>();
-        anim = GetComponent<Animator>();
+        inp    = GetComponent<InputController>();
+        anim   = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
-
-        move = GetComponent<MoveController>();
-        dash = GetComponent<DashController>();
+        move   = GetComponent<MoveController>();
+        dash   = GetComponent<DashController>();
         health = GetComponent<Health>();
         attack = GetComponent<AttackController>();
         posture = GetComponent<Posture>();
@@ -40,7 +36,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         fsm.SetGameState(GameState.Idle);
-        
         anim.SetFloat(AnimParams.MoveX, 0f);
         anim.SetFloat(AnimParams.MoveY, 0f);
         anim.SetBool(AnimParams.IsMoving, false);
@@ -48,40 +43,53 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        inp.MoveInput(ref horizontal, ref vertical);
+        direction = new Vector2(horizontal, vertical).normalized;
+
         PlayerActionState();
-        InputHandler();
-    }
-    void FixedUpdate()
-    {
-        MoveState();
     }
 
-    // Self-Methods
+    void FixedUpdate()
+    {
+        PhysicsState();
+    }
+
+    // ── 狀態機：邏輯層（Update）──────────────────────────────────────────
     void PlayerActionState()
     {
         switch (fsm.gameState)
         {
             case GameState.Idle:
-                // Anim
                 SetMoveAnim(false);
 
-                // Transition
-                if (inp.movePressed)
-                {
-                    fsm.SetGameState(GameState.Move);
-                }
+                if (inp.movePressed)                  { fsm.SetGameState(GameState.Move);   break; }
+                if (inp.attackPressed)                { fsm.SetGameState(GameState.Attack); break; }
+                if (Input.GetMouseButtonDown(1))      { fsm.SetGameState(GameState.Hurt);   break; }
+                if (inp.dashPressed && TryStartDash()) break;   // → Dash state
+                break;
 
-                if (inp.attackPressed)
-                {
-                    fsm.SetGameState(GameState.Attack);
-                }
+            case GameState.Move:
+                if (!direction.Equals(Vector2.zero)) faceDir = direction;
 
-                if (Input.GetMouseButtonDown(1))
+                if (direction.x != 0) sprite.flipX = direction.x < 0;
+                SetMoveAnim(!direction.Equals(Vector2.zero));
+
+                // 優先順序：Dash > Attack > Idle
+                if (inp.dashPressed && TryStartDash()) break;
+                if (inp.attackPressed) { fsm.SetGameState(GameState.Attack); break; }
+                if (direction.Equals(Vector2.zero))    { fsm.SetGameState(GameState.Idle);  break; }
+                break;
+
+            case GameState.Dash:
+                // Dash 結束由 DashController 回報，這裡只等待
+                if (!dash.IsDashing)
                 {
-                    fsm.SetGameState(GameState.Hurt);
+                    fsm.SetGameState(direction.Equals(Vector2.zero)
+                        ? GameState.Idle 
+                        : GameState.Move);
                 }
                 break;
-            
+
             case GameState.Attack:
                 if (attack.canAttack)
                 {
@@ -96,42 +104,36 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case GameState.Hurt:
-                print("Hurt");
                 health.TakeDamage(10);
                 posture.TakePosture(10);
-                
                 fsm.SetGameState(GameState.Idle);
                 break;
         }
     }
-    void MoveState()
+
+    // ── 狀態機：物理層（FixedUpdate）─────────────────────────────────────
+    void PhysicsState()
     {
         switch (fsm.gameState)
         {
             case GameState.Move:
-                // Direction
-                direction = new Vector2(horizontal, vertical).normalized;
-                if (!direction.Equals(Vector2.zero)) faceDir = direction;
-                
-                attack.UpdateAttackDirection(direction);
                 move.Move(direction);
-                
-                if (direction.x != 0)
-                {
-                    sprite.flipX = direction.x < 0;
-                }
-                
-                // Animation
-                SetMoveAnim(true);
-                
-                // Transition
-                if (direction.Equals(Vector2.zero))
-                {
-                    fsm.SetGameState(GameState.Idle);
-                    SetMoveAnim(false);
-                }
+                attack.UpdateAttackDirection(direction);
+                break;
+
+            case GameState.Dash:
+                dash.DashFixedUpdate();
                 break;
         }
+    }
+
+    // ── 工具方法 ──────────────────────────────────────────────────────────
+    bool TryStartDash()
+    {
+        if (!dash.TryDash(direction)) return false;
+        
+        fsm.SetGameState(GameState.Dash);
+        return true;
     }
 
     void SetMoveAnim(bool isMoving)
@@ -139,24 +141,5 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat(AnimParams.MoveX, faceDir.x);
         anim.SetFloat(AnimParams.MoveY, faceDir.y);
         anim.SetBool(AnimParams.IsMoving, isMoving);
-    }
-
-    void InputHandler()
-    {
-        inp.MoveInput(ref horizontal, ref vertical);
-
-        if (fsm.gameState.Equals(GameState.Move))
-        {
-            if (inp.attackPressed)
-            {
-                SetMoveAnim(true);
-                fsm.SetGameState(GameState.Attack);
-            }
-        }
-        
-        if (inp.dashPressed)
-        {
-            dash.TryDash(direction);
-        }
     }
 }

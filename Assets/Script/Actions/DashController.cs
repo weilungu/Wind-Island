@@ -1,110 +1,134 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DashController : MonoBehaviour
 {
-    [SerializeField] bool canDash = true;
+    [SerializeField] bool canDash   = true;
     [SerializeField] bool isDashing = false;
-    
+
+    // 讓 PlayerController 查詢
+    public bool IsDashing => isDashing;
+
     // Instance
     Rigidbody2D rb;
     MoveController move;
     
-    [SerializeField] StateMachine fsm;
     [SerializeField] DashData data;
 
-    private void Awake()
+    // Dash 執行期間的狀態
+    Vector2 dashDir;
+    float elapsed;
+
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         move = GetComponent<MoveController>();
     }
-    
-    IEnumerator DashRoutine(Vector2 direction)
+
+    // ── 公開 API ──────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// 嘗試啟動 Dash；成功回傳 true，PlayerController 負責切換狀態機。
+    /// </summary>
+    public bool TryDash(Vector2 direction)
     {
-        canDash = false;
+        if (isDashing || !canDash || direction.Equals(Vector2.zero)) return false;
+        if (!CanDashInDirection(direction)) return false;
+
+        dashDir = direction.normalized;
+        elapsed = 0f;
         isDashing = true;
+        canDash   = false;
+        return true;
+    }
 
-        Vector2 dashDir = direction.normalized;
-        float elapsed = 0f;
+    /// <summary>
+    /// 由 PlayerController.PhysicsState（FixedUpdate）在 Dash 狀態下每幀呼叫。
+    /// </summary>
+    public void DashFixedUpdate()
+    {
+        if (!isDashing) return;
 
-        while (elapsed < data.dashDuration)
+        if (elapsed < data.dashDuration)
         {
             Vector2 movement = dashDir * data.dashSpeed * Time.fixedDeltaTime;
             bool moved = TryDashMove(dashDir, movement);
 
-            // 完全無法移動才中止 Dash
-            if (!moved) break;
+            if (!moved)
+            {
+                // 撞牆無法繼續，提早結束
+                EndDash();
+                return;
+            }
 
             elapsed += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
         }
+        else
+        {
+            EndDash();
+        }
+    }
 
+    // ── 私有方法 ──────────────────────────────────────────────────────────
+
+    void EndDash()
+    {
         isDashing = false;
-        fsm.SetGameState(direction.Equals(Vector2.zero) ? GameState.Idle : GameState.Move);
+        // isDashing = false 後 PlayerController 會在下一個 Update 偵測到並切換狀態
+        StartCoroutine(DashCooldown());
+    }
 
+    IEnumerator DashCooldown()
+    {
         yield return new WaitForSeconds(data.dashCooldown);
         canDash = true;
     }
 
-    bool TryDashMove(Vector2 dashDir, Vector2 movement)
+    bool TryDashMove(Vector2 dir, Vector2 movement)
     {
-        int hitCount = rb.Cast(dashDir, move.filter, move.hitResults, movement.magnitude + move.castDistance);
-        // print($"dashDir:{dashDir} | hitCount:{hitCount} | distance:{(hitCount > 0 ? move.hitResults[0].distance : -1)}");
-        
+        int hitCount = rb.Cast(dir, move.filter, move.hitResults, movement.magnitude + move.castDistance);
+
         if (hitCount == 0)
         {
             rb.MovePosition(rb.position + movement);
             return true;
         }
 
-        // safeDistance 用 Mathf.Max 確保不為負數
-        float safeDistance = move.hitResults[0].distance - move.castDistance;
-        
-        safeDistance = Mathf.Max(safeDistance, 0.01f);
+        // 盡量貼近障礙物
+        float safeDistance = Mathf.Max(move.hitResults[0].distance - move.castDistance, 0f);
+        if (safeDistance > 0f)
+            rb.MovePosition(rb.position + dir * safeDistance);
 
-        if (safeDistance > 0)
-        {
-            rb.MovePosition(rb.position + dashDir * safeDistance);
-        }
+        // 嘗試沿軸滑動
+        return TrySlide(movement);
+    }
 
-        // 嘗試滑動
-        Vector2 moveX = new Vector2(movement.x, 0);
-        Vector2 moveY = new Vector2(0, movement.y);
+    bool TrySlide(Vector2 movement)
+    {
         bool slidX = false, slidY = false;
 
-        
-        if (moveX.magnitude > 0)
+        Vector2 moveX = new Vector2(movement.x, 0f);
+        if (moveX.magnitude > 0f)
         {
-            int hitX = rb.Cast(moveX.normalized, move.filter, move.hitResults, Mathf.Abs(movement.x) + move.castDistance);
+            int hitX = rb.Cast(moveX.normalized, move.filter, move.hitResults,
+                               Mathf.Abs(movement.x) + move.castDistance);
             if (hitX == 0) { rb.MovePosition(rb.position + moveX); slidX = true; }
         }
 
-        if (moveY.magnitude > 0)
+        Vector2 moveY = new Vector2(0f, movement.y);
+        if (moveY.magnitude > 0f)
         {
-            int hitY = rb.Cast(moveY.normalized, move.filter, move.hitResults, Mathf.Abs(movement.y) + move.castDistance);
+            int hitY = rb.Cast(moveY.normalized, move.filter, move.hitResults,
+                               Mathf.Abs(movement.y) + move.castDistance);
             if (hitY == 0) { rb.MovePosition(rb.position + moveY); slidY = true; }
         }
 
         return slidX || slidY;
     }
-    
-    public bool TryDash(Vector2 direction)
-    {
-        if (isDashing || !canDash || direction.Equals(Vector2.zero)) return false;
-
-        if (!CanDashInDirection(direction)) return false;
-
-        StartCoroutine(DashRoutine(direction));
-        fsm.SetGameState(GameState.Dash);
-        return true;
-    }
 
     bool CanDashInDirection(Vector2 direction)
     {
         RaycastHit2D[] check = new RaycastHit2D[1];
-        
         int hitCount = rb.Cast(direction.normalized, move.filter, check, move.castDistance * 3f);
         return hitCount == 0;
     }
