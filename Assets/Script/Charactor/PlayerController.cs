@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     float horizontal;
     float vertical;
     Vector2 direction = Vector2.zero;
-    Vector2 nonZeroDir = Vector2.right;
+    Vector2 faceDir = Vector2.right;
 
     // Instance
     Animator anim;
@@ -86,8 +86,8 @@ public class PlayerController : MonoBehaviour
                 if (attack.canAttack)
                 {
                     anim.SetTrigger(AnimParams.Attack);
-                    attack.TryAttack(nonZeroDir);
-                    attack.UpdateAttackDirection(nonZeroDir);
+                    attack.TryAttack(faceDir);
+                    attack.UpdateAttackDirection(faceDir);
                 }
                 else
                 {
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
             case GameState.Move:
                 // Direction
                 direction = new Vector2(horizontal, vertical).normalized;
-                if (!direction.Equals(Vector2.zero)) nonZeroDir = direction;
+                if (!direction.Equals(Vector2.zero)) faceDir = direction;
                 
                 attack.UpdateAttackDirection(direction);
                 move.Move(direction);
@@ -136,8 +136,8 @@ public class PlayerController : MonoBehaviour
 
     void SetMoveAnim(bool isMoving)
     {
-        anim.SetFloat(AnimParams.MoveX, nonZeroDir.x);
-        anim.SetFloat(AnimParams.MoveY, nonZeroDir.y);
+        anim.SetFloat(AnimParams.MoveX, faceDir.x);
+        anim.SetFloat(AnimParams.MoveY, faceDir.y);
         anim.SetBool(AnimParams.IsMoving, isMoving);
     }
 

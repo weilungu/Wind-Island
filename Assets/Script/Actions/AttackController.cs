@@ -24,6 +24,16 @@ public class AttackController : MonoBehaviour
 
     
     public bool canAttack => Time.time >= nextAttackTime && Time.time >= comboCooldownEndTime;
+
+    Vector2 GetAttackOrigin(Vector2 attackDir)
+    {
+        Vector2 originBase = attackPoint != null
+            ? (Vector2)attackPoint.position
+            : (Vector2)transform.position;
+
+        return originBase + attackDir * data.attackRange;
+    }
+
     public void UpdateAttackDirection(Vector2 direction)
     {
         Vector2 normalized = direction.normalized;
@@ -33,6 +43,34 @@ public class AttackController : MonoBehaviour
         }
     }
 
+    public bool TryGetPlayerInFront(out Transform player)
+    {
+        player = null;
+
+        Vector2 attackOrigin = GetAttackOrigin(lastDirection);
+
+        int hitCount = Physics2D.OverlapBoxNonAlloc(
+            attackOrigin,
+            data.hitboxSize,
+            0,
+            hitResults,
+            targetLayers);
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            Collider2D hit = hitResults[i];
+            if (hit == null) continue;
+
+            if (hit.CompareTag("Player") || hit.GetComponent<PlayerController>() != null)
+            {
+                player = hit.transform;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     void Attack(Vector2 direction)
     {
         Vector2 attackDir = direction.normalized;
@@ -40,11 +78,7 @@ public class AttackController : MonoBehaviour
         if (attackDir != Vector2.zero) lastDirection = attackDir;
         else attackDir = lastDirection;
 
-        Vector2 originBase = !attackPoint.Equals(null)
-            ? (Vector2)attackPoint.position
-            : (Vector2)transform.position;
-        
-        Vector2 attackOrigin = originBase + attackDir * data.attackRange;
+        Vector2 attackOrigin = GetAttackOrigin(attackDir);
         
         // Detect Enemy in range
         int hitCount = Physics2D.OverlapBoxNonAlloc(

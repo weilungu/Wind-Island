@@ -7,15 +7,20 @@ public class EnemyController : MonoBehaviour
 {
     MoveController move;
     AttackController attack;
+    StateMachine fsm;
     
     [SerializeField] Transform target;
     
     Vector2 faceDir = Vector2.zero;
 
+    [Header("Debug")]
+    [SerializeField] bool hasPlayerInFront;
+
     void Awake()
     {
         move = GetComponent<MoveController>();
         attack = GetComponent<AttackController>();
+        fsm = GetComponent<StateMachine>();
     }
 
     public void SetTarget(Transform t)
@@ -31,20 +36,53 @@ public class EnemyController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // if (isChasing && !target.Equals(null))
+        
+
+        // Chase();
+        //
+        // if (!attack.Equals(null))
         // {
-        //     print($"Player is in range");
-        //     Chase();
+        //     hasPlayerInFront = attack.TryGetPlayerInFront(out _);
+        // }
+        //
+        // if (hasPlayerInFront)
+        // {
+        //     print("Player In Front");
         // }
         
-        Chase();
+        EnemyAttack();
     }
 
     void Chase()
     {
         faceDir = (target.position - transform.position).normalized;
-        attack.UpdateAttackDirection(faceDir);
+
+        if (target.Equals(null))
+        {
+            hasPlayerInFront = false;
+            return;
+        }
+        if (!attack.Equals(null))
+        {
+            attack.UpdateAttackDirection(faceDir);
+        }
         
         move.Move(faceDir);
+    }
+
+    void EnemyAttack()
+    {
+        Chase();
+
+        if (!attack.Equals(null))
+        {
+            hasPlayerInFront = attack.TryGetPlayerInFront(out _);
+        }
+
+        if (hasPlayerInFront)
+        {
+            print("Player In Front");
+            attack.TryAttack(faceDir);
+        }
     }
 }

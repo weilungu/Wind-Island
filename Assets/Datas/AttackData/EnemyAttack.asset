@@ -15,7 +15,7 @@ MonoBehaviour:
   attackRate: 0.3
   attackRange: 0.5
   damage: 10
-  hitboxSize: {x: 2.6, y: 2.29}
+  hitboxSize: {x: 1.5, y: 1.5}
   maxCombo: 3
   comboCooldown: 1
   comboResetTime: 0.5
