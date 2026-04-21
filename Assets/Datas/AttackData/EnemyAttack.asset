@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96559b058c7f37b47967af9a2154b6fc, type: 3}
   m_Name: EnemyAttack
   m_EditorClassIdentifier: 
-  attackRate: 0.3
+  attackRate: 1
   attackRange: 0.5
   damage: 10
   hitboxSize: {x: 1.5, y: 1.5}

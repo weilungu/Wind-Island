@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
 {
     MoveController move;
     AttackController attack;
-    StateMachine fsm;
+    // StateMachine fsm;
     
     [SerializeField] Transform target;
     
@@ -20,36 +20,19 @@ public class EnemyController : MonoBehaviour
     {
         move = GetComponent<MoveController>();
         attack = GetComponent<AttackController>();
-        fsm = GetComponent<StateMachine>();
     }
 
     public void SetTarget(Transform t)
     {
         target = t;
-        // isChasing = true;
     }
     public void ClearTarget()
     {
         target = null;
-        // isChasing = false;
     }
 
     void FixedUpdate()
     {
-        
-
-        // Chase();
-        //
-        // if (!attack.Equals(null))
-        // {
-        //     hasPlayerInFront = attack.TryGetPlayerInFront(out _);
-        // }
-        //
-        // if (hasPlayerInFront)
-        // {
-        //     print("Player In Front");
-        // }
-        
         EnemyAttack();
     }
 
@@ -62,10 +45,10 @@ public class EnemyController : MonoBehaviour
             hasPlayerInFront = false;
             return;
         }
-        if (!attack.Equals(null))
-        {
-            attack.UpdateAttackDirection(faceDir);
-        }
+        // if (!attack.Equals(null))
+        // {
+        attack.UpdateAttackDirection(faceDir);
+        // }
         
         move.Move(faceDir);
     }
@@ -74,10 +57,10 @@ public class EnemyController : MonoBehaviour
     {
         Chase();
 
-        if (!attack.Equals(null))
-        {
-            hasPlayerInFront = attack.TryGetPlayerInFront(out _);
-        }
+        // if (!attack.Equals(null))
+        // {
+        hasPlayerInFront = attack.TryGetPlayerInFront(out _);
+        // }
 
         if (hasPlayerInFront)
         {

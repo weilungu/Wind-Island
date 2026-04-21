@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
         inp    = GetComponent<InputController>();
         anim   = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        
         move   = GetComponent<MoveController>();
         dash   = GetComponent<DashController>();
         health = GetComponent<Health>();
@@ -94,6 +95,7 @@ public class PlayerController : MonoBehaviour
                 if (attack.canAttack)
                 {
                     anim.SetTrigger(AnimParams.Attack);
+                    
                     attack.TryAttack(faceDir);
                     attack.UpdateAttackDirection(faceDir);
                 }
