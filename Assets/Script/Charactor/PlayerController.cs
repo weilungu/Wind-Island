@@ -135,6 +135,8 @@ public class PlayerController : MonoBehaviour
         if (!dash.TryDash(direction)) return false;
         
         fsm.SetGameState(GameState.Dash);
+        anim.SetTrigger(AnimParams.Attack);
+        
         return true;
     }
 
