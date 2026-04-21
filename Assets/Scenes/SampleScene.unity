@@ -6501,6 +6501,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2152108482483130740, guid: 27741617302e0a344b4a450735e45038,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3917019850857179018, guid: 27741617302e0a344b4a450735e45038,
         type: 3}
       propertyPath: fsm
@@ -6511,6 +6516,11 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1897177387}
+    - target: {fileID: 3917019850857179018, guid: 27741617302e0a344b4a450735e45038,
+        type: 3}
+      propertyPath: attackRange
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3917019850857179018, guid: 27741617302e0a344b4a450735e45038,
         type: 3}
       propertyPath: attackCooldown

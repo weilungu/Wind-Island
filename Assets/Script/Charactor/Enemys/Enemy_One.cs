@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Enemy_One : EnemyController
 {
-    [Header("Enemy One - Dash Attack")] 
-    [SerializeField] float dashTriggerRange = 5f; // 進入此距離開始 Dash
+    [Header("Enemy One - Dash Attack")] [SerializeField]
+    float dashTriggerRange = 5f; // 進入此距離開始 Dash
 
     [SerializeField] float attackRange = 1.2f; // 到達此距離才打
     [SerializeField] float attackCooldown = 2f; // 打完後冷卻再回 Chase
@@ -24,13 +24,14 @@ public class Enemy_One : EnemyController
     // ── Dash：衝向 Player，到達攻擊範圍就停下來打 ────────────────────────
     protected override void OnDash()
     {
-        UpdateFaceDir(); // Dash 期間持續追蹤方向（讓 DashController 用最新方向）
+        UpdateFaceDir(); // Dash 期間持續追蹤方向
 
-        // 已夠近 → 提早結束 Dash 直接進攻擊
         if (DistanceToTarget() <= attackRange)
         {
             dash.ForceStop();
             fsm.SetGameState(EnemyState.Attack);
+
+            if (hasPlayerInFront) print("hasPlayerInFront");
             return;
         }
 
@@ -44,6 +45,8 @@ public class Enemy_One : EnemyController
     // ── Attack：攻擊一次後冷卻，回 Chase 繼續循環 ────────────────────────
     protected override void EnemyAttack()
     {
+        base.EnemyAttack();
+
         if (Time.time < attackCooldownEndTime) return;
 
         attack.UpdateAttackDirection(faceDir);

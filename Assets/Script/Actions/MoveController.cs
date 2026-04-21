@@ -10,6 +10,7 @@ public class MoveController : MonoBehaviour
     
     [Header("Values")]
     [SerializeField] float speed = 5;
+
     [SerializeField] LayerMask obstacleLayer;
 
     void Awake()
@@ -40,6 +41,15 @@ public class MoveController : MonoBehaviour
         {
             TrySlideMove(move);
         }
+    }
+    public float CanMove(bool canMove)
+    {
+        float tempSpeed = speed;
+        
+        float result = canMove ? tempSpeed : 0;
+        print(speed);
+        
+        return result;
     }
 
     void TrySlideMove(Vector2 move)

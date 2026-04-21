@@ -2,38 +2,37 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    protected MoveController move;
+    protected MoveController   move;
     protected AttackController attack;
-    protected DashController dash;
+    protected DashController   dash;
     [SerializeField] protected StateMachine fsm;
 
     [SerializeField] protected Transform target;
 
     protected Vector2 faceDir = Vector2.zero;
 
-    [Header("Debug")] 
+    [Header("Debug")]
     [SerializeField] protected bool hasPlayerInFront;
 
     protected virtual void Awake()
     {
-        move = GetComponent<MoveController>();
+        move   = GetComponent<MoveController>();
         attack = GetComponent<AttackController>();
-        dash = GetComponent<DashController>();
+        dash   = GetComponent<DashController>();
     }
 
     protected virtual void Start()
     {
-        fsm.SetGameState(PlayerState.Idle);
+        fsm.SetGameState(EnemyState.Idle);
     }
 
     public void SetTarget(Transform t) => target = t;
-    public void ClearTarget() => target = null;
+    public void ClearTarget()          => target = null;
 
     // ── 狀態機（Update）──────────────────────────────────────────────────
     protected virtual void Update()
     {
         if (target == null) return;
-
         EnemyActionState();
     }
 
@@ -41,30 +40,18 @@ public class EnemyController : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         if (target == null) return;
-
         EnemyPhysicsState();
     }
 
-    // ── 邏輯層：子類別可覆寫個別 case ────────────────────────────────────
+    // ── 邏輯層 ────────────────────────────────────────────────────────────
     protected virtual void EnemyActionState()
     {
         switch (fsm.enemyState)
         {
-            case EnemyState.Idle:
-                OnIdle();
-                break;
-
-            case EnemyState.Chase:
-                OnChase();
-                break;
-
-            case EnemyState.Dash:
-                OnDash();
-                break;
-
-            case EnemyState.Attack:
-                OnAttack();
-                break;
+            case EnemyState.Idle:   OnIdle();   break;
+            case EnemyState.Chase:  OnChase();  break;
+            case EnemyState.Dash:   OnDash();   break;
+            case EnemyState.Attack: OnAttack(); break;
         }
     }
 
@@ -83,11 +70,10 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    // ── 各狀態預設行為（可被子類別 override）─────────────────────────────
+    // ── 各狀態預設行為 ────────────────────────────────────────────────────
 
     protected virtual void OnIdle()
     {
-        // 預設：有 target 就直接開始追
         fsm.SetGameState(EnemyState.Chase);
     }
 
@@ -95,21 +81,30 @@ public class EnemyController : MonoBehaviour
     {
         UpdateFaceDir();
         attack.UpdateAttackDirection(faceDir);
+        attack.CheckPlayerInFront();
+
+        // Player 進入攻擊範圍 → 停止移動並切換至 Attack
+        if (attack.IsTargetInRange(target.position))
+        {
+            print("In Attack Range");
+            fsm.SetGameState(EnemyState.Attack);
+        }
     }
 
     protected virtual void OnDash()
     {
-        // Dash 物理由 EnemyPhysicsState 驅動
-        // 子類別負責決定 Dash 結束後切換到哪個狀態
         if (!dash.IsDashing)
-        {
-            fsm.SetGameState(PlayerState.Attack);
-        }
+            fsm.SetGameState(EnemyState.Attack);
     }
 
     protected virtual void OnAttack()
     {
-        EnemyAttack();
+        attack.CheckPlayerInFront();
+
+        if (attack.HasPlayerInFront)
+            EnemyAttack();
+        else
+            fsm.SetGameState(EnemyState.Chase);  // Player 離開範圍，重新追擊
     }
 
     protected virtual void EnemyAttack()

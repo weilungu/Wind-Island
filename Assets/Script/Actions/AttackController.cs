@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
-    [Header("Debug")] [SerializeField] int currCombo;
-    [SerializeField] bool isAttacking; // 攻擊動作進行中（動畫未結束）
+    [Header("Debug")]
+    [SerializeField] int  currCombo;
+    [SerializeField] bool isAttacking;    // 攻擊動作進行中（動畫未結束）
+    [SerializeField] bool hasPlayerInFront;
 
     float nextAttackTime;
     float lastAttackTime;
@@ -11,11 +13,10 @@ public class AttackController : MonoBehaviour
 
     Vector2 lastDirection = Vector2.right;
 
-    [Header("Field Instance")] 
+    [Header("Field Instance")]
     [SerializeField] Transform attackPoint;
     [SerializeField] LayerMask targetLayers;
 
-    
     [Header("Attack Data")]
     [SerializeField] AttackData data;
 
@@ -24,10 +25,19 @@ public class AttackController : MonoBehaviour
     // ── 公開查詢 ──────────────────────────────────────────────────────────
 
     /// <summary>攻擊冷卻結束且 Combo 冷卻結束，可以發動下一擊。</summary>
-    public bool canAttack => Time.time >= nextAttackTime && Time.time >= comboCooldownEndTime;
+    public bool canAttack       => Time.time >= nextAttackTime && Time.time >= comboCooldownEndTime;
 
     /// <summary>攻擊動畫播放中（由 Animation Event 控制開關）。</summary>
-    public bool IsAttacking => isAttacking;
+    public bool IsAttacking     => isAttacking;
+
+    /// <summary>攻擊判定範圍內偵測到 Player。每幀由 CheckPlayerInFront() 更新。</summary>
+    public bool HasPlayerInFront => hasPlayerInFront;
+
+    /// <summary>目標是否在 attackRange 的圓形範圍內（供 Enemy 停步用）。</summary>
+    public bool IsTargetInRange(Vector2 targetPos)
+    {
+        return Vector2.Distance((Vector2)transform.position, targetPos) <= data.attackRange;
+    }
 
     // ── 公開 API ──────────────────────────────────────────────────────────
 
@@ -38,48 +48,8 @@ public class AttackController : MonoBehaviour
             lastDirection = normalized;
     }
 
-    /// <summary>
-    /// 嘗試發動攻擊；回傳 true 代表這幀確實打出了一擊。
-    /// PlayerController 只在 Attack state 下呼叫此方法。
-    /// </summary>
-    public bool TryAttack(Vector2 direction)
+    public bool CheckPlayerInFront()
     {
-        if (!canAttack) return false;
-
-        // Combo reset
-        if (currCombo > 0 && Time.time - lastAttackTime > data.comboResetTime)
-            currCombo = 0;
-
-        currCombo++;
-        lastAttackTime = Time.time;
-        nextAttackTime = Time.time + data.attackRate;
-        isAttacking = true;
-
-        PerformAttack(direction);
-
-        if (currCombo >= data.maxCombo)
-        {
-            currCombo = 0;
-            comboCooldownEndTime = Time.time + data.comboCooldown;
-        }
-
-        return true;
-    }
-
-    // ── Animation Events（掛在攻擊動畫上）────────────────────────────────
-
-    /// <summary>攻擊動畫結束時由 Animation Event 呼叫，通知狀態機可以離開 Attack state。</summary>
-    public void OnAttackAnimEnd()
-    {
-        isAttacking = false;
-    }
-
-    // ── 工具方法 ──────────────────────────────────────────────────────────
-
-    public bool TryGetPlayerInFront(out Transform player)
-    {
-        player = null;
-
         int hitCount = Physics2D.OverlapBoxNonAlloc(
             GetAttackOrigin(lastDirection),
             data.hitboxSize, 0,
@@ -87,16 +57,46 @@ public class AttackController : MonoBehaviour
 
         for (int i = 0; i < hitCount; i++)
         {
-            if (hitResults[i] == null) continue;
-            if (hitResults[i].CompareTag("Player") ||
-                hitResults[i].GetComponent<PlayerController>() != null)
+            // if (hitResults[i] == null) continue;
+            if (hitResults[i].GetComponent<PlayerController>() != null)
             {
-                player = hitResults[i].transform;
+                hasPlayerInFront = true;
                 return true;
             }
         }
 
+        hasPlayerInFront = false;
         return false;
+    }
+    
+    public bool TryAttack(Vector2 direction)
+    {
+        if (!canAttack) return false;
+
+        if (currCombo > 0 && Time.time - lastAttackTime > data.comboResetTime)
+            currCombo = 0;
+
+        currCombo++;
+        lastAttackTime      = Time.time;
+        nextAttackTime      = Time.time + data.attackRate;
+        isAttacking         = true;
+
+        PerformAttack(direction);
+
+        if (currCombo >= data.maxCombo)
+        {
+            currCombo            = 0;
+            comboCooldownEndTime = Time.time + data.comboCooldown;
+        }
+
+        return true;
+    }
+
+    // ── Animation Events ──────────────────────────────────────────────────
+    
+    public void OnAttackAnimEnd()
+    {
+        isAttacking = false;
     }
 
     // ── 私有方法 ──────────────────────────────────────────────────────────
