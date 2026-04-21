@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        fsm.SetGameState(GameState.Idle);
+        fsm.SetGameState(PlayerState.Idle);
         anim.SetFloat(AnimParams.MoveX, 0f);
         anim.SetFloat(AnimParams.MoveY, 0f);
         anim.SetBool(AnimParams.IsMoving, false);
@@ -58,18 +58,18 @@ public class PlayerController : MonoBehaviour
     // ── 狀態機：邏輯層（Update）──────────────────────────────────────────
     void PlayerActionState()
     {
-        switch (fsm.gameState)
+        switch (fsm.playerState)
         {
-            case GameState.Idle:
+            case PlayerState.Idle:
                 SetMoveAnim(false);
 
-                if (inp.movePressed)                  { fsm.SetGameState(GameState.Move);   break; }
-                if (inp.attackPressed)                { fsm.SetGameState(GameState.Attack); break; }
-                if (Input.GetMouseButtonDown(1))      { fsm.SetGameState(GameState.Hurt);   break; }
+                if (inp.movePressed)                  { fsm.SetGameState(PlayerState.Move);   break; }
+                if (inp.attackPressed)                { fsm.SetGameState(PlayerState.Attack); break; }
+                if (Input.GetMouseButtonDown(1))      { fsm.SetGameState(PlayerState.Hurt);   break; }
                 if (inp.dashPressed && TryStartDash()) break;   // → Dash state
                 break;
 
-            case GameState.Move:
+            case PlayerState.Move:
                 if (!direction.Equals(Vector2.zero)) faceDir = direction;
 
                 if (direction.x != 0) sprite.flipX = direction.x < 0;
@@ -77,21 +77,21 @@ public class PlayerController : MonoBehaviour
 
                 // 優先順序：Dash > Attack > Idle
                 if (inp.dashPressed && TryStartDash()) break;
-                if (inp.attackPressed) { fsm.SetGameState(GameState.Attack); break; }
-                if (direction.Equals(Vector2.zero))    { fsm.SetGameState(GameState.Idle);  break; }
+                if (inp.attackPressed) { fsm.SetGameState(PlayerState.Attack); break; }
+                if (direction.Equals(Vector2.zero))    { fsm.SetGameState(PlayerState.Idle);  break; }
                 break;
 
-            case GameState.Dash:
+            case PlayerState.Dash:
                 // Dash 結束由 DashController 回報，這裡只等待
                 if (!dash.IsDashing)
                 {
                     fsm.SetGameState(direction.Equals(Vector2.zero)
-                        ? GameState.Idle 
-                        : GameState.Move);
+                        ? PlayerState.Idle 
+                        : PlayerState.Move);
                 }
                 break;
 
-            case GameState.Attack:
+            case PlayerState.Attack:
                 if (attack.canAttack)
                 {
                     anim.SetTrigger(AnimParams.Attack);
@@ -101,14 +101,14 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    fsm.SetGameState(GameState.Move);
+                    fsm.SetGameState(PlayerState.Move);
                 }
                 break;
 
-            case GameState.Hurt:
+            case PlayerState.Hurt:
                 health.TakeDamage(10);
                 posture.TakePosture(10);
-                fsm.SetGameState(GameState.Idle);
+                fsm.SetGameState(PlayerState.Idle);
                 break;
         }
     }
@@ -116,14 +116,14 @@ public class PlayerController : MonoBehaviour
     // ── 狀態機：物理層（FixedUpdate）─────────────────────────────────────
     void PhysicsState()
     {
-        switch (fsm.gameState)
+        switch (fsm.playerState)
         {
-            case GameState.Move:
+            case PlayerState.Move:
                 move.Move(direction);
                 attack.UpdateAttackDirection(direction);
                 break;
 
-            case GameState.Dash:
+            case PlayerState.Dash:
                 dash.DashFixedUpdate();
                 break;
         }
@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!dash.TryDash(direction)) return false;
         
-        fsm.SetGameState(GameState.Dash);
+        fsm.SetGameState(PlayerState.Dash);
         anim.SetTrigger(AnimParams.Attack);
         
         return true;

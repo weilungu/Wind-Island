@@ -5960,7 +5960,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5744641ef2f0e04aab8e6f2251fbf85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 0
+  playerState: 0
+  enemyState: 0
 --- !u!4 &1303507965
 Transform:
   m_ObjectHideFlags: 0
@@ -6500,16 +6501,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1594757878439692337, guid: 27741617302e0a344b4a450735e45038,
+    - target: {fileID: 3917019850857179018, guid: 27741617302e0a344b4a450735e45038,
         type: 3}
       propertyPath: fsm
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1594757878439692337, guid: 27741617302e0a344b4a450735e45038,
+      objectReference: {fileID: 1303507964}
+    - target: {fileID: 3917019850857179018, guid: 27741617302e0a344b4a450735e45038,
         type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 1897177387}
+    - target: {fileID: 3917019850857179018, guid: 27741617302e0a344b4a450735e45038,
+        type: 3}
+      propertyPath: attackCooldown
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3917019850857179018, guid: 27741617302e0a344b4a450735e45038,
+        type: 3}
+      propertyPath: dashTriggerRange
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5354497054237677420, guid: 27741617302e0a344b4a450735e45038,
         type: 3}
       propertyPath: m_LocalPosition.x

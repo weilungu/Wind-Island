@@ -2,22 +2,37 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum GameState
+public enum PlayerState
 {
     Idle,
     Move,
     Dash,
     Attack,
     Hurt,
-    Dead
+    Dead,
+}
+
+public enum EnemyState
+{
+    Idle,
+    Chase,
+    Dash,
+    Attack,
+    Hurt,
+    Dead,
 }
 
 public class StateMachine : MonoBehaviour
 {
-    public GameState gameState;
+    public PlayerState playerState;
+    public EnemyState enemyState;
 
-    public void SetGameState(GameState state)
+    public void SetGameState(PlayerState state)
     {
-        gameState = state;
+        playerState = state;
+    }
+    public void SetGameState(EnemyState state)
+    {
+        enemyState = state;
     }
 }
