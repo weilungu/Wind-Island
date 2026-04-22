@@ -127,7 +127,7 @@ public class AttackController : MonoBehaviour
             // if (!posture.Equals(null))
             if (posture is not null)
             {
-                posture.TakePosture(data.posture);
+                posture.TakePostureDamage(data.posture);
             }
             
         }

@@ -21,14 +21,17 @@ public class PlayerController : MonoBehaviour
     [Header("Field Instance")]
     [SerializeField] StateMachine fsm;
 
+    [Header("Value")]
+    [SerializeField] float postureValue = 10;
+
     void Awake()
     {
-        inp    = GetComponent<InputController>();
-        anim   = GetComponent<Animator>();
+        inp = GetComponent<InputController>();
+        anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
-        
-        move   = GetComponent<MoveController>();
-        dash   = GetComponent<DashController>();
+
+        move = GetComponent<MoveController>();
+        dash = GetComponent<DashController>();
         health = GetComponent<Health>();
         attack = GetComponent<AttackController>();
         posture = GetComponent<Posture>();
@@ -63,10 +66,25 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Idle:
                 SetMoveAnim(false);
 
-                if (inp.movePressed)                  { fsm.SetGameState(PlayerState.Move);   break; }
-                if (inp.attackPressed)                { fsm.SetGameState(PlayerState.Attack); break; }
-                if (Input.GetMouseButtonDown(1))      { fsm.SetGameState(PlayerState.Hurt);   break; }
-                if (inp.dashPressed && TryStartDash()) break;   // → Dash state
+                if (inp.movePressed)
+                {
+                    fsm.SetGameState(PlayerState.Move);
+                    break;
+                }
+
+                if (inp.attackPressed)
+                {
+                    fsm.SetGameState(PlayerState.Attack);
+                    break;
+                }
+
+                if (Input.GetMouseButtonDown(1))
+                {
+                    fsm.SetGameState(PlayerState.Hurt);
+                    break;
+                }
+
+                if (inp.dashPressed && TryStartDash()) break; // → Dash state
                 break;
 
             case PlayerState.Move:
@@ -77,8 +95,18 @@ public class PlayerController : MonoBehaviour
 
                 // 優先順序：Dash > Attack > Idle
                 if (inp.dashPressed && TryStartDash()) break;
-                if (inp.attackPressed) { fsm.SetGameState(PlayerState.Attack); break; }
-                if (direction.Equals(Vector2.zero))    { fsm.SetGameState(PlayerState.Idle);  break; }
+                if (inp.attackPressed)
+                {
+                    fsm.SetGameState(PlayerState.Attack);
+                    break;
+                }
+
+                if (direction.Equals(Vector2.zero))
+                {
+                    fsm.SetGameState(PlayerState.Idle);
+                    break;
+                }
+
                 break;
 
             case PlayerState.Dash:
@@ -86,16 +114,17 @@ public class PlayerController : MonoBehaviour
                 if (!dash.IsDashing)
                 {
                     fsm.SetGameState(direction.Equals(Vector2.zero)
-                        ? PlayerState.Idle 
+                        ? PlayerState.Idle
                         : PlayerState.Move);
                 }
+
                 break;
 
             case PlayerState.Attack:
                 if (attack.canAttack)
                 {
                     anim.SetTrigger(AnimParams.Attack);
-                    
+
                     attack.TryAttack(faceDir);
                     attack.UpdateAttackDirection(faceDir);
                 }
@@ -103,11 +132,12 @@ public class PlayerController : MonoBehaviour
                 {
                     fsm.SetGameState(PlayerState.Move);
                 }
+
                 break;
 
             case PlayerState.Hurt:
                 health.TakeDamage(10);
-                posture.TakePosture(10);
+                posture.TakePostureDamage(10);
                 fsm.SetGameState(PlayerState.Idle);
                 break;
         }
@@ -133,10 +163,11 @@ public class PlayerController : MonoBehaviour
     bool TryStartDash()
     {
         if (!dash.TryDash(direction)) return false;
-        
+
         fsm.SetGameState(PlayerState.Dash);
+        posture.TakePostureDamage(postureValue);
         anim.SetTrigger(AnimParams.Attack);
-        
+
         return true;
     }
 

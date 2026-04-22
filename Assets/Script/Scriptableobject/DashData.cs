@@ -14,6 +14,6 @@ public class DashData : ScriptableObject
     public float dashDuration = 0.3f;
     public float dashCooldown = 0.5f;
 
-    [Header("Posture")]
-    public float posture = 10;
+    // [Header("Posture")]
+    // public float posture = 10;
 }

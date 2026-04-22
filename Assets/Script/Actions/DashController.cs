@@ -69,7 +69,6 @@ public class DashController : MonoBehaviour
         }
     }
     
-    /// <summary>外部強制中止 Dash（例如 Enemy 提早到達攻擊距離）。</summary>
     public void ForceStop() => EndDash();
 
     // ── 私有方法 ──────────────────────────────────────────────────────────
