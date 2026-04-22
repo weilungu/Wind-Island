@@ -165,7 +165,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canDash: 1
   isDashing: 0
-  fsm: {fileID: 0}
   data: {fileID: 11400000, guid: ace929635ce6f424c8899af086ab79eb, type: 2}
 --- !u!114 &2657276584876716656
 MonoBehaviour:
@@ -208,6 +207,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currCombo: 0
+  isAttacking: 0
+  hasPlayerInFront: 0
   attackPoint: {fileID: 1300695912978553398}
   targetLayers:
     serializedVersion: 2

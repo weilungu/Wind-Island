@@ -57,7 +57,7 @@ public class AttackController : MonoBehaviour
 
         for (int i = 0; i < hitCount; i++)
         {
-            // if (hitResults[i] == null) continue;
+            if (hitResults[i] == null) continue;
             if (hitResults[i].GetComponent<PlayerController>() != null)
             {
                 hasPlayerInFront = true;
@@ -115,8 +115,21 @@ public class AttackController : MonoBehaviour
         for (int i = 0; i < hitCount; i++)
         {
             if (hitResults[i] == null) continue;
-            var hp = hitResults[i].GetComponent<Health>();
-            if (hp != null) hp.TakeDamage(data.damage);
+            
+            Health hp = hitResults[i].GetComponent<Health>();
+            Posture posture = hitResults[i].GetComponent<Posture>();
+            
+            if (hp is not null)
+            {
+                hp.TakeDamage(data.damage);
+            }
+
+            // if (!posture.Equals(null))
+            if (posture is not null)
+            {
+                posture.TakePosture(data.posture);
+            }
+            
         }
     }
 

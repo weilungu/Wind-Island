@@ -27,7 +27,7 @@ public class EnemyController : MonoBehaviour
     }
 
     public void SetTarget(Transform t) => target = t;
-    public void ClearTarget()          => target = null;
+    public void ClearTarget() => target = null;
 
     // ── 狀態機（Update）──────────────────────────────────────────────────
     protected virtual void Update()
@@ -123,5 +123,14 @@ public class EnemyController : MonoBehaviour
     {
         if (target == null) return float.MaxValue;
         return Vector2.Distance(transform.position, target.position);
+    }
+
+    protected void TryStartDash()
+    {
+        UpdateFaceDir();
+        if (dash.TryDash(faceDir))
+        {
+            fsm.SetGameState(EnemyState.Dash);
+        }
     }
 }
