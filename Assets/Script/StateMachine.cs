@@ -11,7 +11,6 @@ public enum PlayerState
     Hurt,
     Dead,
 }
-
 public enum EnemyState
 {
     Idle,
@@ -21,11 +20,19 @@ public enum EnemyState
     Hurt,
     Dead,
 }
+public enum GameState
+{
+    InGame,
+    Paused,
+    GameOver,
+}
+
 
 public class StateMachine : MonoBehaviour
 {
     public PlayerState playerState;
     public EnemyState enemyState;
+    public GameState gameState;
 
     public void SetGameState(PlayerState state)
     {
@@ -34,5 +41,9 @@ public class StateMachine : MonoBehaviour
     public void SetGameState(EnemyState state)
     {
         enemyState = state;
+    }
+    public void SetGameState(GameState state)
+    {
+        gameState = state;
     }
 }

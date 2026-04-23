@@ -9,6 +9,7 @@ public class InputController : MonoBehaviour
     public bool dashPressed { get; private set; }
     public bool movePressed { get; private set; }
     public bool attackPressed { get; private set; }
+    public bool escapePressed { get; private set; }
 
     void Update()
     {
@@ -18,6 +19,8 @@ public class InputController : MonoBehaviour
                       Input.GetButtonDown("Horizontal") || Input.GetButtonUp("Horizontal");
 
         attackPressed = Input.GetMouseButtonDown(0); // 左鍵
+        
+        escapePressed = Input.GetKeyDown(KeyCode.Escape);
     }
 
     public void MoveInput(ref float h, ref float v)

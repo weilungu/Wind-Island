@@ -32,19 +32,19 @@ public class EnemyController : MonoBehaviour
     // ── 狀態機（Update）──────────────────────────────────────────────────
     protected virtual void Update()
     {
-        if (target == null) return;
-        EnemyActionState();
+        // if (target == null) return;
+        // EnemyActionState();
     }
 
     // ── 狀態機（FixedUpdate）─────────────────────────────────────────────
     protected virtual void FixedUpdate()
     {
-        if (target == null) return;
-        EnemyPhysicsState();
+        // if (target == null) return;
+        // EnemyPhysicsState();
     }
 
     // ── 邏輯層 ────────────────────────────────────────────────────────────
-    protected virtual void EnemyActionState()
+    public virtual void EnemyActionState()
     {
         switch (fsm.enemyState)
         {
@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // ── 物理層 ────────────────────────────────────────────────────────────
-    protected virtual void EnemyPhysicsState()
+    public virtual void EnemyPhysicsState()
     {
         switch (fsm.enemyState)
         {
