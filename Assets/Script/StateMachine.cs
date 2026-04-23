@@ -25,6 +25,7 @@ public enum GameState
     InGame,
     Paused,
     GameOver,
+    Quit,
 }
 
 
