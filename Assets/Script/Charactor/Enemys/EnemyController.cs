@@ -30,18 +30,18 @@ public class EnemyController : MonoBehaviour
     public void ClearTarget() => target = null;
 
     // ── 狀態機（Update）──────────────────────────────────────────────────
-    protected virtual void Update()
-    {
-        // if (target == null) return;
-        // EnemyActionState();
-    }
+    // protected virtual void Update()
+    // {
+    //     if (target == null) return;
+    //     ActionState();
+    // }
 
     // ── 狀態機（FixedUpdate）─────────────────────────────────────────────
-    protected virtual void FixedUpdate()
-    {
-        // if (target == null) return;
-        // EnemyPhysicsState();
-    }
+    // protected virtual void FixedUpdate()
+    // {
+    //     if (target == null) return;
+    //     PhysicsState();
+    // }
 
     // ── 邏輯層 ────────────────────────────────────────────────────────────
     public virtual void ActionState()

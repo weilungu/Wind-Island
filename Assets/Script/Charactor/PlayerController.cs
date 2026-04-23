@@ -49,14 +49,8 @@ public class PlayerController : MonoBehaviour
     {
         inp.MoveInput(ref horizontal, ref vertical);
         direction = new Vector2(horizontal, vertical).normalized;
-
-        ActionState();
     }
-
-    void FixedUpdate()
-    {
-        PhysicsState();
-    }
+    
 
     // ── 狀態機：邏輯層（Update）──────────────────────────────────────────
     public void ActionState()
