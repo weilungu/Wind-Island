@@ -58,9 +58,9 @@ public class Enemy_One : EnemyController
         }
     }
 
-    public override void EnemyActionState()
+    public override void ActionState()
     {
-        base.EnemyActionState();
+        base.ActionState();
         switch (fsm.enemyState)
         {
             case EnemyState.Attack:

@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
         inp.MoveInput(ref horizontal, ref vertical);
         direction = new Vector2(horizontal, vertical).normalized;
 
-        PlayerActionState();
+        ActionState();
     }
 
     void FixedUpdate()
@@ -59,179 +59,92 @@ public class PlayerController : MonoBehaviour
     }
 
     // ── 狀態機：邏輯層（Update）──────────────────────────────────────────
-    void PlayerActionState()
+    public void ActionState()
     {
-        switch (fsm.gameState)
+        switch (fsm.playerState)
         {
-            case GameState.InGame:
-                
-                switch (fsm.playerState)
+            case PlayerState.Idle:
+                SetMoveAnim(false);
+        
+                if (inp.movePressed)
                 {
-                    case PlayerState.Idle:
-                        SetMoveAnim(false);
-
-                        if (inp.movePressed)
-                        {
-                            fsm.SetGameState(PlayerState.Move);
-                            break;
-                        }
-
-                        if (inp.attackPressed)
-                        {
-                            fsm.SetGameState(PlayerState.Attack);
-                            break;
-                        }
-
-                        if (Input.GetMouseButtonDown(1))
-                        {
-                            fsm.SetGameState(PlayerState.Hurt);
-                            break;
-                        }
-
-                        if (inp.dashPressed && TryStartDash()) break; // → Dash state
-                        break;
-
-                    case PlayerState.Move:
-                        if (!direction.Equals(Vector2.zero)) faceDir = direction;
-
-                        if (direction.x != 0) sprite.flipX = direction.x < 0;
-                        SetMoveAnim(!direction.Equals(Vector2.zero));
-
-                        // 優先順序：Dash > Attack > Idle
-                        if (inp.dashPressed && TryStartDash()) break;
-                        if (inp.attackPressed)
-                        {
-                            fsm.SetGameState(PlayerState.Attack);
-                            break;
-                        }
-
-                        if (direction.Equals(Vector2.zero))
-                        {
-                            fsm.SetGameState(PlayerState.Idle);
-                            break;
-                        }
-
-                        break;
-
-                    case PlayerState.Dash:
-                        // Dash 結束由 DashController 回報，這裡只等待
-                        if (!dash.IsDashing)
-                        {
-                            fsm.SetGameState(direction.Equals(Vector2.zero)
-                                ? PlayerState.Idle
-                                : PlayerState.Move);
-                        }
-
-                        break;
-
-                    case PlayerState.Attack:
-                        if (attack.canAttack)
-                        {
-                            anim.SetTrigger(AnimParams.Attack);
-
-                            attack.TryAttack(faceDir);
-                            attack.UpdateAttackDirection(faceDir);
-                        }
-                        else
-                        {
-                            fsm.SetGameState(PlayerState.Move);
-                        }
-
-                        break;
-
-                    case PlayerState.Hurt:
-                        health.TakeDamage(10);
-                        posture.TakePostureDamage(10);
-                        fsm.SetGameState(PlayerState.Idle);
-                        break;
+                    fsm.SetGameState(PlayerState.Move);
+                    break;
                 }
-                
+        
+                if (inp.attackPressed)
+                {
+                    fsm.SetGameState(PlayerState.Attack);
+                    break;
+                }
+        
+                if (Input.GetMouseButtonDown(1))
+                {
+                    fsm.SetGameState(PlayerState.Hurt);
+                    break;
+                }
+        
+                if (inp.dashPressed && TryStartDash()) break; // → Dash state
+                break;
+        
+            case PlayerState.Move:
+                if (!direction.Equals(Vector2.zero)) faceDir = direction;
+        
+                if (direction.x != 0) sprite.flipX = direction.x < 0;
+                SetMoveAnim(!direction.Equals(Vector2.zero));
+        
+                // 優先順序：Dash > Attack > Idle
+                if (inp.dashPressed && TryStartDash()) break;
+                if (inp.attackPressed)
+                {
+                    fsm.SetGameState(PlayerState.Attack);
+                    break;
+                }
+        
+                if (direction.Equals(Vector2.zero))
+                {
+                    fsm.SetGameState(PlayerState.Idle);
+                    break;
+                }
+        
+                break;
+        
+            case PlayerState.Dash:
+                // Dash 結束由 DashController 回報，這裡只等待
+                if (!dash.IsDashing)
+                {
+                    fsm.SetGameState(direction.Equals(Vector2.zero)
+                        ? PlayerState.Idle
+                        : PlayerState.Move);
+                }
+        
+                break;
+        
+            case PlayerState.Attack:
+                if (attack.canAttack)
+                {
+                    anim.SetTrigger(AnimParams.Attack);
+        
+                    attack.TryAttack(faceDir);
+                    attack.UpdateAttackDirection(faceDir);
+                }
+                else
+                {
+                    fsm.SetGameState(PlayerState.Move);
+                }
+        
+                break;
+        
+            case PlayerState.Hurt:
+                health.TakeDamage(10);
+                posture.TakePostureDamage(10);
+                fsm.SetGameState(PlayerState.Idle);
                 break;
         }
-        // switch (fsm.playerState)
-        // {
-        //     case PlayerState.Idle:
-        //         SetMoveAnim(false);
-        //
-        //         if (inp.movePressed)
-        //         {
-        //             fsm.SetGameState(PlayerState.Move);
-        //             break;
-        //         }
-        //
-        //         if (inp.attackPressed)
-        //         {
-        //             fsm.SetGameState(PlayerState.Attack);
-        //             break;
-        //         }
-        //
-        //         if (Input.GetMouseButtonDown(1))
-        //         {
-        //             fsm.SetGameState(PlayerState.Hurt);
-        //             break;
-        //         }
-        //
-        //         if (inp.dashPressed && TryStartDash()) break; // → Dash state
-        //         break;
-        //
-        //     case PlayerState.Move:
-        //         if (!direction.Equals(Vector2.zero)) faceDir = direction;
-        //
-        //         if (direction.x != 0) sprite.flipX = direction.x < 0;
-        //         SetMoveAnim(!direction.Equals(Vector2.zero));
-        //
-        //         // 優先順序：Dash > Attack > Idle
-        //         if (inp.dashPressed && TryStartDash()) break;
-        //         if (inp.attackPressed)
-        //         {
-        //             fsm.SetGameState(PlayerState.Attack);
-        //             break;
-        //         }
-        //
-        //         if (direction.Equals(Vector2.zero))
-        //         {
-        //             fsm.SetGameState(PlayerState.Idle);
-        //             break;
-        //         }
-        //
-        //         break;
-        //
-        //     case PlayerState.Dash:
-        //         // Dash 結束由 DashController 回報，這裡只等待
-        //         if (!dash.IsDashing)
-        //         {
-        //             fsm.SetGameState(direction.Equals(Vector2.zero)
-        //                 ? PlayerState.Idle
-        //                 : PlayerState.Move);
-        //         }
-        //
-        //         break;
-        //
-        //     case PlayerState.Attack:
-        //         if (attack.canAttack)
-        //         {
-        //             anim.SetTrigger(AnimParams.Attack);
-        //
-        //             attack.TryAttack(faceDir);
-        //             attack.UpdateAttackDirection(faceDir);
-        //         }
-        //         else
-        //         {
-        //             fsm.SetGameState(PlayerState.Move);
-        //         }
-        //
-        //         break;
-        //
-        //     case PlayerState.Hurt:
-        //         health.TakeDamage(10);
-        //         posture.TakePostureDamage(10);
-        //         fsm.SetGameState(PlayerState.Idle);
-        //         break;
-        // }
     }
 
     // ── 狀態機：物理層（FixedUpdate）─────────────────────────────────────
-    void PhysicsState()
+    public void PhysicsState()
     {
         switch (fsm.playerState)
         {

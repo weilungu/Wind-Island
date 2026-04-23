@@ -44,7 +44,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // ── 邏輯層 ────────────────────────────────────────────────────────────
-    public virtual void EnemyActionState()
+    public virtual void ActionState()
     {
         switch (fsm.enemyState)
         {
@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // ── 物理層 ────────────────────────────────────────────────────────────
-    public virtual void EnemyPhysicsState()
+    public virtual void PhysicsState()
     {
         switch (fsm.enemyState)
         {
