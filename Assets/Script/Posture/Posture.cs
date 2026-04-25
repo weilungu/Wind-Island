@@ -22,7 +22,14 @@ public class Posture : MonoBehaviour
         print(currValue);
         OnPostureChanged?.Invoke(maxValue, currValue);
     }
-
+    public void RecoveryPosture(float value)
+    {
+        if (currValue <= 0) return;
+        
+        currValue -= value;
+        print(currValue);
+        OnPostureChanged?.Invoke(maxValue, currValue);
+    }
     void PostureBroken()
     {
         OnPostureReset?.Invoke();

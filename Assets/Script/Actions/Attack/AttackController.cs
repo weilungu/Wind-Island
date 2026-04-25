@@ -6,6 +6,9 @@ public class AttackController : MonoBehaviour
     [SerializeField] private int currCombo;
     [SerializeField] private bool isAttacking;
 
+    [Header("Values")]
+    [SerializeField] public int postureDamage;
+    
     private float nextAttackTime;
     private float lastAttackTime;
     private float comboCooldownEndTime;
@@ -24,6 +27,7 @@ public class AttackController : MonoBehaviour
     // ── 公開查詢 ──────────────────────────────────────────────────────────
     public bool canAttack => Time.time >= nextAttackTime && Time.time >= comboCooldownEndTime;
     public bool IsAttacking => isAttacking;
+    public int hitCount;
     
     // ── 公開 API ──────────────────────────────────────────────────────────
     public bool IsTargetInRange(Vector2 targetPos)
@@ -69,7 +73,7 @@ public class AttackController : MonoBehaviour
         if (attackDir == Vector2.zero) attackDir = lastDirection;
         else lastDirection = attackDir;
 
-        int hitCount = Physics2D.OverlapBoxNonAlloc(
+        hitCount = Physics2D.OverlapBoxNonAlloc(
             GetAttackOrigin(attackDir),
             data.hitboxSize, 0,
             hitResults, targetLayers);
@@ -85,6 +89,7 @@ public class AttackController : MonoBehaviour
             {
                 hp.TakeDamage(data.damage);
             }
+            
 
             if (posture is not null)
             {

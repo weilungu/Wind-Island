@@ -100,11 +100,10 @@ public class PlayerController : MonoBehaviour
                 // Dash 結束由 DashController 回報，這裡只等待
                 if (!dash.IsDashing)
                 {
-                    fsm.SetGameState(direction.Equals(Vector2.zero)
+                    fsm.SetGameState(direction == Vector2.zero
                         ? PlayerState.Idle
                         : PlayerState.Move);
                 }
-        
                 break;
         
             case PlayerState.Attack:
@@ -113,19 +112,25 @@ public class PlayerController : MonoBehaviour
                     anim.SetTrigger(AnimParams.Attack);
         
                     attack.TryAttack(faceDir);
+                    if (attack.hitCount > 0)
+                    {
+                        // print($"Recovery to: {posture}");
+                        posture.RecoveryPosture(attack.hitCount * postureValue);
+                    }
+                    
                     attack.UpdateAttackDirection(faceDir);
                 }
                 else
                 {
                     fsm.SetGameState(PlayerState.Move);
                 }
-        
                 break;
         
             case PlayerState.Hurt:
-                health.TakeDamage(10);
-                posture.TakePostureDamage(10);
-                fsm.SetGameState(PlayerState.Idle);
+                // posture.TakePostureDamage(attack.postureDamage);
+                // print("Posture damage taken");
+                //
+                // fsm.SetGameState(PlayerState.Idle);
                 break;
         }
     }
@@ -149,9 +154,9 @@ public class PlayerController : MonoBehaviour
     {
         if (!dash.TryDash(direction)) return false;
 
-        fsm.SetGameState(PlayerState.Dash);
         posture.TakePostureDamage(postureValue);
         anim.SetTrigger(AnimParams.Attack);
+        fsm.SetGameState(PlayerState.Dash);
 
         return true;
     }

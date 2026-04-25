@@ -4,21 +4,20 @@ public class EnemyController : MonoBehaviour
 {
     protected MoveController move;
     protected EnemyAttack attack;
-    protected DashController   dash;
+    protected DashController dash;
     [SerializeField] protected StateMachine fsm;
 
     [SerializeField] protected Transform target;
 
     protected Vector2 faceDir = Vector2.zero;
 
-    [Header("Debug")]
-    [SerializeField] protected bool hasPlayerInFront;
+    [Header("Debug")] [SerializeField] protected bool hasPlayerInFront;
 
     protected virtual void Awake()
     {
-        move   = GetComponent<MoveController>();
+        move = GetComponent<MoveController>();
         attack = GetComponent<EnemyAttack>();
-        dash   = GetComponent<DashController>();
+        dash = GetComponent<DashController>();
     }
 
     protected virtual void Start()
@@ -34,12 +33,16 @@ public class EnemyController : MonoBehaviour
     {
         switch (fsm.enemyState)
         {
-            case EnemyState.Idle:   OnIdle();   break;
-            case EnemyState.Chase:  OnChase();  break;
-            case EnemyState.Dash:   OnDash();   break;
+            case EnemyState.Idle: OnIdle(); break;
+
+            case EnemyState.Chase: OnChase(); break;
+
+            case EnemyState.Dash: OnDash(); break;
+            
             case EnemyState.Attack: OnAttack(); break;
         }
     }
+
     public virtual void PhysicsState()
     {
         switch (fsm.enemyState)
@@ -54,7 +57,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    
+
     // ── 各狀態預設行為 ────────────────────────────────────────────────────
 
     protected virtual void OnIdle()
@@ -89,7 +92,7 @@ public class EnemyController : MonoBehaviour
         if (attack.HasPlayerInFront)
             EnemyAttack();
         else
-            fsm.SetGameState(EnemyState.Chase);  // Player 離開範圍，重新追擊
+            fsm.SetGameState(EnemyState.Chase); // Player 離開範圍，重新追擊
     }
 
     protected virtual void EnemyAttack()
