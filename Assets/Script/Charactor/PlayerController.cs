@@ -72,12 +72,6 @@ public class PlayerController : MonoBehaviour
                     break;
                 }
         
-                if (Input.GetMouseButtonDown(1))
-                {
-                    fsm.SetGameState(PlayerState.Hurt);
-                    break;
-                }
-        
                 if (inp.dashPressed && TryStartDash()) break; // → Dash state
                 break;
         

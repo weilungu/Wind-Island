@@ -2,45 +2,38 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
-    [Header("Debug")]
-    [SerializeField] int  currCombo;
-    [SerializeField] bool isAttacking;    // 攻擊動作進行中（動畫未結束）
-    [SerializeField] bool hasPlayerInFront;
+    [Header("Debug")] 
+    [SerializeField] private int currCombo;
+    [SerializeField] private bool isAttacking; // 攻擊動作進行中（動畫未結束）
+    // [SerializeField] bool hasPlayerInFront;
 
-    float nextAttackTime;
-    float lastAttackTime;
-    float comboCooldownEndTime;
+    private float nextAttackTime;
+    private float lastAttackTime;
+    private float comboCooldownEndTime;
 
-    Vector2 lastDirection = Vector2.right;
+    protected Vector2 lastDirection = Vector2.right;
 
-    [Header("Field Instance")]
-    [SerializeField] Transform attackPoint;
-    [SerializeField] LayerMask targetLayers;
+    [Header("Field Instance")] 
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] protected LayerMask targetLayers;
 
     [Header("Attack Data")]
-    [SerializeField] AttackData data;
+    [SerializeField] protected AttackData data;
 
-    Collider2D[] hitResults = new Collider2D[32];
+    protected Collider2D[] hitResults = new Collider2D[32];
 
     // ── 公開查詢 ──────────────────────────────────────────────────────────
+    public bool canAttack => Time.time >= nextAttackTime && Time.time >= comboCooldownEndTime;
+    public bool IsAttacking => isAttacking;
+    // public bool HasPlayerInFront => hasPlayerInFront;
 
-    /// <summary>攻擊冷卻結束且 Combo 冷卻結束，可以發動下一擊。</summary>
-    public bool canAttack       => Time.time >= nextAttackTime && Time.time >= comboCooldownEndTime;
 
-    /// <summary>攻擊動畫播放中（由 Animation Event 控制開關）。</summary>
-    public bool IsAttacking     => isAttacking;
-
-    /// <summary>攻擊判定範圍內偵測到 Player。每幀由 CheckPlayerInFront() 更新。</summary>
-    public bool HasPlayerInFront => hasPlayerInFront;
-
-    /// <summary>目標是否在 attackRange 的圓形範圍內（供 Enemy 停步用）。</summary>
+    // ── 公開 API ──────────────────────────────────────────────────────────
     public bool IsTargetInRange(Vector2 targetPos)
     {
         return Vector2.Distance((Vector2)transform.position, targetPos) <= data.attackRange;
     }
-
-    // ── 公開 API ──────────────────────────────────────────────────────────
-
+    
     public void UpdateAttackDirection(Vector2 direction)
     {
         Vector2 normalized = direction.normalized;
@@ -48,27 +41,27 @@ public class AttackController : MonoBehaviour
             lastDirection = normalized;
     }
 
-    public bool CheckPlayerInFront()
-    {
-        int hitCount = Physics2D.OverlapBoxNonAlloc(
-            GetAttackOrigin(lastDirection),
-            data.hitboxSize, 0,
-            hitResults, targetLayers);
+    // public bool CheckPlayerInFront()
+    // {
+    //     int hitCount = Physics2D.OverlapBoxNonAlloc(
+    //         GetAttackOrigin(lastDirection),
+    //         data.hitboxSize, 0,
+    //         hitResults, targetLayers);
+    //
+    //     for (int i = 0; i < hitCount; i++)
+    //     {
+    //         if (hitResults[i] is null) continue;
+    //         if (hitResults[i].GetComponent<PlayerController>() is not null)
+    //         {
+    //             hasPlayerInFront = true;
+    //             return true;
+    //         }
+    //     }
+    //
+    //     hasPlayerInFront = false;
+    //     return false;
+    // }
 
-        for (int i = 0; i < hitCount; i++)
-        {
-            if (hitResults[i] == null) continue;
-            if (hitResults[i].GetComponent<PlayerController>() != null)
-            {
-                hasPlayerInFront = true;
-                return true;
-            }
-        }
-
-        hasPlayerInFront = false;
-        return false;
-    }
-    
     public bool TryAttack(Vector2 direction)
     {
         if (!canAttack) return false;
@@ -77,26 +70,19 @@ public class AttackController : MonoBehaviour
             currCombo = 0;
 
         currCombo++;
-        lastAttackTime      = Time.time;
-        nextAttackTime      = Time.time + data.attackRate;
-        isAttacking         = true;
+        lastAttackTime = Time.time;
+        nextAttackTime = Time.time + data.attackRate;
+        isAttacking = true;
 
         PerformAttack(direction);
 
         if (currCombo >= data.maxCombo)
         {
-            currCombo            = 0;
+            currCombo = 0;
             comboCooldownEndTime = Time.time + data.comboCooldown;
         }
 
         return true;
-    }
-
-    // ── Animation Events ──────────────────────────────────────────────────
-    
-    public void OnAttackAnimEnd()
-    {
-        isAttacking = false;
     }
 
     // ── 私有方法 ──────────────────────────────────────────────────────────
@@ -114,28 +100,26 @@ public class AttackController : MonoBehaviour
 
         for (int i = 0; i < hitCount; i++)
         {
-            if (hitResults[i] == null) continue;
-            
+            if (hitResults[i] is null) continue;
+
             Health hp = hitResults[i].GetComponent<Health>();
             Posture posture = hitResults[i].GetComponent<Posture>();
-            
+
             if (hp is not null)
             {
                 hp.TakeDamage(data.damage);
             }
 
-            // if (!posture.Equals(null))
             if (posture is not null)
             {
                 posture.TakePostureDamage(data.posture);
             }
-            
         }
     }
 
-    Vector2 GetAttackOrigin(Vector2 attackDir)
+    protected Vector2 GetAttackOrigin(Vector2 attackDir)
     {
-        Vector2 originBase = attackPoint != null
+        Vector2 originBase = attackPoint is not null
             ? (Vector2)attackPoint.position
             : (Vector2)transform.position;
 
@@ -144,7 +128,7 @@ public class AttackController : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        if (attackPoint == null || data == null) return;
+        if (attackPoint is null || data is null) return;
         Gizmos.DrawWireCube(
             GetAttackOrigin(lastDirection),
             new Vector3(data.hitboxSize.x, data.hitboxSize.y, 1f));

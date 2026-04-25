@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    protected MoveController   move;
-    protected AttackController attack;
+    protected MoveController move;
+    protected EnemyAttack attack;
     protected DashController   dash;
     [SerializeField] protected StateMachine fsm;
 
@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     protected virtual void Awake()
     {
         move   = GetComponent<MoveController>();
-        attack = GetComponent<AttackController>();
+        attack = GetComponent<EnemyAttack>();
         dash   = GetComponent<DashController>();
     }
 
@@ -28,20 +28,6 @@ public class EnemyController : MonoBehaviour
 
     public void SetTarget(Transform t) => target = t;
     public void ClearTarget() => target = null;
-
-    // ── 狀態機（Update）──────────────────────────────────────────────────
-    // protected virtual void Update()
-    // {
-    //     if (target == null) return;
-    //     ActionState();
-    // }
-
-    // ── 狀態機（FixedUpdate）─────────────────────────────────────────────
-    // protected virtual void FixedUpdate()
-    // {
-    //     if (target == null) return;
-    //     PhysicsState();
-    // }
 
     // ── 邏輯層 ────────────────────────────────────────────────────────────
     public virtual void ActionState()
