@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class Posture : MonoBehaviour
 {
     [Header("Values")]
-    [SerializeField] float maxValue = 100f;
-    [SerializeField] float currValue = 0f;
+    [SerializeField] private float maxValue = 100f;
+    [SerializeField] private float currValue = 0f;
     [SerializeField] public float recoveryTime = 2f;
     
     public event Action OnPostureReset;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttack : AttackController
 {
-    [SerializeField] bool hasPlayerInFront;
+    [SerializeField] private bool hasPlayerInFront;
     public bool HasPlayerInFront => hasPlayerInFront;
     
     

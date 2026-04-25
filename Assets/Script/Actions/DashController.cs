@@ -5,19 +5,18 @@ public class DashController : MonoBehaviour
 {
     [SerializeField] bool canDash   = true;
     [SerializeField] bool isDashing = false;
-
-    // 讓 PlayerController 查詢
+    
     public bool IsDashing => isDashing;
 
     // Instance
-    Rigidbody2D rb;
-    MoveController move;
+    private Rigidbody2D rb;
+    private MoveController move;
     
-    [SerializeField] DashData data;
+    [SerializeField] private DashData data;
 
     // Dash 執行期間的狀態
-    Vector2 dashDir;
-    float elapsed;
+    private Vector2 dashDir;
+    private float elapsed;
 
     void Awake()
     {
@@ -26,10 +25,6 @@ public class DashController : MonoBehaviour
     }
 
     // ── 公開 API ──────────────────────────────────────────────────────────
-
-    /// <summary>
-    /// 嘗試啟動 Dash；成功回傳 true，PlayerController 負責切換狀態機。
-    /// </summary>
     public bool TryDash(Vector2 direction)
     {
         if (isDashing || !canDash || direction.Equals(Vector2.zero)) return false;
@@ -41,10 +36,6 @@ public class DashController : MonoBehaviour
         canDash   = false;
         return true;
     }
-
-    /// <summary>
-    /// 由 PlayerController.PhysicsState（FixedUpdate）在 Dash 狀態下每幀呼叫。
-    /// </summary>
     public void DashFixedUpdate()
     {
         if (!isDashing) return;

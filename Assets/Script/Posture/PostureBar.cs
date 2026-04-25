@@ -7,11 +7,11 @@ using UnityEngine.UI;
 public class PostureBar : MonoBehaviour
 {
     [Header("Images")]
-    [SerializeField] Image fillLeft;
-    [SerializeField] Image fillRight;
+    [SerializeField] private Image fillLeft;
+    [SerializeField] private Image fillRight;
     
     [Header("Target")]
-    [SerializeField] Posture posture;
+    [SerializeField] private Posture posture;
 
     void Start()
     {

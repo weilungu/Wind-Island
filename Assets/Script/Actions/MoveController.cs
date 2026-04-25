@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class MoveController : MonoBehaviour
 {
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
     [HideInInspector] public ContactFilter2D filter;
     [HideInInspector] public RaycastHit2D[] hitResults { get; private set; } = new RaycastHit2D[1];
     [HideInInspector] public float castDistance = 0.02f;
 
     
     [Header("Values")]
-    [SerializeField] float speed = 5;
+    [SerializeField] private float speed = 5;
 
-    [SerializeField] LayerMask obstacleLayer;
+    [SerializeField] private LayerMask obstacleLayer;
 
     void Awake()
     {
@@ -31,7 +31,6 @@ public class MoveController : MonoBehaviour
         Vector2 move = direction * f_dt;
         
         int hitCount = rb.Cast(direction, filter, hitResults, move.magnitude + castDistance);
-        // print($"hitCount: {hitCount}");
 
         if (hitCount == 0)
         {

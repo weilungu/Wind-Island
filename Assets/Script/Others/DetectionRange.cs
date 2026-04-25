@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DetectionRange : MonoBehaviour
 {
-    [SerializeField] EnemyController enemy;
+    [SerializeField] private EnemyController enemy;
     
     void OnTriggerEnter2D(Collider2D other)
     {

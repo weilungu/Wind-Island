@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] int maxHealth = 100;
+    [SerializeField] private int maxHealth = 100;
     [field: SerializeField] public int currentHealth { get; private set; } = 100;
     
     // Delegate

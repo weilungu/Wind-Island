@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class HelathBar : MonoBehaviour // HealthBar 放在 UI
 {
-    Slider slider;
+    private Slider slider;
 
-    [SerializeField] Health target; // 使用 Player, Enemy 上的 Health
+    [SerializeField] private Health target; // 使用 Player, Enemy 上的 Health
 
     void Awake()
     {
@@ -17,7 +17,7 @@ public class HelathBar : MonoBehaviour // HealthBar 放在 UI
 
     void Start()
     {
-        if (target.Equals(null)) return;
+        if (target is null) return;
 
         // Subscribe => 若被觸發，直接呼叫 Method
         target.OnMaxHealthChanged += SetMaxHealth;

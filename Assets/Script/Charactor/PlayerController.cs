@@ -2,27 +2,27 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    float horizontal;
-    float vertical;
-    Vector2 direction = Vector2.zero;
-    Vector2 faceDir = Vector2.right;
+    private float horizontal;
+    private float vertical;
+    private Vector2 direction = Vector2.zero;
+    private Vector2 faceDir = Vector2.right;
 
     // Instance
-    Animator anim;
-    SpriteRenderer sprite;
+    private Animator anim;
+    private SpriteRenderer sprite;
 
-    InputController inp;
-    MoveController move;
-    DashController dash;
-    AttackController attack;
-    Health health;
-    Posture posture;
+    private InputController inp;
+    private MoveController move;
+    private DashController dash;
+    private AttackController attack;
+    private Health health;
+    private Posture posture;
 
     [Header("Field Instance")]
-    [SerializeField] StateMachine fsm;
+    [SerializeField] private StateMachine fsm;
 
     [Header("Value")]
-    [SerializeField] float postureValue = 10;
+    [SerializeField] private float postureValue = 10;
 
     void Awake()
     {
@@ -51,8 +51,7 @@ public class PlayerController : MonoBehaviour
         direction = new Vector2(horizontal, vertical).normalized;
     }
     
-
-    // ── 狀態機：邏輯層（Update）──────────────────────────────────────────
+    // 狀態機層
     public void ActionState()
     {
         switch (fsm.playerState)
@@ -130,8 +129,6 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-
-    // ── 狀態機：物理層（FixedUpdate）─────────────────────────────────────
     public void PhysicsState()
     {
         switch (fsm.playerState)
@@ -158,7 +155,6 @@ public class PlayerController : MonoBehaviour
 
         return true;
     }
-
     void SetMoveAnim(bool isMoving)
     {
         anim.SetFloat(AnimParams.MoveX, faceDir.x);

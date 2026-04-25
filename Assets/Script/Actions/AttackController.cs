@@ -4,8 +4,7 @@ public class AttackController : MonoBehaviour
 {
     [Header("Debug")] 
     [SerializeField] private int currCombo;
-    [SerializeField] private bool isAttacking; // 攻擊動作進行中（動畫未結束）
-    // [SerializeField] bool hasPlayerInFront;
+    [SerializeField] private bool isAttacking;
 
     private float nextAttackTime;
     private float lastAttackTime;
@@ -25,9 +24,7 @@ public class AttackController : MonoBehaviour
     // ── 公開查詢 ──────────────────────────────────────────────────────────
     public bool canAttack => Time.time >= nextAttackTime && Time.time >= comboCooldownEndTime;
     public bool IsAttacking => isAttacking;
-    // public bool HasPlayerInFront => hasPlayerInFront;
-
-
+    
     // ── 公開 API ──────────────────────────────────────────────────────────
     public bool IsTargetInRange(Vector2 targetPos)
     {
@@ -40,27 +37,6 @@ public class AttackController : MonoBehaviour
         if (normalized != Vector2.zero)
             lastDirection = normalized;
     }
-
-    // public bool CheckPlayerInFront()
-    // {
-    //     int hitCount = Physics2D.OverlapBoxNonAlloc(
-    //         GetAttackOrigin(lastDirection),
-    //         data.hitboxSize, 0,
-    //         hitResults, targetLayers);
-    //
-    //     for (int i = 0; i < hitCount; i++)
-    //     {
-    //         if (hitResults[i] is null) continue;
-    //         if (hitResults[i].GetComponent<PlayerController>() is not null)
-    //         {
-    //             hasPlayerInFront = true;
-    //             return true;
-    //         }
-    //     }
-    //
-    //     hasPlayerInFront = false;
-    //     return false;
-    // }
 
     public bool TryAttack(Vector2 direction)
     {

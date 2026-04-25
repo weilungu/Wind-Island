@@ -3,12 +3,12 @@ using UnityEngine;
 public class Enemy_One : EnemyController
 {
     [Header("Enemy One - Dash Attack")]
-    [SerializeField] float dashTriggerRange = 5f; // 進入此距離開始 Dash
+    [SerializeField] private float dashTriggerRange = 5f; // 進入此距離開始 Dash
 
-    [SerializeField] float attackRange = 1.2f; // 到達此距離才打
-    [SerializeField] float attackCooldown = 2f; // 打完後冷卻再回 Chase
+    [SerializeField] private float attackRange = 1.2f; // 到達此距離才打
+    [SerializeField] private float attackCooldown = 2f; // 打完後冷卻再回 Chase
 
-    float attackCooldownEndTime;
+    private float attackCooldownEndTime;
 
     // ── Chase：進入 Dash 觸發距離就切換 ─────────────────────────────────
     protected override void OnChase()
@@ -68,16 +68,6 @@ public class Enemy_One : EnemyController
                 break;
         }
     }
-
-    // ── 工具方法 ──────────────────────────────────────────────────────────
-    // protected void TryStartDash()
-    // {
-    //     UpdateFaceDir();
-    //     if (dash.TryDash(faceDir))
-    //     {
-    //         fsm.SetGameState(EnemyState.Dash);
-    //     }
-    // }
 
     void OnDrawGizmosSelected()
     {

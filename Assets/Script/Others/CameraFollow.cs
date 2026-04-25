@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] Transform target;
-    [SerializeField] Vector3 offset = new Vector3(0, 0, -10);
-    [SerializeField] float smoothTime = 0.2f;
+    [SerializeField] private Transform target;
+    [SerializeField] private Vector3 offset = new Vector3(0, 0, -10);
+    [SerializeField] private float smoothTime = 0.2f;
     
     [Header("Bounds")]
-    [SerializeField] PolygonCollider2D polygonBounds;
+    [SerializeField] private PolygonCollider2D polygonBounds;
     
-    Vector3 velocity;
+    private Vector3 velocity;
     
     void LateUpdate()
     {
-        if (target.Equals(null)) return;
+        if (target is null) return;
         
         Vector3 targetPos = target.position + offset;
         
@@ -24,7 +24,7 @@ public class CameraFollow : MonoBehaviour
             smoothTime
         );
         
-        if (!polygonBounds.Equals(null))
+        if (polygonBounds is not null)
         {
             if (!polygonBounds.OverlapPoint(smooth))
             {

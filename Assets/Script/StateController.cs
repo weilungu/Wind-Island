@@ -6,15 +6,17 @@ using UnityEngine.UI;
 
 public class StateController : MonoBehaviour
 {
-    [Header("Panel")] [SerializeField] Image pausePanel;
+    [Header("Panel")]
+    [SerializeField] private Image pausePanel;
 
-    [Header("")] [SerializeField] InputController inp;
-    [SerializeField] StateMachine fsm;
+    [Header("")] 
+    [SerializeField] private InputController inp;
+    [SerializeField] private StateMachine fsm;
 
-    [Header("States Cells")] [SerializeField]
-    PlayerController player;
+    [Header("States Cells")] 
+    [SerializeField] private PlayerController player;
 
-    [SerializeField] EnemyController enemy;
+    [SerializeField] private EnemyController enemy;
 
     void Start()
     {

@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour
     public void SetTarget(Transform t) => target = t;
     public void ClearTarget() => target = null;
 
-    // ── 邏輯層 ────────────────────────────────────────────────────────────
+    // 狀態機層
     public virtual void ActionState()
     {
         switch (fsm.enemyState)
@@ -40,8 +40,6 @@ public class EnemyController : MonoBehaviour
             case EnemyState.Attack: OnAttack(); break;
         }
     }
-
-    // ── 物理層 ────────────────────────────────────────────────────────────
     public virtual void PhysicsState()
     {
         switch (fsm.enemyState)
@@ -56,6 +54,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    
     // ── 各狀態預設行為 ────────────────────────────────────────────────────
 
     protected virtual void OnIdle()
@@ -101,13 +100,13 @@ public class EnemyController : MonoBehaviour
     // ── 工具方法 ──────────────────────────────────────────────────────────
     protected void UpdateFaceDir()
     {
-        if (target == null) return;
+        if (target is null) return;
         faceDir = (target.position - transform.position).normalized;
     }
 
     protected float DistanceToTarget()
     {
-        if (target == null) return float.MaxValue;
+        if (target is null) return float.MaxValue;
         return Vector2.Distance(transform.position, target.position);
     }
 
