@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fsm: {fileID: 0}
+  postureValue: 10
 --- !u!114 &541535365916179944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,8 +193,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72110bb6968a85a4bb1f5b86d268b5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxValue: 100
   currValue: 0
+  maxValue: 100
+  growthVelocity: 1
+  growthRate: 0.01
 --- !u!114 &7651592810922532248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,12 +211,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currCombo: 0
   isAttacking: 0
-  hasPlayerInFront: 0
+  postureDamage: 0
   attackPoint: {fileID: 1300695912978553398}
   targetLayers:
     serializedVersion: 2
     m_Bits: 64
   data: {fileID: 11400000, guid: d3b8531b785f13d4bacaaf75ef287c64, type: 2}
+  hitCount: 0
 --- !u!50 &6793134443164568812
 Rigidbody2D:
   serializedVersion: 4

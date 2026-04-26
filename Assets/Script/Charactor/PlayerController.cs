@@ -114,8 +114,7 @@ public class PlayerController : MonoBehaviour
                     attack.TryAttack(faceDir);
                     if (attack.hitCount > 0)
                     {
-                        // print($"Recovery to: {posture}");
-                        posture.RecoveryPosture(attack.hitCount * postureValue);
+                        StartCoroutine(posture.Recovery(attack.hitCount * postureValue));
                     }
                     
                     attack.UpdateAttackDirection(faceDir);
@@ -154,7 +153,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!dash.TryDash(direction)) return false;
 
-        posture.TakePostureDamage(postureValue);
+        StartCoroutine(posture.TakePostureDamage(postureValue));
         anim.SetTrigger(AnimParams.Attack);
         fsm.SetGameState(PlayerState.Dash);
 

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("Panel")]
     [SerializeField] private Image pausePanel;
 
-    [Header("")] 
+    [Header("Instance")] 
     [SerializeField] private InputController inp;
     [SerializeField] private StateMachine fsm;
 
@@ -27,11 +27,12 @@ public class GameManager : MonoBehaviour
     {
         GameActionState();
     }
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         GamePhysicsState();
     }
 
+    
     void GameActionState()
     {
         switch (fsm.gameState)
@@ -80,6 +81,8 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
+    
     void HideCursor(bool isHide)
     {
         Cursor.visible = !isHide;
@@ -88,20 +91,18 @@ public class GameManager : MonoBehaviour
             ? CursorLockMode.Locked
             : CursorLockMode.None;
     }
-    
-    
     public void GameStart()
     {
         print("GameStart");
         SceneManager.LoadScene("Game");
     }
 
+    
     public void ReturnToMainMenu()
     {
         print("ReturnToMainMenu");
         SceneManager.LoadScene("GameDirectory");
     }
-    
     public void QuitGame()
     {
         print("Quit Game");
