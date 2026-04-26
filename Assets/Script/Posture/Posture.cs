@@ -20,16 +20,18 @@ public class Posture : MonoBehaviour
 
     public IEnumerator TakePostureDamage(float value)
     {
-        if (currValue >= maxValue) yield return null;
-        
         float targetValue = currValue + value;
+        if (growthVelocity >= targetValue)
+        {
+            currValue = targetValue;
+            yield break;
+        }
+        
         while (currValue < targetValue)
         {
-            if (growthVelocity >= targetValue)
+            if (currValue >= maxValue)
             {
-                currValue = targetValue;
-                
-                OnPostureChanged?.Invoke(maxValue, currValue);
+                currValue = maxValue;
                 yield break;
             }
             
@@ -40,19 +42,37 @@ public class Posture : MonoBehaviour
     }
     public IEnumerator Recovery(float value)
     {
-        if (currValue <= 0) yield return null;
-        
         float targetValue = currValue - value;
+        if (growthVelocity >= targetValue)
+        {
+            currValue = targetValue;
+            yield break;
+        }
+        
         while (currValue >= targetValue)
         {
+            if (currValue <= 0)
+            {
+                print("haha");
+                currValue = 0;
+                yield break;
+            }
+            
             currValue -= growthVelocity;
             OnPostureChanged?.Invoke(maxValue, currValue);
             yield return new WaitForSeconds(growthRate);
         }
     }
-    public void ResetWithTime(float seconds)
+    public IEnumerator SlowReset(float seconds)
     {
+        while (currValue >= 0)
+        {
+            currValue -= growthVelocity;
+            OnPostureChanged?.Invoke(maxValue, currValue);
+            yield return new WaitForSeconds(growthRate);
+        }
         
+        yield break;
     }
     
     void PostureBroken()
