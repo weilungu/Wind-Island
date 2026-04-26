@@ -33,16 +33,5 @@ public class PostureBar : MonoBehaviour
     {
         fillRight.fillAmount = 0;
         fillLeft.fillAmount = 0;
-        print("reset posture");
-    }
-
-    void RecoveryPosture()
-    {
-        if (fillRight.fillAmount == 0 && fillLeft.fillAmount == 0) return;
-
-        // while (posture.recoveryTime)
-        // {
-        //     
-        // }
     }
 }

@@ -74,7 +74,6 @@ public class EnemyController : MonoBehaviour
         // Player 進入攻擊範圍 → 停止移動並切換至 Attack
         if (attack.IsTargetInRange(target.position))
         {
-            print("In Attack Range");
             fsm.SetGameState(EnemyState.Attack);
         }
     }

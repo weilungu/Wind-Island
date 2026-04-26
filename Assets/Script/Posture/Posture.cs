@@ -19,7 +19,7 @@ public class Posture : MonoBehaviour
         if (currValue >= maxValue) return;
         
         currValue += value;
-        print(currValue);
+        // print(currValue);
         OnPostureChanged?.Invoke(maxValue, currValue);
     }
     public void RecoveryPosture(float value)
