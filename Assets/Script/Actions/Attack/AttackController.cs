@@ -85,9 +85,13 @@ public class AttackController : MonoBehaviour
             Health hp = hitResults[i].GetComponent<Health>();
             Posture posture = hitResults[i].GetComponent<Posture>();
 
-            if (hp is not null && posture is not null)
+            if (hp is not null)
             {
                 hp.TakeDamage(data.damage);
+            }
+
+            if ( posture is not null)
+            {
                 StartCoroutine(posture.TakePostureDamage(data.posture));
             }
         }
