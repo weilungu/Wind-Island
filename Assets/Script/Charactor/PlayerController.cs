@@ -124,13 +124,6 @@ public class PlayerController : MonoBehaviour
                     fsm.SetGameState(PlayerState.Move);
                 }
                 break;
-        
-            case PlayerState.Hurt:
-                // posture.TakePostureDamage(attack.postureDamage);
-                // print("Posture damage taken");
-                //
-                // fsm.SetGameState(PlayerState.Idle);
-                break;
         }
     }
     public void PhysicsState()

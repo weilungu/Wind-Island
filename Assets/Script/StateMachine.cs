@@ -8,7 +8,6 @@ public enum PlayerState
     Move,
     Dash,
     Attack,
-    Hurt,
     Dead,
 }
 public enum EnemyState
@@ -17,7 +16,6 @@ public enum EnemyState
     Chase,
     Dash,
     Attack,
-    Hurt,
     Dead,
 }
 public enum GameState
