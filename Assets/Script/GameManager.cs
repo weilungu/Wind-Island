@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("Panel")]
     [SerializeField] private Image pausePanel;
 
-    [Header("Instance")] 
+    [Header("Instance")]
     [SerializeField] private InputController inp;
     [SerializeField] private StateMachine fsm;
 

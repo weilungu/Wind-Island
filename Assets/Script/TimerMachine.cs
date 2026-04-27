@@ -1,41 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TimerMachine : MonoBehaviour
+public class TimerMachine
 {
-    public float timer = 0;
-    public bool allowRun = false;
+    public float timer = 0f;
+    private bool allowRun = false;
 
-    void Start()
+    public void InitializeTimer()
     {
-        InitializeTimer();
-    }
-
-    void Update()
-    {
-        if (allowRun)
-        {
-            timer += Time.deltaTime;
-        }
-    }
-
-    void InitializeTimer()
-    {
-        timer = 0;
+        timer = 0f;
         allowRun = false;
+    }
+
+    public void Tick(float deltaTime)
+    {
+        if (!allowRun)
+        {
+            return;
+        }
+
+        timer += deltaTime;
     }
 
     public void Run()
     {
         allowRun = true;
     }
+
     public void Pause()
     {
         allowRun = false;
     }
+
     public void ResetTimer()
     {
-        timer = 0;
+        timer = 0f;
     }
 }
