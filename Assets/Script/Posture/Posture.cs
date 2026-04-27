@@ -13,6 +13,7 @@ public class Posture : MonoBehaviour
     
     [SerializeField] private float growthVelocity = 1f;
     [SerializeField] private float growthRate = 0.01f;
+    [SerializeField] private float slowResetRate = 0.01f;
     
     [SerializeField] private float resetTime = 0.5f;
     
@@ -31,22 +32,30 @@ public class Posture : MonoBehaviour
 
     private void Update()
     {
-        if (postureIncreased && !isSlowResetting)
-        {
-            timer.Tick(Time.deltaTime);
-            float timeElapsed = timer.timer;
-            
-            if (timeElapsed >= resetTime)
-            {
-                postureIncreased = false;
-                timer.Pause();
-                timer.ResetTimer();
+        HandlePostureResetTimer();
+    }
 
-                if (slowResetRoutine is null)
-                {
-                    slowResetRoutine = StartCoroutine(SlowReset());
-                }
-            }
+    private void HandlePostureResetTimer()
+    {
+        if (!postureIncreased || isSlowResetting)
+        {
+            return;
+        }
+
+        timer.Tick(Time.deltaTime);
+
+        if (timer.timer < resetTime)
+        {
+            return;
+        }
+
+        postureIncreased = false;
+        timer.Pause();
+        timer.ResetTimer();
+
+        if (slowResetRoutine is null)
+        {
+            slowResetRoutine = StartCoroutine(SlowReset());
         }
     }
 
@@ -120,7 +129,7 @@ public class Posture : MonoBehaviour
         {
             currValue = Mathf.Max(currValue - growthVelocity, 0f);
             OnPostureChanged?.Invoke(maxValue, currValue);
-            yield return new WaitForSeconds(growthRate);
+            yield return new WaitForSeconds(slowResetRate);
         }
 
         currValue = 0f;
@@ -131,6 +140,7 @@ public class Posture : MonoBehaviour
     
     void PostureBroken()
     {
+        print("Broken");
         OnPostureReset?.Invoke();
     }
 }
