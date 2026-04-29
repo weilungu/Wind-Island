@@ -19,12 +19,10 @@ public class PlayerController : MonoBehaviour
     private AttackController attack;
     private Health health;
     private Posture posture;
-
-    // [Header("Field Instance")]
-    // [SerializeField] private StateMachine fsm;
+    
 
     [Header("Value")]
-    [SerializeField] private float postureValue = 10;
+    [SerializeField] private float backlash = 10; // dash with posture
     
     private PlayerState playerState;
 
@@ -56,7 +54,7 @@ public class PlayerController : MonoBehaviour
     }
     
     // 狀態機層
-    private void SetPlayerState(PlayerState state)
+    void SetPlayerState(PlayerState state)
     {
         playerState = state;
     }
@@ -122,7 +120,7 @@ public class PlayerController : MonoBehaviour
                     attack.TryAttack(faceDir);
                     if (attack.hitCount > 0)
                     {
-                        StartCoroutine(posture.Recovery(attack.hitCount * postureValue));
+                        StartCoroutine(posture.Recovery(attack.hitCount * backlash));
                     }
                     
                     attack.UpdateAttackDirection(faceDir);
@@ -155,7 +153,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!dash.TryDash(direction)) return false;
 
-        StartCoroutine(posture.TakePostureDamage(postureValue));
+        StartCoroutine(posture.TakePostureDamage(backlash));
         anim.SetTrigger(AnimParams.Attack);
         SetPlayerState(PlayerState.Dash);
 

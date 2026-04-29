@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Posture : MonoBehaviour
 {
+    // Properties
     [Header("Debug")]
     [SerializeField] private float currValue = 0f;
     [SerializeField] private bool postureIncreased = false;
@@ -24,49 +25,38 @@ public class Posture : MonoBehaviour
     public event Action OnPostureReset;
     public event Action<float, float> OnPostureChanged;
 
+    
+    // Methods
     private void Start()
     {
         timer = new TimerMachine();
         timer.InitializeTimer();
     }
-
     private void Update()
     {
-        HandlePostureResetTimer();
+        DelayedReset();
     }
 
-    private void HandlePostureResetTimer()
+    
+    void DelayedReset()
     {
-        if (!postureIncreased || isSlowResetting)
-        {
-            return;
-        }
+        if (!postureIncreased || isSlowResetting) return;
 
-        timer.Tick(Time.deltaTime);
-
-        if (timer.timer < resetTime)
-        {
-            return;
-        }
+        timer.Tick();
+        if (timer.timer < resetTime) return;
 
         postureIncreased = false;
         timer.Pause();
         timer.ResetTimer();
-
-        if (slowResetRoutine is null)
-        {
-            slowResetRoutine = StartCoroutine(SlowReset());
-        }
+        
+        slowResetRoutine ??= StartCoroutine(SlowlyReset());
     }
-
+    
     public IEnumerator TakePostureDamage(float value)
     {
-        if (value <= 0f)
-        {
-            yield break;
-        }
+        if (value <= 0f) yield break;
 
-        if (isSlowResetting && slowResetRoutine != null)
+        if (isSlowResetting && slowResetRoutine is not null)
         {
             StopCoroutine(slowResetRoutine);
             slowResetRoutine = null;
@@ -74,10 +64,8 @@ public class Posture : MonoBehaviour
         }
 
         float targetValue = Mathf.Min(currValue + value, maxValue);
-        if (targetValue <= currValue)
-        {
-            yield break;
-        }
+        if (targetValue <= currValue) yield break;
+        
         
         while (currValue < targetValue)
         {
@@ -90,19 +78,12 @@ public class Posture : MonoBehaviour
         timer.ResetTimer();
         timer.Run();
     }
-
     public IEnumerator Recovery(float value)
     {
-        if (value <= 0f)
-        {
-            yield break;
-        }
+        if (value <= 0f) yield break;
 
         float targetValue = currValue - value;
-        if (targetValue >= currValue)
-        {
-            yield break;
-        }
+        if (targetValue >= currValue) yield break;
         
         while (currValue > targetValue)
         {
@@ -120,8 +101,7 @@ public class Posture : MonoBehaviour
             PostureBroken();
         }
     }
-
-    public IEnumerator SlowReset()
+    public IEnumerator SlowlyReset()
     {
         isSlowResetting = true;
 

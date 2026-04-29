@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+// All Status Enumerator
 public enum PlayerState
 {
     Idle,
@@ -29,14 +30,14 @@ public enum GameState
     Quit,
 }
 
+
 public class GameManager : MonoBehaviour
 {
     [Header("Panel")]
     [SerializeField] private Image pausePanel;
 
-    [Header("Instance")]
+    [Header("Field Instance")]
     [SerializeField] private InputController inp;
-    // [SerializeField] private StateMachine fsm;
 
     [Header("States Cells")] 
     [SerializeField] private PlayerController player;

@@ -11,14 +11,11 @@ public class TimerMachine
         allowRun = false;
     }
 
-    public void Tick(float deltaTime)
+    public void Tick()
     {
-        if (!allowRun)
-        {
-            return;
-        }
+        if (!allowRun) return;
 
-        timer += deltaTime;
+        timer += Time.deltaTime;
     }
 
     public void Run()
