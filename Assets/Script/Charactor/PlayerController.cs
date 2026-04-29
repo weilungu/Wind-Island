@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // Player Direction arguments
     private float horizontal;
     private float vertical;
+    
     private Vector2 direction = Vector2.zero;
     private Vector2 faceDir = Vector2.right;
 
@@ -18,11 +20,13 @@ public class PlayerController : MonoBehaviour
     private Health health;
     private Posture posture;
 
-    [Header("Field Instance")]
-    [SerializeField] private StateMachine fsm;
+    // [Header("Field Instance")]
+    // [SerializeField] private StateMachine fsm;
 
     [Header("Value")]
     [SerializeField] private float postureValue = 10;
+    
+    private PlayerState playerState;
 
     void Awake()
     {
@@ -39,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        fsm.SetGameState(PlayerState.Idle);
+        SetPlayerState(PlayerState.Idle);
         anim.SetFloat(AnimParams.MoveX, 0f);
         anim.SetFloat(AnimParams.MoveY, 0f);
         anim.SetBool(AnimParams.IsMoving, false);
@@ -52,22 +56,26 @@ public class PlayerController : MonoBehaviour
     }
     
     // 狀態機層
+    private void SetPlayerState(PlayerState state)
+    {
+        playerState = state;
+    }
     public void ActionState()
     {
-        switch (fsm.playerState)
+        switch (playerState)
         {
             case PlayerState.Idle:
                 SetMoveAnim(false);
         
                 if (inp.movePressed)
                 {
-                    fsm.SetGameState(PlayerState.Move);
+                    SetPlayerState(PlayerState.Move);
                     break;
                 }
         
                 if (inp.attackPressed)
                 {
-                    fsm.SetGameState(PlayerState.Attack);
+                    SetPlayerState(PlayerState.Attack);
                     break;
                 }
         
@@ -84,13 +92,13 @@ public class PlayerController : MonoBehaviour
                 if (inp.dashPressed && TryStartDash()) break;
                 if (inp.attackPressed)
                 {
-                    fsm.SetGameState(PlayerState.Attack);
+                    SetPlayerState(PlayerState.Attack);
                     break;
                 }
         
                 if (direction.Equals(Vector2.zero))
                 {
-                    fsm.SetGameState(PlayerState.Idle);
+                    SetPlayerState(PlayerState.Idle);
                     break;
                 }
         
@@ -100,7 +108,7 @@ public class PlayerController : MonoBehaviour
                 // Dash 結束由 DashController 回報，這裡只等待
                 if (!dash.IsDashing)
                 {
-                    fsm.SetGameState(direction == Vector2.zero
+                    SetPlayerState(direction == Vector2.zero
                         ? PlayerState.Idle
                         : PlayerState.Move);
                 }
@@ -121,14 +129,14 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    fsm.SetGameState(PlayerState.Move);
+                    SetPlayerState(PlayerState.Move);
                 }
                 break;
         }
     }
     public void PhysicsState()
     {
-        switch (fsm.playerState)
+        switch (playerState)
         {
             case PlayerState.Move:
                 move.Move(direction);
@@ -141,6 +149,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
     // ── 工具方法 ──────────────────────────────────────────────────────────
     bool TryStartDash()
     {
@@ -148,7 +157,7 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(posture.TakePostureDamage(postureValue));
         anim.SetTrigger(AnimParams.Attack);
-        fsm.SetGameState(PlayerState.Dash);
+        SetPlayerState(PlayerState.Dash);
 
         return true;
     }

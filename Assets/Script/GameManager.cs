@@ -5,6 +5,30 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public enum PlayerState
+{
+    Idle,
+    Move,
+    Dash,
+    Attack,
+    Dead,
+}
+public enum EnemyState
+{
+    Idle,
+    Chase,
+    Dash,
+    Attack,
+    Dead,
+}
+public enum GameState
+{
+    InGame,
+    Paused,
+    GameOver,
+    Quit,
+}
+
 public class GameManager : MonoBehaviour
 {
     [Header("Panel")]
@@ -12,16 +36,18 @@ public class GameManager : MonoBehaviour
 
     [Header("Instance")]
     [SerializeField] private InputController inp;
-    [SerializeField] private StateMachine fsm;
+    // [SerializeField] private StateMachine fsm;
 
     [Header("States Cells")] 
     [SerializeField] private PlayerController player;
-
     [SerializeField] private EnemyController[] enemies;
+    
+    // State
+    GameState gameState;
 
     private void Start()
     {
-        fsm.SetGameState(GameState.InGame);
+        SetGameState(GameState.InGame);
     }
     private void Update()
     {
@@ -32,10 +58,15 @@ public class GameManager : MonoBehaviour
         GamePhysicsState();
     }
 
-    
+
+    // State Layer
+    void SetGameState(GameState state)
+    {
+        gameState = state;
+    }
     void GameActionState()
     {
-        switch (fsm.gameState)
+        switch (gameState)
         {
             case GameState.InGame:
 
@@ -53,7 +84,7 @@ public class GameManager : MonoBehaviour
                 if (inp.escapePressed)
                 {
                     pausePanel.gameObject.SetActive(true);
-                    fsm.SetGameState(GameState.Paused);
+                    SetGameState(GameState.Paused);
                 }
                 break;
 
@@ -65,7 +96,7 @@ public class GameManager : MonoBehaviour
                 if (inp.escapePressed)
                 {
                     pausePanel.gameObject.SetActive(false);
-                    fsm.SetGameState(GameState.InGame);
+                    SetGameState(GameState.InGame);
                 }
                 break;
 
@@ -77,7 +108,7 @@ public class GameManager : MonoBehaviour
     }
     void GamePhysicsState()
     {
-        switch (fsm.gameState)
+        switch (gameState)
         {
             case GameState.InGame:
                 player.PhysicsState();
@@ -99,13 +130,13 @@ public class GameManager : MonoBehaviour
             ? CursorLockMode.Locked
             : CursorLockMode.None;
     }
+    
+    // With UI
     public void GameStart()
     {
         print("GameStart");
         SceneManager.LoadScene("Game");
     }
-
-    
     public void ReturnToMainMenu()
     {
         print("ReturnToMainMenu");

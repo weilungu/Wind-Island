@@ -6,11 +6,12 @@ public class EnemyController : MonoBehaviour
     protected EnemyAttack attack;
     protected DashController dash;
     [SerializeField] protected Transform target;
-
+    
     
     protected Vector2 faceDir = Vector2.zero;
     protected EnemyState enemyState;
 
+    
     [Header("Debug")] 
     [SerializeField] protected bool hasPlayerInFront;
 
@@ -20,16 +21,21 @@ public class EnemyController : MonoBehaviour
         attack = GetComponent<EnemyAttack>();
         dash = GetComponent<DashController>();
     }
-
     protected virtual void Start()
     {
         SetEnemyState(EnemyState.Idle);
     }
 
+    
     public void SetTarget(Transform t) => target = t;
     public void ClearTarget() => target = null;
 
+    
     // 狀態機層
+    protected virtual void SetEnemyState(EnemyState state)
+    {
+        enemyState = state;
+    }
     public virtual void ActionState()
     {
         switch (enemyState)
@@ -43,7 +49,6 @@ public class EnemyController : MonoBehaviour
             case EnemyState.Attack: OnAttack(); break;
         }
     }
-
     public virtual void PhysicsState()
     {
         switch (enemyState)
@@ -60,12 +65,10 @@ public class EnemyController : MonoBehaviour
 
 
     // ── 各狀態預設行為 ────────────────────────────────────────────────────
-
     protected virtual void OnIdle()
     {
         SetEnemyState(EnemyState.Chase);
     }
-
     protected virtual void OnChase()
     {
         UpdateFaceDir();
@@ -78,13 +81,11 @@ public class EnemyController : MonoBehaviour
             SetEnemyState(EnemyState.Attack);
         }
     }
-
     protected virtual void OnDash()
     {
         if (!dash.IsDashing)
             SetEnemyState(EnemyState.Attack);
     }
-
     protected virtual void OnAttack()
     {
         attack.CheckPlayerInFront();
@@ -92,31 +93,24 @@ public class EnemyController : MonoBehaviour
         if (attack.HasPlayerInFront) EnemyAttack();
         else SetEnemyState(EnemyState.Chase); // Player 離開範圍，重新追擊
     }
-
     protected virtual void EnemyAttack()
     {
         // 子類別實作具體攻擊行為
     }
-
-    protected virtual void SetEnemyState(EnemyState state)
-    {
-        enemyState = state;
-    }
-
+    
+    
     // ── 工具方法 ──────────────────────────────────────────────────────────
     protected void UpdateFaceDir()
     {
         if (target is null) return;
         faceDir = (target.position - transform.position).normalized;
     }
-
     protected float DistanceToTarget()
     {
         if (target is null) return float.MaxValue;
         
         return Vector2.Distance(transform.position, target.position);
     }
-
     protected void TryStartDash()
     {
         UpdateFaceDir();
