@@ -64,7 +64,7 @@ public class Posture : MonoBehaviour
         }
 
         float targetValue = Mathf.Min(currValue + value, maxValue);
-        if (targetValue <= currValue) yield break;
+        if (targetValue <= currValue) yield break; // 判段是否繼續增加攻擊
         
         
         while (currValue < targetValue)
@@ -87,7 +87,9 @@ public class Posture : MonoBehaviour
         
         while (currValue > targetValue)
         {
-            currValue = Mathf.Max(currValue - growthVelocity, targetValue, 0f);
+            currValue = Mathf.Max(currValue - growthVelocity, targetValue);
+            if (currValue <= 0f) currValue = 0f;
+            
             OnPostureChanged?.Invoke(maxValue, currValue);
             yield return new WaitForSeconds(growthRate);
         }
