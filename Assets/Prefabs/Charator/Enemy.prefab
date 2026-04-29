@@ -270,7 +270,6 @@ GameObject:
   - component: {fileID: 8070131899888456366}
   - component: {fileID: 2477151967479833216}
   - component: {fileID: 2152108482483130740}
-  - component: {fileID: 4688126918546607850}
   - component: {fileID: 3917019850857179018}
   - component: {fileID: 4329029466487747354}
   - component: {fileID: 1132621515538581059}
@@ -426,21 +425,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0299904, y: 0.7699106}
   m_EdgeRadius: 0
---- !u!114 &4688126918546607850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6589919534430587276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5744641ef2f0e04aab8e6f2251fbf85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerState: 0
-  enemyState: 0
-  gameState: 0
 --- !u!114 &3917019850857179018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,7 +437,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44a6b0009a2ddc44a1ae67104602e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fsm: {fileID: 0}
   target: {fileID: 0}
   hasPlayerInFront: 0
   dashTriggerRange: 5
@@ -518,11 +501,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currCombo: 0
   isAttacking: 0
+  postureDamage: 0
   attackPoint: {fileID: 2264196468263795275}
   targetLayers:
     serializedVersion: 2
     m_Bits: 8
   data: {fileID: 11400000, guid: 827db2edf8218ff45bfdca829faad9be, type: 2}
+  hitCount: 0
   hasPlayerInFront: 0
 --- !u!114 &5647309542648327982
 MonoBehaviour:

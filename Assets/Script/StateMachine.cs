@@ -30,16 +30,11 @@ public enum GameState
 public class StateMachine : MonoBehaviour
 {
     public PlayerState playerState;
-    public EnemyState enemyState;
     public GameState gameState;
 
     public void SetGameState(PlayerState state)
     {
         playerState = state;
-    }
-    public void SetGameState(EnemyState state)
-    {
-        enemyState = state;
     }
     public void SetGameState(GameState state)
     {

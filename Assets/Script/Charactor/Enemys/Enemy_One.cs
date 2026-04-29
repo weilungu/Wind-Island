@@ -29,7 +29,7 @@ public class Enemy_One : EnemyController
         if (DistanceToTarget() <= attackRange)
         {
             dash.ForceStop();
-            fsm.SetGameState(EnemyState.Attack);
+            SetEnemyState(EnemyState.Attack);
 
             if (hasPlayerInFront) print("hasPlayerInFront");
             return;
@@ -38,7 +38,7 @@ public class Enemy_One : EnemyController
         // Dash 自然結束但還不夠近 → 繼續追
         if (!dash.IsDashing)
         {
-            fsm.SetGameState(EnemyState.Chase);
+            SetEnemyState(EnemyState.Chase);
         }
     }
 
@@ -54,14 +54,14 @@ public class Enemy_One : EnemyController
         if (attack.TryAttack(faceDir))
         {
             attackCooldownEndTime = Time.time + attackCooldown;
-            fsm.SetGameState(EnemyState.Chase);
+            SetEnemyState(EnemyState.Chase);
         }
     }
 
     public override void ActionState()
     {
         base.ActionState();
-        switch (fsm.enemyState)
+        switch (enemyState)
         {
             case EnemyState.Attack:
                 // target.

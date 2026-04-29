@@ -5,13 +5,14 @@ public class EnemyController : MonoBehaviour
     protected MoveController move;
     protected EnemyAttack attack;
     protected DashController dash;
-    [SerializeField] protected StateMachine fsm;
-
     [SerializeField] protected Transform target;
 
+    
     protected Vector2 faceDir = Vector2.zero;
+    protected EnemyState enemyState;
 
-    [Header("Debug")] [SerializeField] protected bool hasPlayerInFront;
+    [Header("Debug")] 
+    [SerializeField] protected bool hasPlayerInFront;
 
     protected virtual void Awake()
     {
@@ -22,7 +23,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Start()
     {
-        fsm.SetGameState(EnemyState.Idle);
+        SetEnemyState(EnemyState.Idle);
     }
 
     public void SetTarget(Transform t) => target = t;
@@ -31,7 +32,7 @@ public class EnemyController : MonoBehaviour
     // 狀態機層
     public virtual void ActionState()
     {
-        switch (fsm.enemyState)
+        switch (enemyState)
         {
             case EnemyState.Idle: OnIdle(); break;
 
@@ -45,7 +46,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void PhysicsState()
     {
-        switch (fsm.enemyState)
+        switch (enemyState)
         {
             case EnemyState.Chase:
                 move.Move(faceDir);
@@ -62,7 +63,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void OnIdle()
     {
-        fsm.SetGameState(EnemyState.Chase);
+        SetEnemyState(EnemyState.Chase);
     }
 
     protected virtual void OnChase()
@@ -74,29 +75,32 @@ public class EnemyController : MonoBehaviour
         // Player 進入攻擊範圍 → 停止移動並切換至 Attack
         if (attack.IsTargetInRange(target.position))
         {
-            fsm.SetGameState(EnemyState.Attack);
+            SetEnemyState(EnemyState.Attack);
         }
     }
 
     protected virtual void OnDash()
     {
         if (!dash.IsDashing)
-            fsm.SetGameState(EnemyState.Attack);
+            SetEnemyState(EnemyState.Attack);
     }
 
     protected virtual void OnAttack()
     {
         attack.CheckPlayerInFront();
 
-        if (attack.HasPlayerInFront)
-            EnemyAttack();
-        else
-            fsm.SetGameState(EnemyState.Chase); // Player 離開範圍，重新追擊
+        if (attack.HasPlayerInFront) EnemyAttack();
+        else SetEnemyState(EnemyState.Chase); // Player 離開範圍，重新追擊
     }
 
     protected virtual void EnemyAttack()
     {
         // 子類別實作具體攻擊行為
+    }
+
+    protected virtual void SetEnemyState(EnemyState state)
+    {
+        enemyState = state;
     }
 
     // ── 工具方法 ──────────────────────────────────────────────────────────
@@ -109,6 +113,7 @@ public class EnemyController : MonoBehaviour
     protected float DistanceToTarget()
     {
         if (target is null) return float.MaxValue;
+        
         return Vector2.Distance(transform.position, target.position);
     }
 
@@ -117,7 +122,7 @@ public class EnemyController : MonoBehaviour
         UpdateFaceDir();
         if (dash.TryDash(faceDir))
         {
-            fsm.SetGameState(EnemyState.Dash);
+            SetEnemyState(EnemyState.Dash);
         }
     }
 }

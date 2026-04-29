@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [Header("States Cells")] 
     [SerializeField] private PlayerController player;
 
-    [SerializeField] private EnemyController enemy;
+    [SerializeField] private EnemyController[] enemies;
 
     private void Start()
     {
@@ -44,7 +44,11 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1;
                 
                 player.ActionState();
-                enemy.ActionState();
+
+                foreach (EnemyController e in enemies)
+                {
+                    e.ActionState();
+                }
 
                 if (inp.escapePressed)
                 {
@@ -77,7 +81,11 @@ public class GameManager : MonoBehaviour
         {
             case GameState.InGame:
                 player.PhysicsState();
-                enemy.PhysicsState();
+
+                foreach (EnemyController e in enemies)
+                {
+                    e.PhysicsState();
+                }
                 break;
         }
     }
