@@ -42,7 +42,7 @@ public class MoveController : MonoBehaviour
     {
         if (direction == Vector2.zero) return;
 
-        float f_dt = Time.fixedDeltaTime * _speed;
+        float f_dt = Time.fixedDeltaTime * Speed;
         Vector2 move = direction * f_dt;
         
         int hitCount = rb.Cast(direction, filter, hitResults, move.magnitude + castDistance);
