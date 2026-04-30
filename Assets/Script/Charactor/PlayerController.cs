@@ -96,7 +96,6 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Move:
                 ToMove();
                 
-                
                 // Transition
                 // 優先順序：Dash > Attack > Idle
                 if (inp.dashPressed && TryStartDash()) break;
@@ -157,6 +156,7 @@ public class PlayerController : MonoBehaviour
             
             case PlayerState.GuardBreak:
                 print("Guard Break");
+                
                 // 只在剛進入 GuardBreak 時初始化（避免重複啟動協程與重覆設定速度）
                 if (!isInGuardBreak)
                 {
