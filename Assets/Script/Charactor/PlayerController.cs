@@ -29,8 +29,9 @@ public class PlayerController : MonoBehaviour
     
     [Header("Debug")]
     [SerializeField] private PlayerState playerState;
+    
     [Header("GuardBreak")]
-    [SerializeField] private float guardBreakStunDuration = 0.5f;
+    [SerializeField] private float guardBreakDuration = 0.5f;
 
     void Awake()
     {
@@ -93,13 +94,9 @@ public class PlayerController : MonoBehaviour
                 break;
         
             case PlayerState.Move:
-                // if (direction != Vector2.zero) faceDir = direction;
-                //
-                // if (direction.x != 0) sprite.flipX = direction.x < 0;
-                // SetMoveAnim(!direction.Equals(Vector2.zero));
-        
-                
                 ToMove();
+                
+                
                 // Transition
                 // 優先順序：Dash > Attack > Idle
                 if (inp.dashPressed && TryStartDash()) break;
@@ -168,6 +165,10 @@ public class PlayerController : MonoBehaviour
                     originalMoveSpeed = move.Speed;
                     move.Speed = posture.guardSpeed;
 
+                    // 若 GuardBreak 打斷 Dash，強制結束 Dash，避免無法再次 Dash
+                    if (dash.IsDashing)
+                        dash.ForceStop();
+
                     posture.ForceBroken();
                     // 讓角色仍能移動（較慢）並播放對應動畫
                     ToMove();
@@ -232,7 +233,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator GuardBreakRoutine()
     {
-        yield return new WaitForSeconds(guardBreakStunDuration);
+        yield return new WaitForSeconds(guardBreakDuration);
         // 還原速度與狀態
         move.Speed = originalMoveSpeed;
         isInGuardBreak = false;
