@@ -9,9 +9,24 @@ public class MoveController : MonoBehaviour
 
     
     [Header("Values")]
-    [SerializeField] private float speed = 5;
-
+    [SerializeField] private float _speed = 5;
     [SerializeField] private LayerMask obstacleLayer;
+
+    public float Speed
+    {
+        get => _speed;
+        set
+        {
+            float tempSpeed = _speed;
+            if (value <= 0)
+            {
+                _speed = tempSpeed;
+                return;
+            }
+            
+            _speed = value;
+        }
+    }
 
     void Awake()
     {
@@ -25,9 +40,9 @@ public class MoveController : MonoBehaviour
 
     public void Move(Vector2 direction)
     {
-        if (direction.Equals(Vector2.zero)) return;
+        if (direction == Vector2.zero) return;
 
-        float f_dt = Time.fixedDeltaTime * speed;
+        float f_dt = Time.fixedDeltaTime * _speed;
         Vector2 move = direction * f_dt;
         
         int hitCount = rb.Cast(direction, filter, hitResults, move.magnitude + castDistance);
@@ -41,16 +56,7 @@ public class MoveController : MonoBehaviour
             TrySlideMove(move);
         }
     }
-    public float CanMove(bool canMove)
-    {
-        float tempSpeed = speed;
-        
-        float result = canMove ? tempSpeed : 0;
-        print(speed);
-        
-        return result;
-    }
-
+    
     void TrySlideMove(Vector2 move)
     {
         Vector2 moveX = new Vector2(move.x, 0);

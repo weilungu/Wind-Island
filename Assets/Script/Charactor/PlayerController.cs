@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -19,12 +20,17 @@ public class PlayerController : MonoBehaviour
     private AttackController attack;
     private Health health;
     private Posture posture;
+    private bool isInGuardBreak = false;
+    private float originalMoveSpeed = 0f;
     
 
     [Header("Value")]
     [SerializeField] private float backlash = 10; // dash with posture
     
-    private PlayerState playerState;
+    [Header("Debug")]
+    [SerializeField] private PlayerState playerState;
+    [Header("GuardBreak")]
+    [SerializeField] private float guardBreakStunDuration = 0.5f;
 
     void Awake()
     {
@@ -77,15 +83,24 @@ public class PlayerController : MonoBehaviour
                     break;
                 }
         
+                if (posture.isFull)
+                {
+                    SetPlayerState(PlayerState.GuardBreak);
+                    break;
+                }
+                
                 if (inp.dashPressed && TryStartDash()) break; // → Dash state
                 break;
         
             case PlayerState.Move:
-                if (!direction.Equals(Vector2.zero)) faceDir = direction;
+                // if (direction != Vector2.zero) faceDir = direction;
+                //
+                // if (direction.x != 0) sprite.flipX = direction.x < 0;
+                // SetMoveAnim(!direction.Equals(Vector2.zero));
         
-                if (direction.x != 0) sprite.flipX = direction.x < 0;
-                SetMoveAnim(!direction.Equals(Vector2.zero));
-        
+                
+                ToMove();
+                // Transition
                 // 優先順序：Dash > Attack > Idle
                 if (inp.dashPressed && TryStartDash()) break;
                 if (inp.attackPressed)
@@ -93,8 +108,13 @@ public class PlayerController : MonoBehaviour
                     SetPlayerState(PlayerState.Attack);
                     break;
                 }
+                if (posture.isFull)
+                {
+                    SetPlayerState(PlayerState.GuardBreak);
+                    break;
+                }
         
-                if (direction.Equals(Vector2.zero))
+                if (direction == Vector2.zero)
                 {
                     SetPlayerState(PlayerState.Idle);
                     break;
@@ -109,6 +129,12 @@ public class PlayerController : MonoBehaviour
                     SetPlayerState(direction == Vector2.zero
                         ? PlayerState.Idle
                         : PlayerState.Move);
+                }
+                
+                if (posture.isFull)
+                {
+                    SetPlayerState(PlayerState.GuardBreak);
+                    break;
                 }
                 break;
         
@@ -130,6 +156,29 @@ public class PlayerController : MonoBehaviour
                     SetPlayerState(PlayerState.Move);
                 }
                 break;
+            
+            
+            case PlayerState.GuardBreak:
+                print("Guard Break");
+                // 只在剛進入 GuardBreak 時初始化（避免重複啟動協程與重覆設定速度）
+                if (!isInGuardBreak)
+                {
+                    isInGuardBreak = true;
+                    // 記錄原本速度並降速
+                    originalMoveSpeed = move.Speed;
+                    move.Speed = posture.guardSpeed;
+
+                    posture.ForceBroken();
+                    // 讓角色仍能移動（較慢）並播放對應動畫
+                    ToMove();
+
+                    StartCoroutine(GuardBreakRoutine());
+                }
+                break;
+            
+            
+            case PlayerState.HitStun:
+                break;
         }
     }
     public void PhysicsState()
@@ -141,8 +190,15 @@ public class PlayerController : MonoBehaviour
                 attack.UpdateAttackDirection(direction);
                 break;
 
+            case PlayerState.GuardBreak:
+                // GuardBreak 仍可移動（速度已在 ActionState 中調整）
+                move.Move(direction);
+                attack.UpdateAttackDirection(direction);
+                break;
+
             case PlayerState.Dash:
                 dash.DashFixedUpdate();
+                print("Dash FixedUpdate");
                 break;
         }
     }
@@ -159,10 +215,27 @@ public class PlayerController : MonoBehaviour
 
         return true;
     }
+
+    void ToMove()
+    {
+        if (direction != Vector2.zero) faceDir = direction;
+        
+        if (direction.x != 0) sprite.flipX = direction.x < 0;
+        SetMoveAnim(!direction.Equals(Vector2.zero));
+    }
     void SetMoveAnim(bool isMoving)
     {
         anim.SetFloat(AnimParams.MoveX, faceDir.x);
         anim.SetFloat(AnimParams.MoveY, faceDir.y);
         anim.SetBool(AnimParams.IsMoving, isMoving);
+    }
+
+    IEnumerator GuardBreakRoutine()
+    {
+        yield return new WaitForSeconds(guardBreakStunDuration);
+        // 還原速度與狀態
+        move.Speed = originalMoveSpeed;
+        isInGuardBreak = false;
+        SetPlayerState(direction == Vector2.zero ? PlayerState.Idle : PlayerState.Move);
     }
 }

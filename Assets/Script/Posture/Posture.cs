@@ -12,11 +12,15 @@ public class Posture : MonoBehaviour
     [Header("Values")]
     [SerializeField] private float maxValue = 100f;
     
+    [Header("Growth")]
     [SerializeField] private float growthVelocity = 1f;
     [SerializeField] private float growthRate = 0.01f;
     [SerializeField] private float slowResetRate = 0.01f;
-    
     [SerializeField] private float resetTime = 0.5f;
+
+    [Header("Guard Break")]
+    public bool isFull = false;
+    public float guardSpeed = 2;
     
     private TimerMachine timer;
     private bool isSlowResetting = false;
@@ -27,14 +31,16 @@ public class Posture : MonoBehaviour
 
     
     // Methods
-    private void Start()
+    void Start()
     {
         timer = new TimerMachine();
         timer.InitializeTimer();
     }
-    private void Update()
+    void Update()
     {
         DelayedReset();
+        
+        isFull = currValue >= maxValue;
     }
 
     
@@ -69,7 +75,7 @@ public class Posture : MonoBehaviour
         
         while (currValue < targetValue)
         {
-            currValue = Mathf.Min(currValue + growthVelocity, targetValue);
+            currValue = Mathf.Min(currValue + growthVelocity, targetValue+1);
             OnPostureChanged?.Invoke(maxValue, currValue);
             yield return new WaitForSeconds(growthRate);
         }
@@ -124,5 +130,24 @@ public class Posture : MonoBehaviour
     {
         print("Broken");
         OnPostureReset?.Invoke();
+    }
+
+    // 強制重置姿態（用於立即清除滿值並避免立刻重入 GuardBreak）
+    public void ForceBroken()
+    {
+        // 停止任何正在進行的慢速重置
+        if (isSlowResetting && slowResetRoutine is not null)
+        {
+            StopCoroutine(slowResetRoutine);
+            slowResetRoutine = null;
+            isSlowResetting = false;
+        }
+
+        currValue = 0f;
+        postureIncreased = false;
+        timer.Pause();
+        timer.ResetTimer();
+        OnPostureChanged?.Invoke(maxValue, currValue);
+        PostureBroken();
     }
 }

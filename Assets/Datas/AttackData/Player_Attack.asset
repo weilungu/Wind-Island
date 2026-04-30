@@ -17,6 +17,6 @@ MonoBehaviour:
   damage: 10
   hitboxSize: {x: 2, y: 2}
   maxCombo: 3
-  comboCooldown: 1
-  comboResetTime: 0.5
+  comboCooldown: 1.5
+  comboResetTime: 1
   posture: 10

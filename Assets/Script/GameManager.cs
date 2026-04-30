@@ -5,21 +5,31 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// All Status Enumerator
+// All State Enum
 public enum PlayerState
 {
     Idle,
+    
     Move,
     Dash,
     Attack,
+    
+    GuardBreak,
+    HitStun,
+    
     Dead,
 }
 public enum EnemyState
 {
     Idle,
+    
     Chase,
     Dash,
     Attack,
+    
+    GuardBreak,
+    HitStun,
+    
     Dead,
 }
 public enum GameState
