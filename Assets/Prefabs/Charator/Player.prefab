@@ -120,6 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backlash: 10
+  playerState: 0
+  guardBreakDuration: 0.5
 --- !u!114 &541535365916179944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +149,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   castDistance: 0.02
-  speed: 5
+  _speed: 5
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -194,11 +196,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currValue: 0
   postureIncreased: 0
-  maxValue: 100
+  maxValue: 25
   growthVelocity: 1
   growthRate: 0.01
   slowResetRate: 0.08
-  resetTime: 0.5
+  resetTime: 1.2
+  isFull: 0
+  guardSpeed: 2
 --- !u!114 &7651592810922532248
 MonoBehaviour:
   m_ObjectHideFlags: 0

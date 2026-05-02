@@ -25,6 +25,7 @@ public class Posture : MonoBehaviour
     private TimerMachine timer;
     private bool isSlowResetting = false;
     private Coroutine slowResetRoutine;
+    private Coroutine recoveryRoutine;
     
     public event Action OnPostureReset;
     public event Action<float, float> OnPostureChanged;
@@ -62,6 +63,12 @@ public class Posture : MonoBehaviour
     {
         if (value <= 0f) yield break;
 
+        if (recoveryRoutine is not null)
+        {
+            StopCoroutine(recoveryRoutine);
+            recoveryRoutine = null;
+        }
+
         if (isSlowResetting && slowResetRoutine is not null)
         {
             StopCoroutine(slowResetRoutine);
@@ -75,7 +82,7 @@ public class Posture : MonoBehaviour
         
         while (currValue < targetValue)
         {
-            currValue = Mathf.Min(currValue + growthVelocity, targetValue+1);
+            currValue = Mathf.Min(currValue + growthVelocity, targetValue);
             OnPostureChanged?.Invoke(maxValue, currValue);
             yield return new WaitForSeconds(growthRate);
         }
@@ -88,13 +95,14 @@ public class Posture : MonoBehaviour
     {
         if (value <= 0f) yield break;
 
-        float targetValue = currValue - value;
+        if (currValue <= 0f) yield break;
+
+        float targetValue = Mathf.Max(currValue - value, 0f);
         if (targetValue >= currValue) yield break;
         
         while (currValue > targetValue)
         {
             currValue = Mathf.Max(currValue - growthVelocity, targetValue);
-            if (currValue <= 0f) currValue = 0f;
             
             OnPostureChanged?.Invoke(maxValue, currValue);
             yield return new WaitForSeconds(growthRate);
@@ -108,6 +116,8 @@ public class Posture : MonoBehaviour
             timer.ResetTimer();
             PostureBroken();
         }
+
+        recoveryRoutine = null;
     }
     public IEnumerator SlowlyReset()
     {
@@ -143,11 +153,30 @@ public class Posture : MonoBehaviour
             isSlowResetting = false;
         }
 
+        if (recoveryRoutine is not null)
+        {
+            StopCoroutine(recoveryRoutine);
+            recoveryRoutine = null;
+        }
+
         currValue = 0f;
         postureIncreased = false;
         timer.Pause();
         timer.ResetTimer();
         OnPostureChanged?.Invoke(maxValue, currValue);
         PostureBroken();
+    }
+
+    public void StartRecoveryRoutine(float value)
+    {
+        if (value <= 0f) return;
+
+        if (recoveryRoutine is not null)
+        {
+            StopCoroutine(recoveryRoutine);
+            recoveryRoutine = null;
+        }
+
+        recoveryRoutine = StartCoroutine(Recovery(value));
     }
 }

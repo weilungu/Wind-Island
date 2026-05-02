@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
                     attack.TryAttack(faceDir);
                     if (attack.hitCount > 0)
                     {
-                        StartCoroutine(posture.Recovery(attack.hitCount * backlash));
+                        posture.StartRecoveryRoutine(attack.hitCount * backlash);
                     }
                     
                     attack.UpdateAttackDirection(faceDir);
