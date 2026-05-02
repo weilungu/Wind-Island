@@ -26,6 +26,7 @@ public class Posture : MonoBehaviour
     private bool isSlowResetting = false;
     private Coroutine slowResetRoutine;
     private Coroutine recoveryRoutine;
+    private Coroutine damageRoutine;
     
     public event Action OnPostureReset;
     public event Action<float, float> OnPostureChanged;
@@ -40,7 +41,8 @@ public class Posture : MonoBehaviour
     void Update()
     {
         DelayedReset();
-        
+        // 安全限制在 0~maxValue，避免超出造成無限增加錯覺
+        currValue = Mathf.Clamp(currValue, 0f, maxValue);
         isFull = currValue >= maxValue;
     }
 
@@ -62,6 +64,12 @@ public class Posture : MonoBehaviour
     public IEnumerator TakePostureDamage(float value)
     {
         if (value <= 0f) yield break;
+
+        if (currValue >= maxValue)
+        {
+            currValue = maxValue;
+            yield break;
+        }
 
         if (recoveryRoutine is not null)
         {
@@ -90,6 +98,8 @@ public class Posture : MonoBehaviour
         postureIncreased = currValue > 0f;
         timer.ResetTimer();
         timer.Run();
+
+        damageRoutine = null;
     }
     public IEnumerator Recovery(float value)
     {
@@ -159,12 +169,31 @@ public class Posture : MonoBehaviour
             recoveryRoutine = null;
         }
 
+        if (damageRoutine is not null)
+        {
+            StopCoroutine(damageRoutine);
+            damageRoutine = null;
+        }
+
         currValue = 0f;
         postureIncreased = false;
         timer.Pause();
         timer.ResetTimer();
         OnPostureChanged?.Invoke(maxValue, currValue);
         PostureBroken();
+    }
+
+    public void StartDamageRoutine(float value)
+    {
+        if (value <= 0f) return;
+
+        if (damageRoutine is not null)
+        {
+            StopCoroutine(damageRoutine);
+            damageRoutine = null;
+        }
+
+        damageRoutine = StartCoroutine(TakePostureDamage(value));
     }
 
     public void StartRecoveryRoutine(float value)

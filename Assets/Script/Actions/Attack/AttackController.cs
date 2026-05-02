@@ -92,7 +92,7 @@ public class AttackController : MonoBehaviour
 
             if ( posture is not null)
             {
-                StartCoroutine(posture.TakePostureDamage(data.posture));
+                posture.StartDamageRoutine(data.posture);
             }
         }
     }
