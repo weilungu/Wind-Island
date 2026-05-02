@@ -156,6 +156,22 @@ public class PlayerController : MonoBehaviour
             
             case PlayerState.GuardBreak:
                 print("Guard Break");
+                // GuardBreak 期間仍要依照輸入更新方向與移動動畫
+                ToMove();
+
+                // GuardBreak 期間仍可攻擊
+                if (inp.attackPressed && attack.canAttack)
+                {
+                    anim.SetTrigger(AnimParams.Attack);
+
+                    attack.TryAttack(faceDir);
+                    if (attack.hitCount > 0)
+                    {
+                        posture.StartRecoveryRoutine(attack.hitCount * backlash);
+                    }
+
+                    attack.UpdateAttackDirection(faceDir);
+                }
                 
                 // 只在剛進入 GuardBreak 時初始化（避免重複啟動協程與重覆設定速度）
                 if (!isInGuardBreak)
@@ -170,9 +186,6 @@ public class PlayerController : MonoBehaviour
                         dash.ForceStop();
 
                     posture.ForceBroken();
-                    // 讓角色仍能移動（較慢）並播放對應動畫
-                    ToMove();
-
                     StartCoroutine(GuardBreakRoutine());
                 }
                 break;

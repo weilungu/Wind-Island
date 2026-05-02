@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -5,21 +6,29 @@ public class EnemyController : MonoBehaviour
     protected MoveController move;
     protected EnemyAttack attack;
     protected DashController dash;
+    [SerializeField] protected Posture posture;
     [SerializeField] protected Transform target;
     
     
     protected Vector2 faceDir = Vector2.zero;
     protected EnemyState enemyState;
+    protected bool isInGuardBreak = false;
+    protected float originalMoveSpeed = 0f;
 
     
     [Header("Debug")] 
     [SerializeField] protected bool hasPlayerInFront;
+    [Header("GuardBreak")]
+    [SerializeField] protected float guardBreakDuration = 0.5f;
+    [SerializeField] protected float guardBreakMoveSpeed = 2f;
 
     protected virtual void Awake()
     {
         move = GetComponent<MoveController>();
         attack = GetComponent<EnemyAttack>();
         dash = GetComponent<DashController>();
+        if (posture is null)
+            posture = GetComponent<Posture>();
     }
     protected virtual void Start()
     {
@@ -38,6 +47,9 @@ public class EnemyController : MonoBehaviour
     }
     public virtual void ActionState()
     {
+        if (posture is not null && posture.isFull && enemyState != EnemyState.GuardBreak)
+            SetEnemyState(EnemyState.GuardBreak);
+
         switch (enemyState)
         {
             case EnemyState.Idle: OnIdle(); break;
@@ -47,6 +59,8 @@ public class EnemyController : MonoBehaviour
             case EnemyState.Dash: OnDash(); break;
             
             case EnemyState.Attack: OnAttack(); break;
+
+            case EnemyState.GuardBreak: OnGuardBreak(); break;
         }
     }
     public virtual void PhysicsState()
@@ -54,6 +68,11 @@ public class EnemyController : MonoBehaviour
         switch (enemyState)
         {
             case EnemyState.Chase:
+                move.Move(faceDir);
+                break;
+
+            case EnemyState.GuardBreak:
+                // GuardBreak 仍可移動（速度已在 OnGuardBreak 中調整）
                 move.Move(faceDir);
                 break;
 
@@ -93,6 +112,29 @@ public class EnemyController : MonoBehaviour
         if (attack.HasPlayerInFront) EnemyAttack();
         else SetEnemyState(EnemyState.Chase); // Player 離開範圍，重新追擊
     }
+    protected virtual void OnGuardBreak()
+    {
+        UpdateFaceDir();
+        attack.UpdateAttackDirection(faceDir);
+
+        // 每幀維持 GuardBreak 移動速度
+        float targetSpeed = posture is not null ? posture.guardSpeed : guardBreakMoveSpeed;
+        move.Speed = targetSpeed;
+
+        if (!isInGuardBreak)
+        {
+            isInGuardBreak = true;
+            originalMoveSpeed = move.Speed;
+
+            if (dash.IsDashing)
+                dash.ForceStop();
+
+            if (posture is not null)
+                posture.ForceBroken();
+
+            StartCoroutine(GuardBreakRoutine());
+        }
+    }
     protected virtual void EnemyAttack()
     {
         // 子類別實作具體攻擊行為
@@ -113,10 +155,25 @@ public class EnemyController : MonoBehaviour
     }
     protected void TryStartDash()
     {
+        if (isInGuardBreak || enemyState == EnemyState.GuardBreak)
+            return;
+
         UpdateFaceDir();
         if (dash.TryDash(faceDir))
         {
             SetEnemyState(EnemyState.Dash);
         }
+    }
+
+    IEnumerator GuardBreakRoutine()
+    {
+        yield return new WaitForSeconds(guardBreakDuration);
+        move.Speed = originalMoveSpeed;
+        isInGuardBreak = false;
+
+        if (target is null)
+            SetEnemyState(EnemyState.Idle);
+        else
+            SetEnemyState(EnemyState.Chase);
     }
 }
