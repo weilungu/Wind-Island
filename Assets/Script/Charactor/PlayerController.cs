@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private Posture posture;
     private bool isInGuardBreak = false;
     private float originalMoveSpeed = 0f;
+    private Coroutine hitStunRoutine;
     
 
     [Header("Value")]
@@ -44,6 +45,18 @@ public class PlayerController : MonoBehaviour
         health = GetComponent<Health>();
         attack = GetComponent<AttackController>();
         posture = GetComponent<Posture>();
+    }
+
+    void OnEnable()
+    {
+        if (health is not null)
+            health.OnDamaged += HandleDamaged;
+    }
+
+    void OnDisable()
+    {
+        if (health is not null)
+            health.OnDamaged -= HandleDamaged;
     }
 
     void Start()
@@ -250,6 +263,37 @@ public class PlayerController : MonoBehaviour
         // 還原速度與狀態
         move.Speed = originalMoveSpeed;
         isInGuardBreak = false;
+        if (playerState != PlayerState.HitStun)
+            SetPlayerState(direction == Vector2.zero ? PlayerState.Idle : PlayerState.Move);
+    }
+
+    void HandleDamaged(int damage)
+    {
+        if (playerState == PlayerState.GuardBreak)
+            EnterHitStun();
+    }
+
+    void EnterHitStun()
+    {
+        if (hitStunRoutine is not null)
+            StopCoroutine(hitStunRoutine);
+
+        if (dash.IsDashing)
+            dash.ForceStop();
+
+        move.Speed = originalMoveSpeed;
+        isInGuardBreak = false;
+        posture.SetIgnoreDamage(true);
+        SetPlayerState(PlayerState.HitStun);
+
+        hitStunRoutine = StartCoroutine(HitStunRoutine());
+    }
+
+    IEnumerator HitStunRoutine()
+    {
+        yield return new WaitForSeconds(posture.hitStunDuration);
+        hitStunRoutine = null;
+        posture.SetIgnoreDamage(false);
         SetPlayerState(direction == Vector2.zero ? PlayerState.Idle : PlayerState.Move);
     }
 }

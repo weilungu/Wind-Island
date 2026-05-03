@@ -21,6 +21,12 @@ public class Posture : MonoBehaviour
     [Header("Guard Break")]
     public bool isFull = false;
     public float guardSpeed = 2;
+
+    [Header("HitStun")]
+    public float hitStunDuration = 0.5f;
+
+    [Header("HitStun")]
+    [SerializeField] private bool ignoreDamage = false;
     
     private TimerMachine timer;
     private bool isSlowResetting = false;
@@ -64,6 +70,8 @@ public class Posture : MonoBehaviour
     public IEnumerator TakePostureDamage(float value)
     {
         if (value <= 0f) yield break;
+
+        if (ignoreDamage) yield break;
 
         if (currValue >= maxValue)
         {
@@ -187,6 +195,8 @@ public class Posture : MonoBehaviour
     {
         if (value <= 0f) return;
 
+        if (ignoreDamage) return;
+
         if (damageRoutine is not null)
         {
             StopCoroutine(damageRoutine);
@@ -194,6 +204,11 @@ public class Posture : MonoBehaviour
         }
 
         damageRoutine = StartCoroutine(TakePostureDamage(value));
+    }
+
+    public void SetIgnoreDamage(bool value)
+    {
+        ignoreDamage = value;
     }
 
     public void StartRecoveryRoutine(float value)

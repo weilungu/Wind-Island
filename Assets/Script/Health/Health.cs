@@ -12,6 +12,7 @@ public class Health : MonoBehaviour
     // Delegate
     public event Action<int> OnHealthChanged;
     public event Action<int> OnMaxHealthChanged;
+    public event Action<int> OnDamaged;
     public event Action OnDeath;
     
     void Start()
@@ -23,6 +24,9 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (damage <= 0) return;
+
+        OnDamaged?.Invoke(damage);
         currentHealth = Mathf.Max(currentHealth - damage, 0);
         OnHealthChanged?.Invoke(currentHealth);
         // print("OnHealthChanged");
