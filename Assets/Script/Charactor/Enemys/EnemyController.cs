@@ -130,7 +130,7 @@ public class EnemyController : MonoBehaviour
                 dash.ForceStop();
 
             if (posture is not null)
-                posture.ForceBroken();
+                posture.StartGuardBreakRecover();
 
             StartCoroutine(GuardBreakRoutine());
         }
@@ -167,9 +167,20 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator GuardBreakRoutine()
     {
-        yield return new WaitForSeconds(guardBreakDuration);
+        if (posture is not null)
+        {
+            while (posture.CurrentValue > posture.RecoverThreshold)
+                yield return null;
+        }
+        else
+        {
+            yield return new WaitForSeconds(guardBreakDuration);
+        }
         move.Speed = originalMoveSpeed;
         isInGuardBreak = false;
+
+        if (posture is not null)
+            posture.ContinueAfterGuardBreak();
 
         if (target is null)
             SetEnemyState(EnemyState.Idle);

@@ -198,7 +198,7 @@ public class PlayerController : MonoBehaviour
                     if (dash.IsDashing)
                         dash.ForceStop();
 
-                    posture.ForceBroken();
+                    posture.StartGuardBreakRecover();
                     StartCoroutine(GuardBreakRoutine());
                 }
                 break;
@@ -259,10 +259,12 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator GuardBreakRoutine()
     {
-        yield return new WaitForSeconds(guardBreakDuration);
+        while (posture.CurrentValue > posture.RecoverThreshold)
+            yield return null;
         // 還原速度與狀態
         move.Speed = originalMoveSpeed;
         isInGuardBreak = false;
+        posture.ContinueAfterGuardBreak();
         if (playerState != PlayerState.HitStun)
             SetPlayerState(direction == Vector2.zero ? PlayerState.Idle : PlayerState.Move);
     }

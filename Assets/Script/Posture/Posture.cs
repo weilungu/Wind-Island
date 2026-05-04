@@ -21,21 +21,25 @@ public class Posture : MonoBehaviour
     [Header("Guard Break")]
     public bool isFull = false;
     public float guardSpeed = 2;
+    public float recoverStatePct = 75f;
 
     [Header("HitStun")]
     public float hitStunDuration = 0.5f;
-
-    [Header("HitStun")]
-    [SerializeField] private bool ignoreDamage = false;
+    [SerializeField] private bool ignorePosture = false;
     
+
     private TimerMachine timer;
     private bool isSlowResetting = false;
     private Coroutine slowResetRoutine;
     private Coroutine recoveryRoutine;
     private Coroutine damageRoutine;
+    private Coroutine guardBreakRecoverRoutine;
     
     public event Action OnPostureReset;
     public event Action<float, float> OnPostureChanged;
+
+    public float CurrentValue => currValue;
+    public float RecoverThreshold => maxValue * (recoverStatePct * 0.01f);
 
     
     // Methods
@@ -71,7 +75,7 @@ public class Posture : MonoBehaviour
     {
         if (value <= 0f) yield break;
 
-        if (ignoreDamage) yield break;
+        if (ignorePosture) yield break;
 
         if (currValue >= maxValue)
         {
@@ -191,11 +195,45 @@ public class Posture : MonoBehaviour
         PostureBroken();
     }
 
+    public void StartGuardBreakRecover()
+    {
+        if (guardBreakRecoverRoutine is not null)
+        {
+            StopCoroutine(guardBreakRecoverRoutine);
+            guardBreakRecoverRoutine = null;
+        }
+
+        if (isSlowResetting && slowResetRoutine is not null)
+        {
+            StopCoroutine(slowResetRoutine);
+            slowResetRoutine = null;
+            isSlowResetting = false;
+        }
+
+        if (recoveryRoutine is not null)
+        {
+            StopCoroutine(recoveryRoutine);
+            recoveryRoutine = null;
+        }
+
+        if (damageRoutine is not null)
+        {
+            StopCoroutine(damageRoutine);
+            damageRoutine = null;
+        }
+
+        postureIncreased = false;
+        timer.Pause();
+        timer.ResetTimer();
+
+        guardBreakRecoverRoutine = StartCoroutine(GuardBreakRecoverRoutine());
+    }
+
     public void StartDamageRoutine(float value)
     {
         if (value <= 0f) return;
 
-        if (ignoreDamage) return;
+        if (ignorePosture) return;
 
         if (damageRoutine is not null)
         {
@@ -208,7 +246,7 @@ public class Posture : MonoBehaviour
 
     public void SetIgnoreDamage(bool value)
     {
-        ignoreDamage = value;
+        ignorePosture = value;
     }
 
     public void StartRecoveryRoutine(float value)
@@ -222,5 +260,27 @@ public class Posture : MonoBehaviour
         }
 
         recoveryRoutine = StartCoroutine(Recovery(value));
+    }
+
+    public void ContinueAfterGuardBreak()
+    {
+        if (currValue <= 0f) return;
+        if (isSlowResetting) return;
+
+        slowResetRoutine ??= StartCoroutine(SlowlyReset());
+    }
+
+    IEnumerator GuardBreakRecoverRoutine()
+    {
+        float targetValue = Mathf.Max(RecoverThreshold, 0f);
+
+        while (currValue > targetValue)
+        {
+            currValue = Mathf.Max(currValue - growthVelocity, targetValue);
+            OnPostureChanged?.Invoke(maxValue, currValue);
+            yield return new WaitForSeconds(slowResetRate);
+        }
+
+        guardBreakRecoverRoutine = null;
     }
 }
