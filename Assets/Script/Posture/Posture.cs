@@ -22,6 +22,7 @@ public class Posture : MonoBehaviour
     public bool isFull = false;
     public float guardSpeed = 2;
     public float recoverStatePct = 75f;
+    public float guardBreakSlowResetRate = 0.01f;
 
     [Header("HitStun")]
     public float hitStunDuration = 0.5f;
@@ -278,7 +279,7 @@ public class Posture : MonoBehaviour
         {
             currValue = Mathf.Max(currValue - growthVelocity, targetValue);
             OnPostureChanged?.Invoke(maxValue, currValue);
-            yield return new WaitForSeconds(slowResetRate);
+            yield return new WaitForSeconds(guardBreakSlowResetRate);
         }
 
         guardBreakRecoverRoutine = null;
