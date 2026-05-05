@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     protected Animator anim;
+    protected SpriteRenderer sprite;
 
     protected MoveController move;
     protected EnemyAttack attack;
@@ -27,6 +28,7 @@ public class EnemyController : MonoBehaviour
     protected virtual void Awake()
     {
         anim = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
 
         move = GetComponent<MoveController>();
         attack = GetComponent<EnemyAttack>();
@@ -169,6 +171,8 @@ public class EnemyController : MonoBehaviour
     {
         anim.SetFloat(AnimParams.MoveX, dir.x);
         anim.SetFloat(AnimParams.MoveY, dir.y);
+        if (sprite is not null && dir.x != 0f)
+            sprite.flipX = dir.x < 0f;
     }
     protected float DistanceToTarget()
     {
