@@ -195,14 +195,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currValue: 0
   postureIncreased: 0
-  maxValue: 25
+  maxValue: 100
   growthVelocity: 1
   growthRate: 0.01
   slowResetRate: 0.08
   resetTime: 1.2
   isFull: 0
   guardSpeed: 2
-  recoverStatePct: 75
+  recoverStatePct: 50
   guardBreakSlowResetRate: 0.5
   hitStunDuration: 2
   ignorePosture: 0
@@ -220,13 +220,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currCombo: 0
   isAttacking: 0
-  postureDamage: 0
+  hitCount: 0
   attackPoint: {fileID: 1300695912978553398}
   targetLayers:
     serializedVersion: 2
     m_Bits: 64
   data: {fileID: 11400000, guid: d3b8531b785f13d4bacaaf75ef287c64, type: 2}
-  hitCount: 0
 --- !u!50 &6793134443164568812
 Rigidbody2D:
   serializedVersion: 4

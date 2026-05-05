@@ -997,7 +997,7 @@ MonoBehaviour:
   resetTime: 1.2
   isFull: 0
   guardSpeed: 2
-  recoverStatePct: 75
+  recoverStatePct: 50
   guardBreakSlowResetRate: 0.5
   hitStunDuration: 2
   ignorePosture: 0
@@ -1046,13 +1046,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currCombo: 0
   isAttacking: 0
-  postureDamage: 0
+  hitCount: 0
   attackPoint: {fileID: 2264196468263795275}
   targetLayers:
     serializedVersion: 2
     m_Bits: 8
   data: {fileID: 11400000, guid: 827db2edf8218ff45bfdca829faad9be, type: 2}
-  hitCount: 0
   hasPlayerInFront: 0
 --- !u!114 &5647309542648327982
 MonoBehaviour:

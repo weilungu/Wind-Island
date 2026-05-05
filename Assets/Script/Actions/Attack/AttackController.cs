@@ -5,6 +5,7 @@ public class AttackController : MonoBehaviour
     [Header("Debug")] 
     [SerializeField] private int currCombo;
     [SerializeField] private bool isAttacking;
+    public int hitCount;
 
     [Header("Values")]
     
@@ -26,7 +27,6 @@ public class AttackController : MonoBehaviour
     // ── 公開查詢 ──────────────────────────────────────────────────────────
     public bool canAttack => Time.time >= nextAttackTime && Time.time >= comboCooldownEndTime;
     public bool IsAttacking => isAttacking;
-    public int hitCount;
     
     // ── 公開 API ──────────────────────────────────────────────────────────
     public bool IsTargetInRange(Vector2 targetPos)

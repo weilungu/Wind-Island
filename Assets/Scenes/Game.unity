@@ -7455,7 +7455,7 @@ PrefabInstance:
     - target: {fileID: 5266531355352111075, guid: 84303c6abcf1325498e9e272801f7add,
         type: 3}
       propertyPath: maxValue
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

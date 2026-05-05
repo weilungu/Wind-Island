@@ -7,7 +7,7 @@ public static class AnimParams
 
     // Trigger
     public static readonly int Attack = Animator.StringToHash("Attack");
-    public static readonly int Down = Animator.StringToHash("Down");
+    public static readonly int Dash = Animator.StringToHash("Dash");
 
 
     // Float

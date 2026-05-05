@@ -236,7 +236,7 @@ public class PlayerController : MonoBehaviour
         if (!dash.TryDash(direction)) return false;
 
         posture.StartDamageRoutine(backlash);
-        anim.SetTrigger(AnimParams.Attack);
+        anim.SetTrigger(AnimParams.Dash);
         SetPlayerState(PlayerState.Dash);
 
         return true;
