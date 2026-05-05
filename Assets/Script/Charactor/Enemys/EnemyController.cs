@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     protected MoveController move;
     protected EnemyAttack attack;
     protected DashController dash;
+    protected Health health;
     [SerializeField] protected Posture posture;
     [SerializeField] protected Transform target;
     
@@ -17,6 +18,7 @@ public class EnemyController : MonoBehaviour
     protected EnemyState enemyState;
     protected bool isInGuardBreak = false;
     protected float originalMoveSpeed = 0f;
+    protected Coroutine hitStunRoutine;
 
     
     [Header("Debug")] 
@@ -33,8 +35,20 @@ public class EnemyController : MonoBehaviour
         move = GetComponent<MoveController>();
         attack = GetComponent<EnemyAttack>();
         dash = GetComponent<DashController>();
+        health = GetComponent<Health>();
         if (posture is null)
             posture = GetComponent<Posture>();
+    }
+    protected virtual void OnEnable()
+    {
+        if (health is not null)
+            health.OnDamaged += HandleDamaged;
+    }
+
+    protected virtual void OnDisable()
+    {
+        if (health is not null)
+            health.OnDamaged -= HandleDamaged;
     }
     protected virtual void Start()
     {
@@ -70,6 +84,8 @@ public class EnemyController : MonoBehaviour
             case EnemyState.Attack: OnAttack(); break;
 
             case EnemyState.GuardBreak: OnGuardBreak(); break;
+
+            case EnemyState.HitStun: OnHitStun(); break;
         }
     }
     public virtual void PhysicsState()
@@ -133,10 +149,6 @@ public class EnemyController : MonoBehaviour
         SetMoveAnim(faceDir);
         attack.UpdateAttackDirection(faceDir);
 
-        // 每幀維持 GuardBreak 移動速度
-        float targetSpeed = posture is not null ? posture.guardSpeed : guardBreakMoveSpeed;
-        move.Speed = targetSpeed;
-
         if (!isInGuardBreak)
         {
             isInGuardBreak = true;
@@ -150,6 +162,14 @@ public class EnemyController : MonoBehaviour
 
             StartCoroutine(GuardBreakRoutine());
         }
+
+        // 每幀維持 GuardBreak 移動速度
+        float targetSpeed = posture is not null ? posture.guardSpeed : guardBreakMoveSpeed;
+        move.Speed = targetSpeed;
+    }
+    protected virtual void OnHitStun()
+    {
+        SetMoveAnim(Vector2.zero);
     }
     protected virtual void EnemyAttack()
     {
@@ -178,7 +198,7 @@ public class EnemyController : MonoBehaviour
     }
     protected void TryStartDash()
     {
-        if (isInGuardBreak || enemyState == EnemyState.GuardBreak)
+        if (isInGuardBreak || enemyState == EnemyState.GuardBreak || enemyState == EnemyState.HitStun)
             return;
 
         UpdateFaceDir();
@@ -204,6 +224,49 @@ public class EnemyController : MonoBehaviour
 
         if (posture is not null)
             posture.ContinueAfterGuardBreak();
+
+        if (enemyState != EnemyState.HitStun)
+        {
+            if (target is null)
+                SetEnemyState(EnemyState.Idle);
+            else
+                SetEnemyState(EnemyState.Chase);
+        }
+    }
+
+    void HandleDamaged(int damage)
+    {
+        if (enemyState == EnemyState.GuardBreak)
+            EnterHitStun();
+    }
+
+    void EnterHitStun()
+    {
+        if (hitStunRoutine is not null)
+            StopCoroutine(hitStunRoutine);
+
+        if (dash.IsDashing)
+            dash.ForceStop();
+
+        move.Speed = originalMoveSpeed;
+        isInGuardBreak = false;
+        if (posture is not null)
+        {
+            posture.ForceBroken();
+            posture.SetIgnoreDamage(true);
+        }
+
+        SetEnemyState(EnemyState.HitStun);
+        hitStunRoutine = StartCoroutine(HitStunRoutine());
+    }
+
+    IEnumerator HitStunRoutine()
+    {
+        float duration = posture is not null ? posture.hitStunDuration : 0.5f;
+        yield return new WaitForSeconds(duration);
+        hitStunRoutine = null;
+        if (posture is not null)
+            posture.SetIgnoreDamage(false);
 
         if (target is null)
             SetEnemyState(EnemyState.Idle);

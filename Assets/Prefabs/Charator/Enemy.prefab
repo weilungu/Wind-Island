@@ -573,7 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616087233a4a80e42bc6ed07607611b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
+  enemy: {fileID: 3917019850857179018}
 --- !u!1 &4972494201705121753
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,10 +996,10 @@ MonoBehaviour:
   slowResetRate: 0.08
   resetTime: 1.2
   isFull: 0
-  guardSpeed: 0
-  recoverStatePct: 25
-  guardBreakSlowResetRate: 0.01
-  hitStunDuration: 0.5
+  guardSpeed: 2
+  recoverStatePct: 75
+  guardBreakSlowResetRate: 0.5
+  hitStunDuration: 2
   ignorePosture: 0
 --- !u!114 &1132621515538581059
 MonoBehaviour:
