@@ -997,6 +997,10 @@ MonoBehaviour:
   resetTime: 1.2
   isFull: 0
   guardSpeed: 0
+  recoverStatePct: 25
+  guardBreakSlowResetRate: 0.01
+  hitStunDuration: 0.5
+  ignorePosture: 0
 --- !u!114 &1132621515538581059
 MonoBehaviour:
   m_ObjectHideFlags: 0

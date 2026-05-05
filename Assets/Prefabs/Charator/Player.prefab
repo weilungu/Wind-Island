@@ -121,7 +121,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backlash: 10
   playerState: 0
-  guardBreakDuration: 2
 --- !u!114 &541535365916179944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +202,10 @@ MonoBehaviour:
   resetTime: 1.2
   isFull: 0
   guardSpeed: 2
+  recoverStatePct: 75
+  guardBreakSlowResetRate: 0.5
+  hitStunDuration: 2
+  ignorePosture: 0
 --- !u!114 &7651592810922532248
 MonoBehaviour:
   m_ObjectHideFlags: 0
