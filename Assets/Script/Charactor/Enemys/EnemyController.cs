@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    protected Animator anim;
+
     protected MoveController move;
     protected EnemyAttack attack;
     protected DashController dash;
@@ -24,6 +26,8 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Awake()
     {
+        anim = GetComponent<Animator>();
+
         move = GetComponent<MoveController>();
         attack = GetComponent<EnemyAttack>();
         dash = GetComponent<DashController>();
@@ -33,6 +37,9 @@ public class EnemyController : MonoBehaviour
     protected virtual void Start()
     {
         SetEnemyState(EnemyState.Idle);
+
+        anim.SetFloat(AnimParams.MoveX, 0f);
+        anim.SetFloat(AnimParams.MoveY, 0f);
     }
 
     
@@ -91,6 +98,7 @@ public class EnemyController : MonoBehaviour
     protected virtual void OnChase()
     {
         UpdateFaceDir();
+        SetMoveAnim(faceDir);
         attack.UpdateAttackDirection(faceDir);
         attack.CheckPlayerInFront();
 
@@ -102,6 +110,7 @@ public class EnemyController : MonoBehaviour
     }
     protected virtual void OnDash()
     {
+        SetMoveAnim(faceDir);
         if (!dash.IsDashing)
             SetEnemyState(EnemyState.Attack);
     }
@@ -109,12 +118,21 @@ public class EnemyController : MonoBehaviour
     {
         attack.CheckPlayerInFront();
 
-        if (attack.HasPlayerInFront) EnemyAttack();
+        if (attack.HasPlayerInFront)
+        {
+            SetMoveAnim(faceDir);
+            if (attack.canAttack)
+            {
+                anim.SetTrigger(AnimParams.Attack);
+                EnemyAttack();
+            }
+        }
         else SetEnemyState(EnemyState.Chase); // Player 離開範圍，重新追擊
     }
     protected virtual void OnGuardBreak()
     {
         UpdateFaceDir();
+        SetMoveAnim(faceDir);
         attack.UpdateAttackDirection(faceDir);
 
         // 每幀維持 GuardBreak 移動速度
@@ -146,6 +164,11 @@ public class EnemyController : MonoBehaviour
     {
         if (target is null) return;
         faceDir = (target.position - transform.position).normalized;
+    }
+    protected void SetMoveAnim(Vector2 dir)
+    {
+        anim.SetFloat(AnimParams.MoveX, dir.x);
+        anim.SetFloat(AnimParams.MoveY, dir.y);
     }
     protected float DistanceToTarget()
     {
