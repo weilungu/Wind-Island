@@ -153,6 +153,11 @@ public class GameManager : MonoBehaviour
         print("ReturnToMainMenu");
         SceneManager.LoadScene("GameDirectory");
     }
+    public void RetryGame()
+    {
+        print("RetryGame");
+        SceneManager.LoadScene("Game");
+    }
     public void QuitGame()
     {
         print("Quit Game");
