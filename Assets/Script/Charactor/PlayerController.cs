@@ -30,9 +30,6 @@ public class PlayerController : MonoBehaviour
     
     [Header("Debug")]
     [SerializeField] private PlayerState playerState;
-    
-    [Header("GuardBreak")]
-    [SerializeField] private float guardBreakDuration = 0.5f;
 
     void Awake()
     {
