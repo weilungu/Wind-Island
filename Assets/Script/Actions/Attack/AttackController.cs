@@ -7,7 +7,6 @@ public class AttackController : MonoBehaviour
     [SerializeField] private bool isAttacking;
 
     [Header("Values")]
-    [SerializeField] public int postureDamage;
     
     private float nextAttackTime;
     private float lastAttackTime;
