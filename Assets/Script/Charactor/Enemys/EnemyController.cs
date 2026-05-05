@@ -123,11 +123,7 @@ public class EnemyController : MonoBehaviour
         if (attack.HasPlayerInFront)
         {
             SetMoveAnim(faceDir);
-            if (attack.canAttack)
-            {
-                anim.SetTrigger(AnimParams.Attack);
-                EnemyAttack();
-            }
+            if (attack.canAttack) EnemyAttack();
         }
         else SetEnemyState(EnemyState.Chase); // Player 離開範圍，重新追擊
     }

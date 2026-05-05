@@ -53,6 +53,7 @@ public class Enemy_One : EnemyController
 
         if (attack.TryAttack(faceDir))
         {
+            anim.SetTrigger(AnimParams.Attack);
             attackCooldownEndTime = Time.time + attackCooldown;
             SetEnemyState(EnemyState.Chase);
         }
