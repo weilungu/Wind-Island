@@ -202,6 +202,8 @@ public class PlayerController : MonoBehaviour
             
             
             case PlayerState.HitStun:
+                print("HitStun");
+                SetMoveAnim(false);
                 break;
         }
     }
@@ -282,6 +284,7 @@ public class PlayerController : MonoBehaviour
 
         move.Speed = originalMoveSpeed;
         isInGuardBreak = false;
+        posture.ForceBroken();
         posture.SetIgnoreDamage(true);
         SetPlayerState(PlayerState.HitStun);
 
