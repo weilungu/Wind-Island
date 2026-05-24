@@ -43,12 +43,16 @@ public class EnemyController : MonoBehaviour
     {
         if (health is not null)
             health.OnDamaged += HandleDamaged;
+        if (health is not null)
+            health.OnDeath += HandleDeath;
     }
 
     protected virtual void OnDisable()
     {
         if (health is not null)
             health.OnDamaged -= HandleDamaged;
+        if (health is not null)
+            health.OnDeath -= HandleDeath;
     }
     protected virtual void Start()
     {
@@ -70,6 +74,8 @@ public class EnemyController : MonoBehaviour
     }
     public virtual void ActionState()
     {
+        if (anim is null || move is null) return;
+
         if (posture is not null && posture.isFull && enemyState != EnemyState.GuardBreak)
             SetEnemyState(EnemyState.GuardBreak);
 
@@ -90,6 +96,8 @@ public class EnemyController : MonoBehaviour
     }
     public virtual void PhysicsState()
     {
+        if (move is null) return;
+
         switch (enemyState)
         {
             case EnemyState.Chase:
@@ -185,6 +193,7 @@ public class EnemyController : MonoBehaviour
     }
     protected void SetMoveAnim(Vector2 dir)
     {
+        if (anim is null) return;
         anim.SetFloat(AnimParams.MoveX, dir.x);
         anim.SetFloat(AnimParams.MoveY, dir.y);
         if (sprite is not null && dir.x != 0f)
@@ -238,6 +247,14 @@ public class EnemyController : MonoBehaviour
     {
         if (enemyState == EnemyState.GuardBreak)
             EnterHitStun();
+    }
+
+    void HandleDeath()
+    {
+        StopAllCoroutines();
+        enemyState = EnemyState.Dead;
+        enabled = false;
+        Destroy(gameObject);
     }
 
     void EnterHitStun()
