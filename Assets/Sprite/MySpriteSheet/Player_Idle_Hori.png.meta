@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 542714835b837c943b7616ce7779fbda
+guid: 37847fa3d0d9e6d4db7c5dae5e5cbad8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,133 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TEST_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a2d5f9ec441cb714eaf299869f12b0fe
-      internalID: -1582239367
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TEST_1
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8b0e2ff8d80f43f448248924cc961bde
-      internalID: 1971170973
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TEST_2
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6eff622a34713454db022c5d7d34b825
-      internalID: 852152435
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TEST_3
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 74ccbbdadd206bf438392d397027ab29
-      internalID: 1501261998
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TEST_4
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 564f834b738b860478e27576054cb678
-      internalID: -75007851
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TEST_5
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 87a7cd08a903b724fa7c83ea9b8b50c9
-      internalID: 1840080008
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TEST_6
+      name: Player_Idle_Hori_0
       rect:
         serializedVersion: 2
         x: 0
@@ -237,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5371053d2d696304db0f87a5155d4326
-      internalID: 952993315
+      spriteID: e79aab1ea828dd741944c50fc5eec9ff
+      internalID: 830686805
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TEST_7
+      name: Player_Idle_Hori_1
       rect:
         serializedVersion: 2
         x: 48
@@ -258,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bae9e8e1674ac4544813ad359e21ac39
-      internalID: 1277207268
+      spriteID: 93ecfa44cd62b684980cf51072a3f665
+      internalID: -1124421797
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TEST_8
+      name: Player_Idle_Hori_2
       rect:
         serializedVersion: 2
         x: 96
@@ -279,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4ec716998ea98084496819536a42d144
-      internalID: 154260318
+      spriteID: 6ff389d099127904db2e245281ee4058
+      internalID: -39841066
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TEST_9
+      name: Player_Idle_Hori_3
       rect:
         serializedVersion: 2
         x: 144
@@ -300,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c38675e71cb81c47a683fdeeb3b2315
-      internalID: 669676100
+      spriteID: 1c00db25ef296f5468583d68961b1c69
+      internalID: 1462549556
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TEST_10
+      name: Player_Idle_Hori_4
       rect:
         serializedVersion: 2
         x: 192
@@ -321,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e6e0be103bca5644b49393decd17e80
-      internalID: -871310181
+      spriteID: f3815912c5acc2842b41d9a5c8a97a7c
+      internalID: 1614031313
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TEST_11
+      name: Player_Idle_Hori_5
       rect:
         serializedVersion: 2
         x: 240
@@ -342,8 +216,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e47df64748eaeb84db36e531fa67dc22
-      internalID: 1583389732
+      spriteID: 8ba626c84ca4553479d69e4260ccd477
+      internalID: -678785607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Idle_Hori_6
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 819f7ea0eb756a442a6fee0dcf60f418
+      internalID: -1533686912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Idle_Hori_7
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b0b23cf49bd11845955600ae8f802be
+      internalID: -1571349051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Idle_Hori_8
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df5c2c545dee10a4c8c842e058ef5523
+      internalID: 238184917
       vertices: []
       indices: 
       edges: []
@@ -359,18 +296,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      TEST_0: -1582239367
-      TEST_1: 1971170973
-      TEST_10: -871310181
-      TEST_11: 1583389732
-      TEST_2: 852152435
-      TEST_3: 1501261998
-      TEST_4: -75007851
-      TEST_5: 1840080008
-      TEST_6: 952993315
-      TEST_7: 1277207268
-      TEST_8: 154260318
-      TEST_9: 669676100
+      Player_Idle_Hori_0: 830686805
+      Player_Idle_Hori_1: -1124421797
+      Player_Idle_Hori_2: -39841066
+      Player_Idle_Hori_3: 1462549556
+      Player_Idle_Hori_4: 1614031313
+      Player_Idle_Hori_5: -678785607
+      Player_Idle_Hori_6: -1533686912
+      Player_Idle_Hori_7: -1571349051
+      Player_Idle_Hori_8: 238184917
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

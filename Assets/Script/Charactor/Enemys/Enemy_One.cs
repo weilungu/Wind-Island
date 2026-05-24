@@ -59,7 +59,7 @@ public class Enemy_One : EnemyController
         }
     }
 
-    public override void ActionState()
+    public new void ActionState()
     {
         base.ActionState();
         switch (enemyState)

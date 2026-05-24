@@ -5,6 +5,8 @@ public class EnemyController : MonoBehaviour
 {
     protected Animator anim;
     protected SpriteRenderer sprite;
+    protected AudioSource audios;
+    
 
     protected MoveController move;
     protected EnemyAttack attack;
@@ -23,14 +25,19 @@ public class EnemyController : MonoBehaviour
     
     [Header("Debug")] 
     [SerializeField] protected bool hasPlayerInFront;
+    
     [Header("GuardBreak")]
     [SerializeField] protected float guardBreakDuration = 0.5f;
     [SerializeField] protected float guardBreakMoveSpeed = 2f;
+    
+    [Header("Audio")]
+    [SerializeField] protected AudioClip clipAttack;
 
     protected virtual void Awake()
     {
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        audios = GetComponent<AudioSource>();
 
         move = GetComponent<MoveController>();
         attack = GetComponent<EnemyAttack>();
@@ -181,11 +188,16 @@ public class EnemyController : MonoBehaviour
     }
     protected virtual void EnemyAttack()
     {
-        // 子類別實作具體攻擊行為
+        PlayAudio(clipAttack);
     }
     
     
     // ── 工具方法 ──────────────────────────────────────────────────────────
+    protected void PlayAudio(AudioClip clip)
+    {
+        if (clip is null) return;
+        audios.PlayOneShot(clip);
+    }
     protected void UpdateFaceDir()
     {
         if (target is null) return;

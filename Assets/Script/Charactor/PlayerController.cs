@@ -33,9 +33,12 @@ public class PlayerController : MonoBehaviour
     
     [Header("Audio")]
     [SerializeField] private AudioClip clip_Move;
+    
     [SerializeField] private AudioClip clip_Sword;
     [SerializeField] private AudioClip clip_Attack;
+    [SerializeField] private AudioClip clip_Hurt;
     [SerializeField] private AudioClip clip_Dash;
+    
     [SerializeField] private AudioClip clip_GuardBreak;
     [SerializeField] private AudioClip clip_HitStun;
     
@@ -288,6 +291,7 @@ public class PlayerController : MonoBehaviour
     {
         while (posture.CurrentValue > posture.RecoverThreshold)
             yield return null;
+        
         // 還原速度與狀態
         move.Speed = originalMoveSpeed;
         isInGuardBreak = false;
