@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     // Instance
     private Animator anim;
     private SpriteRenderer sprite;
+    private AudioSource audios;
 
     private InputController inp;
     private MoveController move;
@@ -20,13 +21,23 @@ public class PlayerController : MonoBehaviour
     private AttackController attack;
     private Health health;
     private Posture posture;
+    
     private bool isInGuardBreak = false;
     private float originalMoveSpeed = 0f;
     private Coroutine hitStunRoutine;
+    private bool isInHitStun = false;
     
 
     [Header("Value")]
     [SerializeField] private float backlash = 10; // dash with posture
+    
+    [Header("Audio")]
+    [SerializeField] private AudioClip clip_Move;
+    [SerializeField] private AudioClip clip_Sword;
+    [SerializeField] private AudioClip clip_Attack;
+    [SerializeField] private AudioClip clip_Dash;
+    [SerializeField] private AudioClip clip_GuardBreak;
+    [SerializeField] private AudioClip clip_HitStun;
     
     [Header("Debug")]
     [SerializeField] private PlayerState playerState;
@@ -36,6 +47,7 @@ public class PlayerController : MonoBehaviour
         inp = GetComponent<InputController>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        audios = GetComponent<AudioSource>();
 
         move = GetComponent<MoveController>();
         dash = GetComponent<DashController>();
@@ -148,11 +160,15 @@ public class PlayerController : MonoBehaviour
                 if (attack.canAttack)
                 {
                     anim.SetTrigger(AnimParams.Attack);
-        
                     attack.TryAttack(faceDir);
+                    PlayAudio(clip_Sword);
+                    
                     if (attack.hitCount > 0)
                     {
                         posture.StartRecoveryRoutine(attack.hitCount * backlash);
+                        
+                        // Play Audio
+                        PlayAudio(clip_Attack);
                     }
                     
                     attack.UpdateAttackDirection(faceDir);
@@ -175,9 +191,11 @@ public class PlayerController : MonoBehaviour
                     anim.SetTrigger(AnimParams.Attack);
 
                     attack.TryAttack(faceDir);
+                    PlayAudio(clip_Sword);
                     if (attack.hitCount > 0)
                     {
                         posture.StartRecoveryRoutine(attack.hitCount * backlash);
+                        PlayAudio(clip_Attack);
                     }
 
                     attack.UpdateAttackDirection(faceDir);
@@ -187,6 +205,9 @@ public class PlayerController : MonoBehaviour
                 if (!isInGuardBreak)
                 {
                     isInGuardBreak = true;
+                    
+                    // GuardBreak 只播放一次音效
+                    PlayAudio(clip_GuardBreak);
                     // 記錄原本速度並降速
                     originalMoveSpeed = move.Speed;
                     move.Speed = posture.guardSpeed;
@@ -203,7 +224,7 @@ public class PlayerController : MonoBehaviour
             
             case PlayerState.HitStun:
                 print("HitStun");
-                SetMoveAnim(false);
+                // SetMoveAnim(false);
                 break;
         }
     }
@@ -231,12 +252,19 @@ public class PlayerController : MonoBehaviour
 
     
     // ── 工具方法 ──────────────────────────────────────────────────────────
+    void PlayAudio(AudioClip clip)
+    {
+        if (clip is null) return;
+        audios.PlayOneShot(clip);
+    }
+    
     bool TryStartDash()
     {
         if (!dash.TryDash(direction)) return false;
 
         posture.StartDamageRoutine(backlash);
         anim.SetTrigger(AnimParams.Dash);
+        PlayOneShot(clip_Dash);
         SetPlayerState(PlayerState.Dash);
 
         return true;
@@ -279,6 +307,12 @@ public class PlayerController : MonoBehaviour
         if (hitStunRoutine is not null)
             StopCoroutine(hitStunRoutine);
 
+        if (!isInHitStun)
+        {
+            isInHitStun = true;
+            PlayOneShot(clip_HitStun);
+        }
+
         if (dash.IsDashing)
             dash.ForceStop();
 
@@ -295,7 +329,14 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(posture.hitStunDuration);
         hitStunRoutine = null;
+        isInHitStun = false;
         posture.SetIgnoreDamage(false);
         SetPlayerState(direction == Vector2.zero ? PlayerState.Idle : PlayerState.Move);
+    }
+
+    void PlayOneShot(AudioClip clip)
+    {
+        if (clip is null) return;
+        audios.PlayOneShot(clip);
     }
 }

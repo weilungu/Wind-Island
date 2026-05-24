@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
                 HideCursor(true);
                 pausePanel.gameObject.SetActive(false);
                 Time.timeScale = 1;
+                AudioListener.pause = false;
                 
                 player.ActionState();
 
@@ -103,6 +104,7 @@ public class GameManager : MonoBehaviour
             case GameState.Paused:
                 HideCursor(false);
                 Time.timeScale = 0;
+                AudioListener.pause = true;
 
                 if (inp.escapePressed)
                 {
