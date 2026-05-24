@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
     private float originalMoveSpeed = 0f;
     private Coroutine hitStunRoutine;
     private bool isInHitStun = false;
+
+    public bool IsDead { get; private set; } = false;
+    public event System.Action OnPlayerDead;
     
 
     [Header("Value")]
@@ -62,12 +65,14 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         if (health is not null)
+            health.OnDeath += HandleDeath;
             health.OnDamaged += HandleDamaged;
     }
 
     void OnDisable()
     {
         if (health is not null)
+            health.OnDeath -= HandleDeath;
             health.OnDamaged -= HandleDamaged;
     }
 
@@ -304,6 +309,15 @@ public class PlayerController : MonoBehaviour
     {
         if (playerState == PlayerState.GuardBreak)
             EnterHitStun();
+    }
+
+    void HandleDeath()
+    {
+        if (IsDead) return;
+
+        IsDead = true;
+        SetPlayerState(PlayerState.Dead);
+        OnPlayerDead?.Invoke();
     }
 
     void EnterHitStun()

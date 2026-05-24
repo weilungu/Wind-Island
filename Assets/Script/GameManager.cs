@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("Panel")]
     [SerializeField] private Image pausePanel;
+    [SerializeField] private Image gameOverPanel;
 
     [Header("Field Instance")]
     [SerializeField] private InputController inp;
@@ -55,6 +56,18 @@ public class GameManager : MonoBehaviour
     
     // State
     GameState gameState;
+
+    private void OnEnable()
+    {
+        if (player is not null)
+            player.OnPlayerDead += HandlePlayerDead;
+    }
+
+    private void OnDisable()
+    {
+        if (player is not null)
+            player.OnPlayerDead -= HandlePlayerDead;
+    }
 
     private void Start()
     {
@@ -112,6 +125,18 @@ public class GameManager : MonoBehaviour
                     SetGameState(GameState.InGame);
                 }
                 break;
+            
+            
+            case GameState.GameOver:
+                if (player.IsDead)
+                {
+                    HideCursor(false);
+                    Time.timeScale = 0;
+                    AudioListener.pause = true;
+                    
+                    gameOverPanel.gameObject.SetActive(true);
+                }
+                break;
 
 
             case GameState.Quit:
@@ -164,5 +189,10 @@ public class GameManager : MonoBehaviour
     {
         print("Quit Game");
         Application.Quit();
+    }
+
+    void HandlePlayerDead()
+    {
+        SetGameState(GameState.GameOver);
     }
 }

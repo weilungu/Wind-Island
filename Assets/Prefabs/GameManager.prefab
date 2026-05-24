@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 0}
+  gameOverPanel: {fileID: 0}
   inp: {fileID: 0}
-  fsm: {fileID: 0}
   player: {fileID: 0}
-  enemy: {fileID: 0}
+  enemies:
+  - {fileID: 0}
