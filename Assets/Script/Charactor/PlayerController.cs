@@ -65,15 +65,20 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         if (health is not null)
+        {
             health.OnDeath += HandleDeath;
             health.OnDamaged += HandleDamaged;
+        }
+        
     }
 
     void OnDisable()
     {
         if (health is not null)
+        {
             health.OnDeath -= HandleDeath;
             health.OnDamaged -= HandleDamaged;
+        }
     }
 
     void Start()
