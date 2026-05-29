@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController_orig : MonoBehaviour
 {
     // Player Direction arguments
     private float horizontal;

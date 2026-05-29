@@ -18,7 +18,7 @@ public class EnemyAttack : AttackController
         for (int i = 0; i < hitCount; i++)
         {
             if (hitResults[i] is null) continue;
-            if (hitResults[i].GetComponent<PlayerController>() is not null)
+            if (hitResults[i].GetComponent<PlayerController_orig>() is not null)
             {
                 hasPlayerInFront = true;
                 return true;

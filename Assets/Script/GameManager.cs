@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputController inp;
 
     [Header("States Cells")] 
-    [SerializeField] private PlayerController player;
+    [SerializeField] private PlayerController_orig player;
     [SerializeField] private EnemyController[] enemies;
     
     // State
