@@ -22,16 +22,18 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    void FixedUpdate()
+    {
+        dir = Direction;
+    }
+
 
     // == Self API == //
     public void Movement()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-        
-        dir = new Vector2(x, y).normalized;
-        rb.velocity = dir * moveSpeed;
+        rb.velocity = Direction * moveSpeed;
     }
 
-    public Vector2 Direction => dir;
+    public static Vector2 Direction =>
+        new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 }
