@@ -15,7 +15,7 @@ public class PlayerController_orig : MonoBehaviour
     private SpriteRenderer sprite;
     private AudioSource audios;
 
-    private InputController inp;
+    private InputController_orig inp;
     private MoveController move;
     private DashController dash;
     private AttackController attack;
@@ -50,7 +50,7 @@ public class PlayerController_orig : MonoBehaviour
 
     void Awake()
     {
-        inp = GetComponent<InputController>();
+        inp = GetComponent<InputController_orig>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         audios = GetComponent<AudioSource>();

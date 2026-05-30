@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputController : MonoBehaviour
+public class InputController_orig : MonoBehaviour
 {
     // Input of Pressed
     public bool dashPressed { get; private set; }

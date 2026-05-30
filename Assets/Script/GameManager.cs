@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image gameOverPanel;
 
     [Header("Field Instance")]
-    [SerializeField] private InputController inp;
+    [SerializeField] private InputController_orig inp;
 
     [Header("States Cells")] 
     [SerializeField] private PlayerController_orig player;
