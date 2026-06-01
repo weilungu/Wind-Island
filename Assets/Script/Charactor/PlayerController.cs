@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private SpriteRenderer sprite;
     private AudioSource audios;
+    private Rigidbody2D rb;
 
     private InputController inp;
     private MoveController move;
@@ -26,6 +27,10 @@ public class PlayerController : MonoBehaviour
     private float originalMoveSpeed = 0f;
     private Coroutine hitStunRoutine;
     private bool isInHitStun = false;
+    private bool isFalling = false;
+    private Coroutine fallRoutine;
+    private Vector3 respawnPosition;
+    private Vector3 originalScale;
 
     public bool IsDead { get; private set; } = false;
     public event System.Action OnPlayerDead;
@@ -48,12 +53,19 @@ public class PlayerController : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private PlayerState playerState;
 
+    [Header("Fall")]
+    [SerializeField] private LayerMask fallZoneLayer;
+    [SerializeField] private Transform respawnPoint;
+    [SerializeField] private float fallDuration = 0.6f;
+    [SerializeField] private float fallDepth = 1.2f;
+
     void Awake()
     {
         inp = GetComponent<InputController>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         audios = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody2D>();
 
         move = GetComponent<MoveController>();
         dash = GetComponent<DashController>();
@@ -87,10 +99,16 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat(AnimParams.MoveX, 0f);
         anim.SetFloat(AnimParams.MoveY, 0f);
         anim.SetBool(AnimParams.IsMoving, false);
+        originalMoveSpeed = move.Speed;
+        originalScale = transform.localScale;
+        respawnPosition = respawnPoint != null
+            ? respawnPoint.position
+            : transform.position;
     }
 
     void Update()
     {
+        if (isFalling) return;
         inp.MoveInput(ref horizontal, ref vertical);
         direction = new Vector2(horizontal, vertical).normalized;
     }
@@ -102,6 +120,7 @@ public class PlayerController : MonoBehaviour
     }
     public void ActionState()
     {
+        if (isFalling) return;
         switch (playerState)
         {
             case PlayerState.Idle:
@@ -243,6 +262,7 @@ public class PlayerController : MonoBehaviour
     }
     public void PhysicsState()
     {
+        if (isFalling) return;
         switch (playerState)
         {
             case PlayerState.Move:
@@ -355,6 +375,57 @@ public class PlayerController : MonoBehaviour
         isInHitStun = false;
         posture.SetIgnoreDamage(false);
         SetPlayerState(direction == Vector2.zero ? PlayerState.Idle : PlayerState.Move);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (IsDead || isFalling) return;
+
+        if (((1 << other.gameObject.layer) & fallZoneLayer) == 0) return;
+
+        EnterFall();
+    }
+
+    void EnterFall()
+    {
+        if (fallRoutine is not null)
+            StopCoroutine(fallRoutine);
+
+        isFalling = true;
+        direction = Vector2.zero;
+
+        if (dash.IsDashing)
+            dash.ForceStop();
+
+        SetMoveAnim(false);
+        fallRoutine = StartCoroutine(FallRoutine());
+    }
+
+    IEnumerator FallRoutine()
+    {
+        float elapsed = 0f;
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = startPos + Vector3.down * fallDepth;
+
+        if (rb is not null)
+            rb.velocity = Vector2.zero;
+
+        while (elapsed < fallDuration)
+        {
+            float t = Mathf.Clamp01(elapsed / fallDuration);
+            transform.position = Vector3.Lerp(startPos, targetPos, t);
+            transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = respawnPosition;
+        transform.localScale = originalScale;
+        move.Speed = originalMoveSpeed;
+        isInGuardBreak = false;
+        isFalling = false;
+        fallRoutine = null;
+        SetPlayerState(PlayerState.Idle);
     }
 
     void PlayOneShot(AudioClip clip)
