@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    // === Unity Life Cycle === //
+
+    
+    // === Self API === //
     public void StartGame()
     {
         SceneManager.LoadScene(1);
