@@ -1,13 +1,9 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MainMenuButtonEffect : MonoBehaviour,
-    ISelectHandler,
-    IDeselectHandler,
-    IPointerEnterHandler,
-    IPointerExitHandler
+public class MainMenuButtonEffect : MonoBehaviour
 {
-    [SerializeField] float scale = 1f;
+    [SerializeField] float scale = 1.1f;
 
     RectTransform[] rectTransforms;
     RectTransform rect_TF;
@@ -22,36 +18,14 @@ public class MainMenuButtonEffect : MonoBehaviour,
     }
     
     // === Self Method === //
-    public void OnSelect(BaseEventData eventData)
-    {
-        Select();
-    }
-
-    public void OnDeselect(BaseEventData eventData)
-    {
-        Deselect();
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        Select();
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        
-    }
-
-    
-    void Select()
+    public void SelectEffect()
     {
         if (isSelected) return;
         isSelected = true;
         
         rect_TF.localScale = Vector3.one * scale;
     }
-
-    void Deselect()
+    public void DeselectEffect()
     {
         if (!isSelected) return;
         isSelected = false;
