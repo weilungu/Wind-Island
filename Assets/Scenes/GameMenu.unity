@@ -1328,6 +1328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 411057904}
   - component: {fileID: 411057906}
+  - component: {fileID: 411057907}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -1368,6 +1369,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67693174dd2b84b4e8e39afcf2e9277f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &411057907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411057903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11dece9b2ee249843ba178792a318050, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSelect: {fileID: 369386324}
 --- !u!1 &438832557
 GameObject:
   m_ObjectHideFlags: 0
@@ -3745,7 +3759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 369386324}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1276625795
