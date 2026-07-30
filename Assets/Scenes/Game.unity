@@ -202,7 +202,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &110297465
 RectTransform:
@@ -282,11 +282,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 7482667652216324306, guid: d05f0750caf58b749b1d8adaa99a4899,
+    type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -14056,6 +14057,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 793142200}
+  - component: {fileID: 793142201}
   m_Layer: 5
   m_Name: PostureBar
   m_TagString: Untagged
@@ -14086,6 +14088,21 @@ RectTransform:
   m_AnchoredPosition: {x: 768, y: 32}
   m_SizeDelta: {x: 1024, y: 128}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &793142201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793142199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f40f9a52b55fea247891edf271bbc7a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillLeft: {fileID: 1750060036}
+  fillRight: {fileID: 117092532}
+  posture: {fileID: 1897177410}
 --- !u!1 &835003965
 GameObject:
   m_ObjectHideFlags: 0
@@ -15906,12 +15923,12 @@ PrefabInstance:
     - target: {fileID: 5354497054237677420, guid: 27741617302e0a344b4a450735e45038,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.57
+      value: -14.78
       objectReference: {fileID: 0}
     - target: {fileID: 5354497054237677420, guid: 27741617302e0a344b4a450735e45038,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.71
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 5354497054237677420, guid: 27741617302e0a344b4a450735e45038,
         type: 3}
@@ -16566,7 +16583,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_TargetDisplay: 0
 --- !u!224 &1706218237
 RectTransform:
@@ -16780,14 +16797,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 7482667652216324306, guid: d05f0750caf58b749b1d8adaa99a4899,
+    type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1750060037
@@ -17016,6 +17034,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8117438686e2a854eb6e3cb435c31ba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1897177410 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5266531355352111075, guid: 84303c6abcf1325498e9e272801f7add,
+    type: 3}
+  m_PrefabInstance: {fileID: 8219456518606238202}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72110bb6968a85a4bb1f5b86d268b5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1973330306
