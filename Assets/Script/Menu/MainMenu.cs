@@ -4,51 +4,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-
-public enum InputMode
-{
-    Mouse,
-    Keyboard
-}
 
 public class MainMenu : MonoBehaviour
 {
-    InputMode inputMode;
-    
     MainMenuButton currBtn;
     List<MainMenuButton> buttons;
     
+    public GameObject lastSelect;
     
     // === Unity Life Cycle === //
     void Awake()
     {
-        currBtn = GetComponentInChildren<MainMenuButton>();
-        
         buttons = new List<MainMenuButton>(
             GetComponentsInChildren<MainMenuButton>(true)
         );
     }
 
+    void Start()
+    {
+        if (buttons.Count < 0) return;
+        
+        Select(buttons[0]);
+    }
+
+    void Update()
+    {
+        if (EventSystem.current.currentSelectedGameObject is null)
+            EventSystem.current.SetSelectedGameObject(lastSelect);
+    }
     
     // === Self API === //
     public void Select(MainMenuButton tg)
     {
+        if (currBtn == tg) return;
         
-    }
-
-    public void Deselect()
-    {
+        currBtn?.Deselect();
         
-    }
-    public void SetInputMode(InputMode mode)
-    {
+        currBtn = tg;
+        currBtn.Select();
+        lastSelect = currBtn.gameObject;
         
-    }
-
-    public void OnKeyboardInput()
-    {
-        
+        EventSystem.current.SetSelectedGameObject(currBtn.gameObject);
     }
 
     

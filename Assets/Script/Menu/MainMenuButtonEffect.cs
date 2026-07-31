@@ -8,7 +8,8 @@ public class MainMenuButtonEffect : MonoBehaviour
     RectTransform[] rect_TF;
     RectTransform target;
     
-    bool isSelected = false;
+    bool isSelected;
+    
     
     // == Unity Life Cycle == //
     void Awake()
@@ -17,19 +18,14 @@ public class MainMenuButtonEffect : MonoBehaviour
         target = rect_TF[1];
     }
     
+    
     // === Self Method === //
     public void SelectEffect()
     {
-        if (isSelected) return;
-        isSelected = true;
-        
         target.localScale = Vector3.one * scale;
     }
     public void DeselectEffect()
     {
-        if (!isSelected) return;
-        isSelected = false;
-        
         target.localScale = Vector3.one;
     }
 }
