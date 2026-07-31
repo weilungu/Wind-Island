@@ -29,7 +29,7 @@ public class Enemy_One : EnemyController
         if (DistanceToTarget() <= attackRange)
         {
             dash.ForceStop();
-            SetEnemyState(EnemyState.Attack);
+            SetEnemyState(Enemy_State.Attack);
 
             if (hasPlayerInFront) print("hasPlayerInFront");
             return;
@@ -38,7 +38,7 @@ public class Enemy_One : EnemyController
         // Dash 自然結束但還不夠近 → 繼續追
         if (!dash.IsDashing)
         {
-            SetEnemyState(EnemyState.Chase);
+            SetEnemyState(Enemy_State.Chase);
         }
     }
 
@@ -55,7 +55,7 @@ public class Enemy_One : EnemyController
         {
             anim.SetTrigger(AnimParams.Attack);
             attackCooldownEndTime = Time.time + attackCooldown;
-            SetEnemyState(EnemyState.Chase);
+            SetEnemyState(Enemy_State.Chase);
         }
     }
 
@@ -64,7 +64,7 @@ public class Enemy_One : EnemyController
         base.ActionState();
         switch (enemyState)
         {
-            case EnemyState.Attack:
+            case Enemy_State.Attack:
                 // target.
                 break;
         }

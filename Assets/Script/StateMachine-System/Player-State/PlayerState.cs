@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_State : ScriptableObject, IState
+public class PlayerState : ScriptableObject, IState
 {
     protected PlayerStateMachine stateMachine;
 

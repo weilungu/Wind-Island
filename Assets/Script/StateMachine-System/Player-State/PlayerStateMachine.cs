@@ -7,14 +7,14 @@ public class PlayerStateMachine : StateMachine
 {
     // Animator anim;
     
-    [SerializeField] Player_State[] states;
+    [SerializeField] PlayerState[] states;
     
     void Awake()
     {
         // anim = GetComponentInChildren<Animator>();
         stateTable = new Dictionary<Type, IState>(states.Length);
         
-        foreach (Player_State st in states)
+        foreach (PlayerState st in states)
         {
             st.Initialize(this);
             stateTable.Add(st.GetType(), st);
