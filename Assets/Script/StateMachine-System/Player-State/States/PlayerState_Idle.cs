@@ -7,7 +7,8 @@ public class PlayerState_Idle : PlayerState
 {
     public override void Enter()
     {
-        ctx.anim.Play("Idle_Hori");
+        // ctx.anim.Play("Idle_Hori");
+        ctx.anim.Play("Idle");
         Debug.Log("PlayerState_Idle");
     }
 
