@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerState : ScriptableObject, IState
 {
     protected PlayerStateMachine stateMachine;
-
-    public void Initialize(PlayerStateMachine stateMachine)
+    protected PlayerStateContext ctx;
+    
+    public void Initialize(PlayerStateMachine stateMachine, PlayerStateContext ctx)
     {
         this.stateMachine = stateMachine;
+        this.ctx = ctx;
     }
     
         

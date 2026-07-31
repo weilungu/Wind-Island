@@ -5,18 +5,21 @@ using UnityEngine;
 
 public class PlayerStateMachine : StateMachine
 {
-    // Animator anim;
-    
+    PlayerStateContext ctx;
     [SerializeField] PlayerState[] states;
+    
+    Animator anim;
     
     void Awake()
     {
-        // anim = GetComponentInChildren<Animator>();
+        anim = GetComponentInChildren<Animator>();
+        
+        ctx = new PlayerStateContext(anim);
         stateTable = new Dictionary<Type, IState>(states.Length);
         
         foreach (PlayerState st in states)
         {
-            st.Initialize(this);
+            st.Initialize(this, ctx);
             stateTable.Add(st.GetType(), st);
         }
     }
