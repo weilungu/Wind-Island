@@ -5,16 +5,16 @@ public class MainMenuButtonEffect : MonoBehaviour
 {
     [SerializeField] float scale = 1.1f;
 
-    RectTransform[] rectTransforms;
-    RectTransform rect_TF;
+    RectTransform[] rect_TF;
+    RectTransform target;
     
     bool isSelected = false;
     
     // == Unity Life Cycle == //
     void Awake()
     {
-        rectTransforms = GetComponentsInChildren<RectTransform>();
-        rect_TF = rectTransforms[1];
+        rect_TF = GetComponentsInChildren<RectTransform>();
+        target = rect_TF[1];
     }
     
     // === Self Method === //
@@ -23,13 +23,13 @@ public class MainMenuButtonEffect : MonoBehaviour
         if (isSelected) return;
         isSelected = true;
         
-        rect_TF.localScale = Vector3.one * scale;
+        target.localScale = Vector3.one * scale;
     }
     public void DeselectEffect()
     {
         if (!isSelected) return;
         isSelected = false;
         
-        rect_TF.localScale = Vector3.one;
+        target.localScale = Vector3.one;
     }
 }

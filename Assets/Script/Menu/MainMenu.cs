@@ -15,21 +15,29 @@ public enum InputMode
 public class MainMenu : MonoBehaviour
 {
     InputMode inputMode;
-    MainMenu currBtn;
+    
+    MainMenuButton currBtn;
     List<MainMenuButton> buttons;
+    
     
     // === Unity Life Cycle === //
     void Awake()
     {
-        currBtn = GetComponentInChildren<MainMenu>();
+        currBtn = GetComponentInChildren<MainMenuButton>();
+        
+        buttons = new List<MainMenuButton>(
+            GetComponentsInChildren<MainMenuButton>(true)
+        );
     }
 
+    
     // === Self API === //
     public void Select(MainMenuButton tg)
     {
         
     }
-    public void OnKeyboardInput()
+
+    public void Deselect()
     {
         
     }
@@ -37,6 +45,12 @@ public class MainMenu : MonoBehaviour
     {
         
     }
+
+    public void OnKeyboardInput()
+    {
+        
+    }
+
     
     // === UI API === //
     public void StartGame()
