@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuState : ScriptableObject, IState
+public class Player_State : ScriptableObject, IState
 {
-    Menu_StateMachine stateMachine;
+    protected PlayerStateMachine stateMachine;
 
-    public void Initialize(Menu_StateMachine stateMachine)
+    public void Initialize(PlayerStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
     }
