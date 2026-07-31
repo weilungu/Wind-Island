@@ -5,22 +5,24 @@ using UnityEngine;
 
 public class PlayerStateMachine : StateMachine
 {
-    Animator anim;
+    // Animator anim;
     
-    public PlayerState_Idle idle;
-    public PlayerState_Move move;
+    [SerializeField] Player_State[] states;
     
     void Awake()
     {
-        anim = GetComponentInChildren<Animator>();
+        // anim = GetComponentInChildren<Animator>();
+        stateTable = new Dictionary<Type, IState>(states.Length);
         
-        // Player State Init
-        idle.Initialize(this);
-        move.Initialize(this);
+        foreach (Player_State st in states)
+        {
+            st.Initialize(this);
+            stateTable.Add(st.GetType(), st);
+        }
     }
 
     void Start()
     {
-        SwitchOn(idle);
+        SwitchOn(stateTable[typeof(PlayerState_Idle)]);
     }
 }

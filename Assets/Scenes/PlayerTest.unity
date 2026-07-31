@@ -267,6 +267,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idle: {fileID: 11400000, guid: e997ca1e2537b0f4185836d9a37a0007, type: 2}
   move: {fileID: 11400000, guid: 5612238de35e38841a0510c888111569, type: 2}
+  states:
+  - {fileID: 11400000, guid: e997ca1e2537b0f4185836d9a37a0007, type: 2}
+  - {fileID: 11400000, guid: 5612238de35e38841a0510c888111569, type: 2}
 --- !u!1 &1427298137
 GameObject:
   m_ObjectHideFlags: 0

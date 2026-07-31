@@ -6,6 +6,7 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour
 {
     IState currState;
+    protected Dictionary<Type, IState> stateTable;
 
     void Update()
     {
@@ -27,5 +28,10 @@ public class StateMachine : MonoBehaviour
     {
         currState.Exit();
         SwitchOn(newState);
+    }
+    
+    public void SwitchState(Type newStateType)
+    {
+        SwitchState(stateTable[newStateType]);
     }
 }

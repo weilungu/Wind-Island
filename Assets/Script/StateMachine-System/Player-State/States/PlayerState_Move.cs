@@ -14,7 +14,7 @@ public class PlayerState_Move : Player_State
     {
         if (!(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) )
         {
-            stateMachine.SwitchState(stateMachine.idle);
+            stateMachine.SwitchState(typeof(PlayerState_Idle));
         }
     }
 }
