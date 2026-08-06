@@ -8,13 +8,15 @@ public class PlayerStateMachine : StateMachine
     PlayerStateContext ctx;
     [SerializeField] PlayerState[] states;
     
+    PlayerInput input;
     Animator anim;
     
     void Awake()
     {
+        input = GetComponent<PlayerInput>();
         anim = GetComponentInChildren<Animator>();
         
-        ctx = new PlayerStateContext(anim);
+        ctx = new PlayerStateContext(input ,anim);
         stateTable = new Dictionary<Type, IState>(states.Length);
         
         foreach (PlayerState st in states)

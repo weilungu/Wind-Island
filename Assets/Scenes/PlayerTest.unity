@@ -239,6 +239,7 @@ GameObject:
   - component: {fileID: 1410239803}
   - component: {fileID: 1410239804}
   - component: {fileID: 1410239805}
+  - component: {fileID: 1410239806}
   m_Layer: 0
   m_Name: NewPlayer
   m_TagString: Untagged
@@ -289,6 +290,18 @@ MonoBehaviour:
   states:
   - {fileID: 11400000, guid: e997ca1e2537b0f4185836d9a37a0007, type: 2}
   - {fileID: 11400000, guid: 5612238de35e38841a0510c888111569, type: 2}
+--- !u!114 &1410239806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410239802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5c09dd2c0af685408428cad06d76af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1427298137
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,14 +10,13 @@ public class PlayerState_Move : PlayerState
     
     public override void Enter()
     {
-        // ctx.anim.Play("Move_Hori");
         ctx.anim.Play("Move");
         Debug.Log("Move");
     }
 
     public override void LogicalUpdate()
     {
-        if ( !(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) )
+        if (!ctx.input.Move)
         {
             stateMachine.SwitchState(typeof(PlayerState_Idle));
         }

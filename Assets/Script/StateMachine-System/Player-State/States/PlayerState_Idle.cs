@@ -7,14 +7,13 @@ public class PlayerState_Idle : PlayerState
 {
     public override void Enter()
     {
-        // ctx.anim.Play("Idle_Hori");
         ctx.anim.Play("Idle");
         Debug.Log("Idle");
     }
 
     public override void LogicalUpdate()
     {
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (ctx.input.Move)
         {
             stateMachine.SwitchState(typeof(PlayerState_Move));
         }
