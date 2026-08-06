@@ -10,13 +10,26 @@ public class PlayerStateMachine : StateMachine
     
     PlayerInput input;
     Animator anim;
+    New_PlayerController player;
+    
+    PlayerMove move;
     
     void Awake()
     {
         input = GetComponent<PlayerInput>();
         anim = GetComponentInChildren<Animator>();
+        player = GetComponent<New_PlayerController>();
         
-        ctx = new PlayerStateContext(input ,anim);
+        move = GetComponent<PlayerMove>();
+        
+        ctx = new PlayerStateContext(
+            input: input,
+            anim: anim,
+            player: player,
+            
+            move: move
+        );
+        
         stateTable = new Dictionary<Type, IState>(states.Length);
         
         foreach (PlayerState st in states)

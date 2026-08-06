@@ -18,4 +18,9 @@ public class PlayerState_Idle : PlayerState
             stateMachine.SwitchState(typeof(PlayerState_Move));
         }
     }
+
+    public override void PhysicalUpdate()
+    {
+        ctx.move.StopMove();
+    }
 }

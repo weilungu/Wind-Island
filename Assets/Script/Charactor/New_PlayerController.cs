@@ -6,7 +6,7 @@ using UnityEngine;
 public class New_PlayerController : MonoBehaviour
 {
     PlayerInput input;
-
+    
     
     void Awake()
     {
@@ -17,4 +17,9 @@ public class New_PlayerController : MonoBehaviour
     {
         input.EnableGameplayInput();
     }
+
+    
+    // === Self API === //
+    public Vector2 MoveVector() 
+        => new Vector2(input.Horizontal, input.Vertical).normalized;
 }
