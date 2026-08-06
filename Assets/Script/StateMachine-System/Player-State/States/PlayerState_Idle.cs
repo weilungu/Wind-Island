@@ -9,7 +9,7 @@ public class PlayerState_Idle : PlayerState
     {
         // ctx.anim.Play("Idle_Hori");
         ctx.anim.Play("Idle");
-        Debug.Log("PlayerState_Idle");
+        Debug.Log("Idle");
     }
 
     public override void LogicalUpdate()
