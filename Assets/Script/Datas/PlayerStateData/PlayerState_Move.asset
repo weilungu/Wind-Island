@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: PlayerState_Move
   m_EditorClassIdentifier: 
   animationName: Move
+  XInputName: MoveX
+  YInputName: MoveY
