@@ -14,23 +14,11 @@ public class PlayerState : ScriptableObject, IState
     }
     
         
-    public virtual void Enter()
-    {
-        
-    }
+    public virtual void Enter() {}
 
-    public virtual void Exit()
-    {
-        
-    }
+    public virtual void Exit() {}
 
-    public virtual void LogicalUpdate()
-    {
-        
-    }
+    public virtual void LogicalUpdate() {}
 
-    public virtual void PhysicalUpdate()
-    {
-        
-    }
+    public virtual void PhysicalUpdate() {}
 }

@@ -9,24 +9,27 @@ public class PlayerStateMachine : StateMachine
     [SerializeField] PlayerState[] states;
     
     PlayerInput input;
+    SpriteRenderer sprite;
     Animator anim;
-    New_PlayerController player;
     
+    New_PlayerController player;
     PlayerMove move;
     
     void Awake()
     {
         input = GetComponent<PlayerInput>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
         anim = GetComponentInChildren<Animator>();
-        player = GetComponent<New_PlayerController>();
         
+        player = GetComponent<New_PlayerController>();
         move = GetComponent<PlayerMove>();
         
         ctx = new PlayerStateContext(
-            input: input,
+            input: input, 
+            sprite: sprite, 
             anim: anim,
-            player: player,
             
+            player: player, 
             move: move
         );
         

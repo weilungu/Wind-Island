@@ -24,7 +24,8 @@ public class PlayerState_Move : PlayerState
 
     public override void PhysicalUpdate()
     {
-        ctx.move.Move(ctx.player.MoveVector());
+        ctx.player.Flip(ctx.sprite);
+        ctx.move.Move(ctx.player.MoveDirection());
         
         // ctx.anim.SetFloat();
     }

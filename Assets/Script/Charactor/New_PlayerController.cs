@@ -20,6 +20,13 @@ public class New_PlayerController : MonoBehaviour
 
     
     // === Self API === //
-    public Vector2 MoveVector() 
+    public Vector2 MoveDirection() 
         => new Vector2(input.Horizontal, input.Vertical).normalized;
+
+    public void Flip(SpriteRenderer sprite)
+    {
+        Vector2 dir = MoveDirection();
+        if (dir.x != 0f)
+            sprite.flipX = dir.x < 0;
+    }
 }
