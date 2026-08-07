@@ -24,6 +24,7 @@ public class PlayerState : ScriptableObject, IState
     public virtual void Enter()
     {
         ctx.anim.Play(animationHash);
+        Debug.Log(animationName);
     }
 
     public virtual void Exit() {}

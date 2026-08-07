@@ -7,13 +7,6 @@ public class PlayerState_Move : PlayerState
 {
     private static readonly int MoveX = Animator.StringToHash("MoveX");
     private static readonly int MoveY = Animator.StringToHash("MoveY");
-    
-    public override void Enter()
-    {
-        // ctx.anim.Play("Move");
-        base.Enter();
-        Debug.Log("Move");
-    }
 
     public override void LogicalUpdate()
     {
@@ -24,8 +17,9 @@ public class PlayerState_Move : PlayerState
     public override void PhysicalUpdate()
     {
         ctx.player.Flip(ctx.sprite);
-        ctx.move.Move(ctx.player.MoveDirection());
+        ctx.move.Move(ctx.player.MoveDirection);
         
-        // ctx.anim.SetFloat();
+        ctx.anim.SetFloat(MoveX, ctx.player.MoveDirection.x);
+        ctx.anim.SetFloat(MoveY, ctx.player.MoveDirection.y);
     }
 }

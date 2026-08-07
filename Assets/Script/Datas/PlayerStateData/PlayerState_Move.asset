@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5688362ce1a44dd4d93903e8335e5cb5, type: 3}
   m_Name: PlayerState_Move
   m_EditorClassIdentifier: 
+  animationName: Move
