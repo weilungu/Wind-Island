@@ -14,6 +14,7 @@ public class PlayerStateMachine : StateMachine
     
     New_PlayerController player;
     PlayerMove move;
+    PlayerDash dash;
     
     void Awake()
     {
@@ -23,6 +24,7 @@ public class PlayerStateMachine : StateMachine
         
         player = GetComponent<New_PlayerController>();
         move = GetComponent<PlayerMove>();
+        dash = GetComponent<PlayerDash>();
         
         ctx = new PlayerStateContext(
             input: input, 
@@ -30,7 +32,8 @@ public class PlayerStateMachine : StateMachine
             anim: anim,
             
             player: player, 
-            move: move
+            move: move,
+            dash: dash
         );
         
         stateTable = new Dictionary<Type, IState>(states.Length);

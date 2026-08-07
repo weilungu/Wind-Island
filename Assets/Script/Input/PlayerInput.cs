@@ -20,6 +20,7 @@ public class PlayerInput : MonoBehaviour
     
     // is Pressed
     public bool Move => Horizontal != 0 || Vertical != 0;
+    public bool Dash => playerInputActions.Gamplay.Dash.WasPressedThisFrame();
     
     
     // Unity Life Cycle

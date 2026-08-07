@@ -24,6 +24,9 @@ public class PlayerState_Move : PlayerState
     {
         if (!ctx.input.Move)
             stateMachine.SwitchState(typeof(PlayerState_Idle));
+     
+        if (ctx.input.Dash && ctx.dash.canDash)
+            stateMachine.SwitchState(typeof(PlayerState_Dash));
     }
 
     public override void PhysicalUpdate()

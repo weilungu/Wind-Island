@@ -100,6 +100,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""9dc3149d-1fb2-40ae-8835-2ec7e7e8791c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -212,6 +221,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Axis"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b4144dd-d3f8-4265-8642-2e4c964e7f44"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c38ceba8-ffa7-4165-b71b-0ec5bd1a3929"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -221,6 +252,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Gamplay
         m_Gamplay = asset.FindActionMap("Gamplay", throwIfNotFound: true);
         m_Gamplay_Axis = m_Gamplay.FindAction("Axis", throwIfNotFound: true);
+        m_Gamplay_Dash = m_Gamplay.FindAction("Dash", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -302,6 +334,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Gamplay;
     private List<IGamplayActions> m_GamplayActionsCallbackInterfaces = new List<IGamplayActions>();
     private readonly InputAction m_Gamplay_Axis;
+    private readonly InputAction m_Gamplay_Dash;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gamplay".
     /// </summary>
@@ -317,6 +350,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gamplay/Axis".
         /// </summary>
         public InputAction @Axis => m_Wrapper.m_Gamplay_Axis;
+        /// <summary>
+        /// Provides access to the underlying input action "Gamplay/Dash".
+        /// </summary>
+        public InputAction @Dash => m_Wrapper.m_Gamplay_Dash;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -346,6 +383,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Axis.started += instance.OnAxis;
             @Axis.performed += instance.OnAxis;
             @Axis.canceled += instance.OnAxis;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         /// <summary>
@@ -360,6 +400,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Axis.started -= instance.OnAxis;
             @Axis.performed -= instance.OnAxis;
             @Axis.canceled -= instance.OnAxis;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         /// <summary>
@@ -407,5 +450,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAxis(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Dash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDash(InputAction.CallbackContext context);
     }
 }

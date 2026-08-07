@@ -10,6 +10,7 @@ public class PlayerStateContext
     
     public New_PlayerController player;
     public PlayerMove move;
+    public PlayerDash dash;
 
     public PlayerStateContext(
         PlayerInput input,
@@ -17,7 +18,8 @@ public class PlayerStateContext
         Animator anim,
         
         New_PlayerController player,
-        PlayerMove move)
+        PlayerMove move,
+        PlayerDash dash)
     {
         this.input = input;
         this.sprite = sprite;
@@ -25,5 +27,6 @@ public class PlayerStateContext
         
         this.player = player;
         this.move = move;
+        this.dash = dash;
     }
 }
