@@ -10,16 +10,15 @@ public class PlayerState_Move : PlayerState
     
     public override void Enter()
     {
-        ctx.anim.Play("Move");
+        // ctx.anim.Play("Move");
+        base.Enter();
         Debug.Log("Move");
     }
 
     public override void LogicalUpdate()
     {
         if (!ctx.input.Move)
-        {
             stateMachine.SwitchState(typeof(PlayerState_Idle));
-        }
     }
 
     public override void PhysicalUpdate()

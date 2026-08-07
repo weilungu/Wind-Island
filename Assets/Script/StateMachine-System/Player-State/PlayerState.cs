@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class PlayerState : ScriptableObject, IState
 {
+    [SerializeField] string animationName;
+    int animationHash;
+    
     protected PlayerStateMachine stateMachine;
     protected PlayerStateContext ctx;
+
+    void OnEnable()
+    {
+        animationHash = Animator.StringToHash(animationName);
+    }
     
     public void Initialize(PlayerStateMachine stateMachine, PlayerStateContext ctx)
     {
@@ -13,8 +21,10 @@ public class PlayerState : ScriptableObject, IState
         this.ctx = ctx;
     }
     
-        
-    public virtual void Enter() {}
+    public virtual void Enter()
+    {
+        ctx.anim.Play(animationHash);
+    }
 
     public virtual void Exit() {}
 
