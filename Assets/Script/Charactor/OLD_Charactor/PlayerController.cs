@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip clip_HitStun;
     
     [Header("Debug")]
-    [SerializeField] private PlayerState playerState;
+    [SerializeField] private Player_State playerState;
 
     [Header("Fall")]
     [SerializeField] private LayerMask fallZoneLayer;
@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        SetPlayerState(PlayerState.Idle);
+        SetPlayerState(Player_State.Idle);
         anim.SetFloat(AnimParams.MoveX, 0f);
         anim.SetFloat(AnimParams.MoveY, 0f);
         anim.SetBool(AnimParams.IsMoving, false);
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
     }
     
     // 狀態機層
-    void SetPlayerState(PlayerState state)
+    void SetPlayerState(Player_State state)
     {
         playerState = state;
     }
@@ -123,31 +123,31 @@ public class PlayerController : MonoBehaviour
         if (isFalling) return;
         switch (playerState)
         {
-            case PlayerState.Idle:
+            case Player_State.Idle:
                 SetMoveAnim(false);
         
                 if (inp.movePressed)
                 {
-                    SetPlayerState(PlayerState.Move);
+                    SetPlayerState(Player_State.Move);
                     break;
                 }
         
                 if (inp.attackPressed)
                 {
-                    SetPlayerState(PlayerState.Attack);
+                    SetPlayerState(Player_State.Attack);
                     break;
                 }
         
                 if (posture.isFull)
                 {
-                    SetPlayerState(PlayerState.GuardBreak);
+                    SetPlayerState(Player_State.GuardBreak);
                     break;
                 }
                 
                 if (inp.dashPressed && TryStartDash()) break; // → Dash state
                 break;
         
-            case PlayerState.Move:
+            case Player_State.Move:
                 ToMove();
                 
                 // Transition
@@ -155,40 +155,40 @@ public class PlayerController : MonoBehaviour
                 if (inp.dashPressed && TryStartDash()) break;
                 if (inp.attackPressed)
                 {
-                    SetPlayerState(PlayerState.Attack);
+                    SetPlayerState(Player_State.Attack);
                     break;
                 }
                 if (posture.isFull)
                 {
-                    SetPlayerState(PlayerState.GuardBreak);
+                    SetPlayerState(Player_State.GuardBreak);
                     break;
                 }
         
                 if (direction == Vector2.zero)
                 {
-                    SetPlayerState(PlayerState.Idle);
+                    SetPlayerState(Player_State.Idle);
                     break;
                 }
         
                 break;
         
-            case PlayerState.Dash:
+            case Player_State.Dash:
                 // Dash 結束由 DashController 回報，這裡只等待
                 if (!dash.IsDashing)
                 {
                     SetPlayerState(direction == Vector2.zero
-                        ? PlayerState.Idle
-                        : PlayerState.Move);
+                        ? Player_State.Idle
+                        : Player_State.Move);
                 }
                 
                 if (posture.isFull)
                 {
-                    SetPlayerState(PlayerState.GuardBreak);
+                    SetPlayerState(Player_State.GuardBreak);
                     break;
                 }
                 break;
         
-            case PlayerState.Attack:
+            case Player_State.Attack:
                 if (attack.canAttack)
                 {
                     anim.SetTrigger(AnimParams.Attack);
@@ -207,12 +207,12 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    SetPlayerState(PlayerState.Move);
+                    SetPlayerState(Player_State.Move);
                 }
                 break;
             
             
-            case PlayerState.GuardBreak:
+            case Player_State.GuardBreak:
                 print("Guard Break");
                 // GuardBreak 期間仍要依照輸入更新方向與移動動畫
                 ToMove();
@@ -254,7 +254,7 @@ public class PlayerController : MonoBehaviour
                 break;
             
             
-            case PlayerState.HitStun:
+            case Player_State.HitStun:
                 print("HitStun");
                 // SetMoveAnim(false);
                 break;
@@ -265,18 +265,18 @@ public class PlayerController : MonoBehaviour
         if (isFalling) return;
         switch (playerState)
         {
-            case PlayerState.Move:
+            case Player_State.Move:
                 move.Move(direction);
                 attack.UpdateAttackDirection(direction);
                 break;
 
-            case PlayerState.GuardBreak:
+            case Player_State.GuardBreak:
                 // GuardBreak 仍可移動（速度已在 ActionState 中調整）
                 move.Move(direction);
                 attack.UpdateAttackDirection(direction);
                 break;
 
-            case PlayerState.Dash:
+            case Player_State.Dash:
                 dash.DashFixedUpdate();
                 print("Dash FixedUpdate");
                 break;
@@ -298,7 +298,7 @@ public class PlayerController : MonoBehaviour
         posture.StartDamageRoutine(backlash);
         anim.SetTrigger(AnimParams.Dash);
         PlayOneShot(clip_Dash);
-        SetPlayerState(PlayerState.Dash);
+        SetPlayerState(Player_State.Dash);
 
         return true;
     }
@@ -326,13 +326,13 @@ public class PlayerController : MonoBehaviour
         move.Speed = originalMoveSpeed;
         isInGuardBreak = false;
         posture.ContinueAfterGuardBreak();
-        if (playerState != PlayerState.HitStun)
-            SetPlayerState(direction == Vector2.zero ? PlayerState.Idle : PlayerState.Move);
+        if (playerState != Player_State.HitStun)
+            SetPlayerState(direction == Vector2.zero ? Player_State.Idle : Player_State.Move);
     }
 
     void HandleDamaged(int damage)
     {
-        if (playerState == PlayerState.GuardBreak)
+        if (playerState == Player_State.GuardBreak)
             EnterHitStun();
     }
 
@@ -341,7 +341,7 @@ public class PlayerController : MonoBehaviour
         if (IsDead) return;
 
         IsDead = true;
-        SetPlayerState(PlayerState.Dead);
+        SetPlayerState(Player_State.Dead);
         OnPlayerDead?.Invoke();
     }
 
@@ -363,7 +363,7 @@ public class PlayerController : MonoBehaviour
         isInGuardBreak = false;
         posture.ForceBroken();
         posture.SetIgnoreDamage(true);
-        SetPlayerState(PlayerState.HitStun);
+        SetPlayerState(Player_State.HitStun);
 
         hitStunRoutine = StartCoroutine(HitStunRoutine());
     }
@@ -374,7 +374,7 @@ public class PlayerController : MonoBehaviour
         hitStunRoutine = null;
         isInHitStun = false;
         posture.SetIgnoreDamage(false);
-        SetPlayerState(direction == Vector2.zero ? PlayerState.Idle : PlayerState.Move);
+        SetPlayerState(direction == Vector2.zero ? Player_State.Idle : Player_State.Move);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -425,7 +425,7 @@ public class PlayerController : MonoBehaviour
         isInGuardBreak = false;
         isFalling = false;
         fallRoutine = null;
-        SetPlayerState(PlayerState.Idle);
+        SetPlayerState(Player_State.Idle);
     }
 
     void PlayOneShot(AudioClip clip)

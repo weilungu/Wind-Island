@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     
     
     protected Vector2 faceDir = Vector2.zero;
-    protected EnemyState enemyState;
+    protected Enemy_State enemyState;
     protected bool isInGuardBreak = false;
     protected float originalMoveSpeed = 0f;
     protected Coroutine hitStunRoutine;
@@ -63,7 +63,7 @@ public class EnemyController : MonoBehaviour
     }
     protected virtual void Start()
     {
-        SetEnemyState(EnemyState.Idle);
+        SetEnemyState(Enemy_State.Idle);
 
         anim.SetFloat(AnimParams.MoveX, 0f);
         anim.SetFloat(AnimParams.MoveY, 0f);
@@ -75,7 +75,7 @@ public class EnemyController : MonoBehaviour
 
     
     // 狀態機層
-    protected virtual void SetEnemyState(EnemyState state)
+    protected virtual void SetEnemyState(Enemy_State state)
     {
         enemyState = state;
     }
@@ -83,22 +83,22 @@ public class EnemyController : MonoBehaviour
     {
         if (anim is null || move is null) return;
 
-        if (posture is not null && posture.isFull && enemyState != EnemyState.GuardBreak)
-            SetEnemyState(EnemyState.GuardBreak);
+        if (posture is not null && posture.isFull && enemyState != Enemy_State.GuardBreak)
+            SetEnemyState(Enemy_State.GuardBreak);
 
         switch (enemyState)
         {
-            case EnemyState.Idle: OnIdle(); break;
+            case Enemy_State.Idle: OnIdle(); break;
 
-            case EnemyState.Chase: OnChase(); break;
+            case Enemy_State.Chase: OnChase(); break;
 
-            case EnemyState.Dash: OnDash(); break;
+            case Enemy_State.Dash: OnDash(); break;
             
-            case EnemyState.Attack: OnAttack(); break;
+            case Enemy_State.Attack: OnAttack(); break;
 
-            case EnemyState.GuardBreak: OnGuardBreak(); break;
+            case Enemy_State.GuardBreak: OnGuardBreak(); break;
 
-            case EnemyState.HitStun: OnHitStun(); break;
+            case Enemy_State.HitStun: OnHitStun(); break;
         }
     }
     public virtual void PhysicsState()
@@ -107,16 +107,16 @@ public class EnemyController : MonoBehaviour
 
         switch (enemyState)
         {
-            case EnemyState.Chase:
+            case Enemy_State.Chase:
                 move.Move(faceDir);
                 break;
 
-            case EnemyState.GuardBreak:
+            case Enemy_State.GuardBreak:
                 // GuardBreak 仍可移動（速度已在 OnGuardBreak 中調整）
                 move.Move(faceDir);
                 break;
 
-            case EnemyState.Dash:
+            case Enemy_State.Dash:
                 dash.DashFixedUpdate();
                 break;
         }
@@ -126,7 +126,7 @@ public class EnemyController : MonoBehaviour
     // ── 各狀態預設行為 ────────────────────────────────────────────────────
     protected virtual void OnIdle()
     {
-        SetEnemyState(EnemyState.Chase);
+        SetEnemyState(Enemy_State.Chase);
     }
     protected virtual void OnChase()
     {
@@ -138,14 +138,14 @@ public class EnemyController : MonoBehaviour
         // Player 進入攻擊範圍 → 停止移動並切換至 Attack
         if (attack.IsTargetInRange(target.position))
         {
-            SetEnemyState(EnemyState.Attack);
+            SetEnemyState(Enemy_State.Attack);
         }
     }
     protected virtual void OnDash()
     {
         SetMoveAnim(faceDir);
         if (!dash.IsDashing)
-            SetEnemyState(EnemyState.Attack);
+            SetEnemyState(Enemy_State.Attack);
     }
     protected virtual void OnAttack()
     {
@@ -156,7 +156,7 @@ public class EnemyController : MonoBehaviour
             SetMoveAnim(faceDir);
             if (attack.canAttack) EnemyAttack();
         }
-        else SetEnemyState(EnemyState.Chase); // Player 離開範圍，重新追擊
+        else SetEnemyState(Enemy_State.Chase); // Player 離開範圍，重新追擊
     }
     protected virtual void OnGuardBreak()
     {
@@ -219,13 +219,13 @@ public class EnemyController : MonoBehaviour
     }
     protected void TryStartDash()
     {
-        if (isInGuardBreak || enemyState == EnemyState.GuardBreak || enemyState == EnemyState.HitStun)
+        if (isInGuardBreak || enemyState == Enemy_State.GuardBreak || enemyState == Enemy_State.HitStun)
             return;
 
         UpdateFaceDir();
         if (dash.TryDash(faceDir))
         {
-            SetEnemyState(EnemyState.Dash);
+            SetEnemyState(Enemy_State.Dash);
         }
     }
 
@@ -246,25 +246,25 @@ public class EnemyController : MonoBehaviour
         if (posture is not null)
             posture.ContinueAfterGuardBreak();
 
-        if (enemyState != EnemyState.HitStun)
+        if (enemyState != Enemy_State.HitStun)
         {
             if (target is null)
-                SetEnemyState(EnemyState.Idle);
+                SetEnemyState(Enemy_State.Idle);
             else
-                SetEnemyState(EnemyState.Chase);
+                SetEnemyState(Enemy_State.Chase);
         }
     }
 
     void HandleDamaged(int damage)
     {
-        if (enemyState == EnemyState.GuardBreak)
+        if (enemyState == Enemy_State.GuardBreak)
             EnterHitStun();
     }
 
     void HandleDeath()
     {
         StopAllCoroutines();
-        enemyState = EnemyState.Dead;
+        enemyState = Enemy_State.Dead;
         enabled = false;
         Destroy(gameObject);
     }
@@ -285,7 +285,7 @@ public class EnemyController : MonoBehaviour
             posture.SetIgnoreDamage(true);
         }
 
-        SetEnemyState(EnemyState.HitStun);
+        SetEnemyState(Enemy_State.HitStun);
         hitStunRoutine = StartCoroutine(HitStunRoutine());
     }
 
@@ -298,8 +298,8 @@ public class EnemyController : MonoBehaviour
             posture.SetIgnoreDamage(false);
 
         if (target is null)
-            SetEnemyState(EnemyState.Idle);
+            SetEnemyState(Enemy_State.Idle);
         else
-            SetEnemyState(EnemyState.Chase);
+            SetEnemyState(Enemy_State.Chase);
     }
 }

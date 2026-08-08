@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // All State Enum
-public enum PlayerState
+public enum Player_State
 {
     Idle,
     
@@ -19,7 +19,7 @@ public enum PlayerState
     
     Dead,
 }
-public enum EnemyState
+public enum Enemy_State
 {
     Idle,
     
@@ -32,7 +32,7 @@ public enum EnemyState
     
     Dead,
 }
-public enum GameState
+public enum Game_State
 {
     InGame,
     Paused,
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EnemyController[] enemies;
     
     // State
-    GameState gameState;
+    Game_State gameState;
 
     private void OnEnable()
     {
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SetGameState(GameState.InGame);
+        SetGameState(Game_State.InGame);
     }
     private void Update()
     {
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 
 
     // State Layer
-    void SetGameState(GameState state)
+    void SetGameState(Game_State state)
     {
         gameState = state;
     }
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
     {
         switch (gameState)
         {
-            case GameState.InGame:
+            case Game_State.InGame:
 
                 HideCursor(true);
                 pausePanel.gameObject.SetActive(false);
@@ -109,12 +109,12 @@ public class GameManager : MonoBehaviour
                 if (inp.escapePressed)
                 {
                     pausePanel.gameObject.SetActive(true);
-                    SetGameState(GameState.Paused);
+                    SetGameState(Game_State.Paused);
                 }
                 break;
 
 
-            case GameState.Paused:
+            case Game_State.Paused:
                 HideCursor(false);
                 Time.timeScale = 0;
                 AudioListener.pause = true;
@@ -122,12 +122,12 @@ public class GameManager : MonoBehaviour
                 if (inp.escapePressed)
                 {
                     pausePanel.gameObject.SetActive(false);
-                    SetGameState(GameState.InGame);
+                    SetGameState(Game_State.InGame);
                 }
                 break;
             
             
-            case GameState.GameOver:
+            case Game_State.GameOver:
                 if (player.IsDead)
                 {
                     HideCursor(false);
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
                 break;
 
 
-            case GameState.Quit:
+            case Game_State.Quit:
                 QuitGame();
                 break;
         }
@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
     {
         switch (gameState)
         {
-            case GameState.InGame:
+            case Game_State.InGame:
                 player.PhysicsState();
 
                 foreach (EnemyController e in enemies)
@@ -193,6 +193,6 @@ public class GameManager : MonoBehaviour
 
     void HandlePlayerDead()
     {
-        SetGameState(GameState.GameOver);
+        SetGameState(Game_State.GameOver);
     }
 }
