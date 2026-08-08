@@ -5,20 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/StateMachine/Player_State/Move", fileName = "PlayerState_Move")]
 public class PlayerState_Move : PlayerState
 {
-    [Header("Input Name")]
-    [SerializeField] string XInputName = "MoveX";
-    [SerializeField] string YInputName = "MoveY";
-    
-    private static int MoveX;
-    private static int MoveY;
-
-    public override void Enter()
-    {
-        base.Enter();
-        
-        MoveX = Animator.StringToHash(XInputName);
-        MoveY = Animator.StringToHash(YInputName);
-    }
+    private static int MoveX = Animator.StringToHash("MoveX");
+    private static int MoveY = Animator.StringToHash("MoveY");
 
     public override void LogicalUpdate()
     {
