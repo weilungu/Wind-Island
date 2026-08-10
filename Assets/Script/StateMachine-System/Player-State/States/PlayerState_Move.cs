@@ -10,19 +10,24 @@ public class PlayerState_Move : PlayerState
 
     public override void LogicalUpdate()
     {
-        if (!ctx.input.Move)
+        if (!ctx.Get<PlayerInput>().Move)
             stateMachine.SwitchState(typeof(PlayerState_Idle));
      
-        if (ctx.input.Dash && ctx.dash.canDash)
+        if (ctx.Get<PlayerInput>().Dash && ctx.Get<PlayerDash>().canDash)
             stateMachine.SwitchState(typeof(PlayerState_Dash));
     }
 
     public override void PhysicalUpdate()
     {
-        ctx.player.Flip(ctx.sprite);
-        ctx.move.Move(ctx.player.MoveDirection);
+        New_PlayerController player = ctx.Get<New_PlayerController>();
+        PlayerMove move = ctx.Get<PlayerMove>();
+        SpriteRenderer sprite = ctx.Get<SpriteRenderer>();
+        Animator anim = ctx.Get<Animator>();
+
+        player.Flip(sprite);
+        move.Move(player.MoveDirection);
         
-        ctx.anim.SetFloat(MoveX, ctx.player.MoveDirection.x);
-        ctx.anim.SetFloat(MoveY, ctx.player.MoveDirection.y);
+        anim.SetFloat(MoveX, player.MoveDirection.x);
+        anim.SetFloat(MoveY, player.MoveDirection.y);
     }
 }

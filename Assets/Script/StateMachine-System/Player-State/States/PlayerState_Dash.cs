@@ -8,15 +8,15 @@ public class PlayerState_Dash : PlayerState
     public override void Enter()
     {
         base.Enter();
-        ctx.dash.TryDash();
+        ctx.Get<PlayerDash>().TryDash();
     }
 
     public override void LogicalUpdate()
     {
-        if (ctx.dash.isDashing) return;
+        if (ctx.Get<PlayerDash>().isDashing) return;
         
         stateMachine.SwitchState(
-            ctx.input.Move
+            ctx.Get<PlayerInput>().Move
             ? typeof(PlayerState_Move)
             : typeof(PlayerState_Idle)
         );
