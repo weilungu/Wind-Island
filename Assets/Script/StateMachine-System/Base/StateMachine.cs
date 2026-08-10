@@ -10,28 +10,37 @@ public class StateMachine : MonoBehaviour
 
     void Update()
     {
-        currState.LogicalUpdate();
+        currState?.LogicalUpdate();
     }
 
     void FixedUpdate()
     {
-        currState.PhysicalUpdate();
+        currState?.PhysicalUpdate();
     }
 
     protected void SwitchOn(IState newState)
     {
+        if (newState is null)
+            throw new ArgumentNullException(nameof(newState));
+
         currState = newState;
         currState.Enter();
     }
 
     public void SwitchState(IState newState)
     {
-        currState.Exit();
+        if (newState is null)
+            throw new ArgumentNullException(nameof(newState));
+
+        currState?.Exit();
         SwitchOn(newState);
     }
     
     public void SwitchState(Type newStateType)
     {
-        SwitchState(stateTable[newStateType]);
+        if (stateTable is null || !stateTable.TryGetValue(newStateType, out IState newState))
+            throw new KeyNotFoundException($"State not found: {newStateType?.Name}");
+
+        SwitchState(newState);
     }
 }

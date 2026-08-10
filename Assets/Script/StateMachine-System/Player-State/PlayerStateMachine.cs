@@ -8,33 +8,9 @@ public class PlayerStateMachine : StateMachine
     PlayerStateContext ctx;
     [SerializeField] PlayerState[] states;
     
-    PlayerInput input;
-    SpriteRenderer sprite;
-    Animator anim;
-    
-    New_PlayerController player;
-    PlayerMove move;
-    PlayerDash dash;
-    
     void Awake()
     {
-        input = GetComponent<PlayerInput>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
-        anim = GetComponentInChildren<Animator>();
-        
-        player = GetComponent<New_PlayerController>();
-        move = GetComponent<PlayerMove>();
-        dash = GetComponent<PlayerDash>();
-        
-        ctx = new PlayerStateContext(
-            input: input, 
-            sprite: sprite, 
-            anim: anim,
-            
-            player: player, 
-            move: move,
-            dash: dash
-        );
+        ctx = new PlayerStateContext(GetComponentsInChildren<Component>(true));
         
         stateTable = new Dictionary<Type, IState>(states.Length);
         

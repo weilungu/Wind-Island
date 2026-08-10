@@ -7,12 +7,12 @@ public class PlayerState_Idle : PlayerState
 {
     public override void LogicalUpdate()
     {
-        if (ctx.input.Move)
+        if (ctx.Get<PlayerInput>().Move)
             stateMachine.SwitchState(typeof(PlayerState_Move));
     }
 
     public override void PhysicalUpdate()
     {
-        ctx.move.StopMove();
+        ctx.Get<PlayerMove>().StopMove();
     }
 }

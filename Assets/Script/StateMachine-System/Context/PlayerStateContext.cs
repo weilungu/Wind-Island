@@ -1,32 +1,28 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStateContext
 {
-    public PlayerInput input;
-    public SpriteRenderer sprite;
-    public Animator anim;
-    
-    public New_PlayerController player;
-    public PlayerMove move;
-    public PlayerDash dash;
+    readonly List<Component> services = new List<Component>();
 
-    public PlayerStateContext(
-        PlayerInput input,
-        SpriteRenderer sprite,
-        Animator anim,
-        
-        New_PlayerController player,
-        PlayerMove move,
-        PlayerDash dash)
+    public PlayerStateContext(params Component[] services)
     {
-        this.input = input;
-        this.sprite = sprite;
-        this.anim = anim;
-        
-        this.player = player;
-        this.move = move;
-        this.dash = dash;
+        foreach (Component service in services)
+        {
+            if (service is not null)
+                this.services.Add(service);
+        }
+    }
+
+    public T Get<T>() where T : class
+    {
+        foreach (Component service in services)
+        {
+            if (service is T typedService)
+                return typedService;
+        }
+
+        throw new InvalidOperationException($"Missing state context service: {typeof(T).Name}");
     }
 }

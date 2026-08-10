@@ -23,7 +23,7 @@ public class PlayerState : ScriptableObject, IState
     
     public virtual void Enter()
     {
-        ctx.anim.Play(animationHash);
+        ctx.Get<Animator>().Play(animationHash);
         Debug.Log(animationName);
     }
 
