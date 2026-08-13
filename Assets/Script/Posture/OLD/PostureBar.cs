@@ -7,31 +7,46 @@ using UnityEngine.UI;
 public class PostureBar : MonoBehaviour
 {
     [Header("Images")]
-    [SerializeField] private Image fillLeft;
-    [SerializeField] private Image fillRight;
+    [SerializeField] Image[] fills;
+    
+    [SerializeField] Image fillLeft;
+    [SerializeField] Image fillRight;
     
     [Header("Target")]
-    [SerializeField] private Posture posture;
+    [SerializeField] PlayerPosture posture;
 
-    void Start()
+    
+    // === Unity Life Cycle === //
+    void OnEnable()
     {
         posture.OnPostureChanged += PostureUpdate;
         posture.OnPostureReset += ResetPosture;
-        
-        ResetPosture();
+    }
+    
+    void OnDisable()
+    {
+        posture.OnPostureChanged -= PostureUpdate;
+        posture.OnPostureReset -= ResetPosture;
     }
 
 
-    void PostureUpdate(float maxPosture, float currPosture)
+    // === Self Method === //
+    void PostureUpdate(int maxPosture, int currPosture)
     {
-        float fill = currPosture / maxPosture;
-
-        fillRight.fillAmount = fill;
-        fillLeft.fillAmount = fill;
+        float fill = (float)currPosture / (float)maxPosture;
+        
+        SetFills(fill);
     }
     void ResetPosture()
     {
-        fillRight.fillAmount = 0;
-        fillLeft.fillAmount = 0;
+        float fill = 0f;
+        
+        SetFills(fill);
+    }
+    
+    void SetFills(float fill)
+    {
+        foreach (Image f in fills)
+            f.fillAmount = fill;
     }
 }

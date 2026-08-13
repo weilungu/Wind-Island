@@ -992,6 +992,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a600cb9a4d44a6a49bcfa483085be402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currPosture: 30
+  maxPosture: 100
 --- !u!1 &1412794589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1534,9 +1536,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f40f9a52b55fea247891edf271bbc7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fills:
+  - {fileID: 1755833426}
+  - {fileID: 269671949}
   fillLeft: {fileID: 1755833426}
   fillRight: {fileID: 269671949}
-  posture: {fileID: 0}
+  posture: {fileID: 1410239811}
 --- !u!1 &2120488732
 GameObject:
   m_ObjectHideFlags: 0
