@@ -13,7 +13,7 @@ public class PlayerPosture : MonoBehaviour
     
     
     // Observer Pattern Part
-    public event Action<int, int> OnPostureChanged;
+    public event Action OnPostureChanged;
     public event Action OnPostureReset;
     
     
@@ -22,13 +22,15 @@ public class PlayerPosture : MonoBehaviour
     {
         OnPostureReset?.Invoke();
     }
-
-    void Update()
+    
+    
+    // === Self API === //
+    public void TakePosture(int amount)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnPostureChanged?.Invoke(maxPosture, currPosture);
-            print("clicked");
-        }
+        currPosture += amount;
+        OnPostureChanged?.Invoke();
     }
+    
+    public int CurrPosture => currPosture;
+    public int MaxPosture => maxPosture;
 }

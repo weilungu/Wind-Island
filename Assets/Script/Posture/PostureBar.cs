@@ -1,16 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PostureBar : MonoBehaviour
 {
     [Header("Images")]
-    [SerializeField] Image[] fills;
-    
-    [SerializeField] Image fillLeft;
-    [SerializeField] Image fillRight;
+    [SerializeField] Image[] fills = new Image[2];
     
     [Header("Target")]
     [SerializeField] PlayerPosture posture;
@@ -31,16 +25,18 @@ public class PostureBar : MonoBehaviour
 
 
     // === Self Method === //
-    void PostureUpdate(int maxPosture, int currPosture)
+    void PostureUpdate()
     {
-        float fill = (float)currPosture / (float)maxPosture;
+        float curr = posture.CurrPosture;
+        float max = posture.MaxPosture;
         
+        float fill = curr / max;
         SetFills(fill);
     }
     void ResetPosture()
     {
-        float fill = 0f;
-        
+        const float fill = 0f;
+
         SetFills(fill);
     }
     
