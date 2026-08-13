@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ba9f4425deec384aae81a00dc30c8cf, type: 3}
-  m_Name: PlayerState_Dash
+  m_Script: {fileID: 11500000, guid: 4dcbc4996fb90934fb2a4afed53248c4, type: 3}
+  m_Name: PlayerState_GuardBreak
   m_EditorClassIdentifier: 
-  animationName: Dash
-  postureAmount: 50
+  animationName: GuardBreak

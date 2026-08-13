@@ -31,6 +31,8 @@ public class PlayerPosture : MonoBehaviour
         OnPostureChanged?.Invoke();
     }
     
+    public void ResetPosture() => OnPostureReset?.Invoke();
+    
     public int CurrPosture => currPosture;
     public int MaxPosture => maxPosture;
 }

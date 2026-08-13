@@ -9,6 +9,10 @@ public class PlayerState_Idle : PlayerState
     {
         if (ctx.Get<PlayerInput>().Move)
             stateMachine.SwitchState(typeof(PlayerState_Move));
+        
+        
+        if (ctx.Get<PlayerPosture>().CurrPosture >= ctx.Get<PlayerPosture>().MaxPosture)
+            stateMachine.SwitchState(typeof(PlayerState_GuardBreak));
     }
 
     public override void PhysicalUpdate()
