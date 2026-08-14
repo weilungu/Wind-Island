@@ -50,7 +50,11 @@ public class PlayerPosture : MonoBehaviour
     }
     void DecreasePosture()
     {
-        if (currPosture <= 0) return;
+        if (currPosture <= 0f)
+        {
+            currPosture = 0f;
+            return;
+        }
         
         currPosture -= decreaseRate * Time.deltaTime;
         OnChanged?.Invoke();
