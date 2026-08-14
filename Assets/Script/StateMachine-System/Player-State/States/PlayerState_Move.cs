@@ -5,13 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/StateMachine/Player_State/Move", fileName = "PlayerState_Move")]
 public class PlayerState_Move : PlayerState
 {
-
     PlayerInput input;
     SpriteRenderer sprite;
     Animator anim;
     
     New_PlayerController player;
     PlayerMove move;
+    PlayerDash dash;
     
     private static int MoveX = Animator.StringToHash("MoveX");
     private static int MoveY = Animator.StringToHash("MoveY");
@@ -21,12 +21,13 @@ public class PlayerState_Move : PlayerState
         base.Enter();
         
         // Initialize Context
-        player = ctx.Get<New_PlayerController>();
         input = ctx.Get<PlayerInput>();
-            
-        move = ctx.Get<PlayerMove>();
         sprite = ctx.Get<SpriteRenderer>();
         anim = ctx.Get<Animator>();
+            
+        player = ctx.Get<New_PlayerController>();
+        move = ctx.Get<PlayerMove>();
+        dash = ctx.Get<PlayerDash>();
     }
     
     public override void LogicalUpdate()
@@ -35,7 +36,7 @@ public class PlayerState_Move : PlayerState
             stateMachine.SwitchState(typeof(PlayerState_Idle));
      
         
-        if (input.Dash && ctx.Get<PlayerDash>().canDash)
+        if (input.Dash && dash.canDash)
             stateMachine.SwitchState(typeof(PlayerState_Dash));
     }
 

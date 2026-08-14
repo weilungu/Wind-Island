@@ -17,7 +17,7 @@ public class PlayerState_GuardBreak : PlayerState
         move = ctx.Get<PlayerMove>();
         
         // Enter Logic
-        ctx.Get<PlayerGuardBreak>().SetState(true);
+        ctx.Get<PlayerGuardBreak>().SetActive(true);
         ctx.Get<PlayerMove>().StopMove();
     }
 
