@@ -6,6 +6,10 @@ using UnityEngine.UI;
 [CreateAssetMenu(menuName = "Data/StateMachine/Player_State/Dash", fileName = "PlayerState_Dash")]
 public class PlayerState_Dash : PlayerState
 {
+    PlayerDash dash;
+    PlayerPosture posture;
+    PlayerInput input;
+    
     [Header("Dash Posture")]
     [SerializeField] int postureAmount = 10;
     
@@ -13,22 +17,28 @@ public class PlayerState_Dash : PlayerState
     {
         base.Enter();
         
-        ctx.Get<PlayerDash>().TryDash();
-        ctx.Get<PlayerPosture>().TakePosture(postureAmount);
+        // Initialize Context
+        dash = ctx.Get<PlayerDash>();
+        posture = ctx.Get<PlayerPosture>();
+        input = ctx.Get<PlayerInput>();
+        
+        // Enter Logic
+        dash.TryDash();
+        posture.TakePosture(postureAmount);
     }
 
     public override void LogicalUpdate()
     {
-        if (ctx.Get<PlayerDash>().isDashing) return;
+        if (dash.isDashing) return;
         
         stateMachine.SwitchState(
-            ctx.Get<PlayerInput>().Move
+            input.Move
             ? typeof(PlayerState_Move)
             : typeof(PlayerState_Idle)
         );
         
         
-        if (ctx.Get<PlayerPosture>().CurrPosture >= ctx.Get<PlayerPosture>().MaxPosture)
+        if (posture.CurrPosture >= posture.MaxPosture)
             stateMachine.SwitchState(typeof(PlayerState_GuardBreak));
     }
 }
