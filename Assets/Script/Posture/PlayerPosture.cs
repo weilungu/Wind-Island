@@ -14,14 +14,14 @@ public class PlayerPosture : MonoBehaviour
     [SerializeField] float decreaseRate;  // 每秒下降多少 
     
     // Observer Pattern Part
-    public event Action OnPostureChanged;
-    public event Action OnPostureReset;
+    public event Action OnChanged;
+    public event Action OnReset;
     
     
     // === Unity LifeCycle === //
     void Start()
     {
-        OnPostureReset?.Invoke();
+        OnReset?.Invoke();
     }
 
     void Update()
@@ -33,7 +33,7 @@ public class PlayerPosture : MonoBehaviour
     public void TakePosture(float amount)
     {
         currPosture += amount;
-        OnPostureChanged?.Invoke();
+        OnChanged?.Invoke();
     }
 
     public void DecreasePosture()
@@ -41,10 +41,10 @@ public class PlayerPosture : MonoBehaviour
         if (currPosture <= 0) return;
         
         currPosture -= decreaseRate * Time.deltaTime;
-        OnPostureChanged?.Invoke();
+        OnChanged?.Invoke();
     }
     
-    public void ResetPosture() => OnPostureReset?.Invoke();
+    public void ResetPosture() => OnReset?.Invoke();
     
     public float CurrPosture => currPosture;
     public float MaxPosture => maxPosture;

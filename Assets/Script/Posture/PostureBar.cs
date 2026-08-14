@@ -13,19 +13,19 @@ public class PostureBar : MonoBehaviour
     // === Unity Life Cycle === //
     void OnEnable()
     {
-        posture.OnPostureChanged += PostureUpdate;
-        posture.OnPostureReset += ResetPosture;
+        posture.OnChanged += Update;
+        posture.OnReset += Reset;
     }
     
     void OnDisable()
     {
-        posture.OnPostureChanged -= PostureUpdate;
-        posture.OnPostureReset -= ResetPosture;
+        posture.OnChanged -= Update;
+        posture.OnReset -= Reset;
     }
 
 
     // === Self Method === //
-    void PostureUpdate()
+    void Update()
     {
         float curr = posture.CurrPosture;
         float max = posture.MaxPosture;
@@ -33,7 +33,7 @@ public class PostureBar : MonoBehaviour
         float fill = curr / max;
         SetFills(fill);
     }
-    void ResetPosture()
+    void Reset()
     {
         const float fill = 0f;
 
