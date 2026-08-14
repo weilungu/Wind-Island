@@ -21,7 +21,9 @@ public class PlayerState_Dash : PlayerState
         
         // Enter Logic
         dash.TryDash();
+        
         posture.TakePosture(dash.GetPosture());
+        posture.ResetTimeGap();
     }
 
     public override void LogicalUpdate()

@@ -997,8 +997,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currPosture: 0
   maxPosture: 100
-  timeGap: 5
   decreaseRate: 10
+  timeGap: 1
 --- !u!114 &1410239812
 MonoBehaviour:
   m_ObjectHideFlags: 0
