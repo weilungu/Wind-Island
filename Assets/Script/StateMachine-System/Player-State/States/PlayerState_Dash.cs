@@ -29,6 +29,6 @@ public class PlayerState_Dash : PlayerState
         
         
         if (ctx.Get<PlayerPosture>().CurrPosture >= ctx.Get<PlayerPosture>().MaxPosture)
-            stateMachine.SwitchState(typeof(PlayerState_Idle));
+            stateMachine.SwitchState(typeof(PlayerState_GuardBreak));
     }
 }

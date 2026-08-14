@@ -18,8 +18,6 @@ public class PlayerState_Move : PlayerState
             stateMachine.SwitchState(typeof(PlayerState_Dash));
         
         
-        if (ctx.Get<PlayerPosture>().CurrPosture >= ctx.Get<PlayerPosture>().MaxPosture)
-            stateMachine.SwitchState(typeof(PlayerState_GuardBreak));
     }
 
     public override void PhysicalUpdate()

@@ -9,6 +9,12 @@ public class PlayerState_GuardBreak : PlayerState
     {
         base.Enter();
         
-        ctx.Get<PlayerPosture>().ResetPosture();
+        ctx.Get<PlayerGuardBreak>().SetState(true);
+        ctx.Get<PlayerMove>().StopMove();
+    }
+
+    public override void PhysicalUpdate()
+    {
+        ctx.Get<PlayerMove>().Move(ctx.Get<New_PlayerController>().MoveDirection);
     }
 }

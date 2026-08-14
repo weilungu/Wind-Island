@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PlayerState_GuardBreak
   m_EditorClassIdentifier: 
   animationName: GuardBreak
+  speedPercent: 100
