@@ -13,11 +13,14 @@ public class PlayerDash : MonoBehaviour
     public bool canDash = true;
     public bool isDashing = false;
     
-    [Header("Inspector Values")]
+    [Header("Dash Values")]
     [SerializeField] float dashSpeed = 12f;
     [SerializeField] float dashTime = 0.5f;
     [SerializeField] float dashCooldown = 0.2f;
 
+    [Header("Posture Values")]
+    [SerializeField] int postureValue = 10;
+    
     // Private Values
     Vector2 dashDir;
     
@@ -53,4 +56,6 @@ public class PlayerDash : MonoBehaviour
         
         StartCoroutine(Dash());
     }
+    
+    public int GetPosture() => postureValue;
 }

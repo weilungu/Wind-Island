@@ -17,12 +17,12 @@ public class PlayerState_GuardBreak : PlayerState
         move = ctx.Get<PlayerMove>();
         
         // Enter Logic
-        ctx.Get<PlayerGuardBreak>().SetActive(true);
-        ctx.Get<PlayerMove>().StopMove();
+        guardBreak.SetActive(true);
+        move.StopMove();
     }
 
     public override void PhysicalUpdate()
     {
-        ctx.Get<PlayerMove>().Move(ctx.Get<New_PlayerController>().MoveDirection);
+        move.Move(ctx.Get<New_PlayerController>().MoveDirection);
     }
 }

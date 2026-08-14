@@ -10,9 +10,6 @@ public class PlayerState_Dash : PlayerState
     PlayerPosture posture;
     PlayerInput input;
     
-    [Header("Dash Posture")]
-    [SerializeField] int postureAmount = 10;
-    
     public override void Enter()
     {
         base.Enter();
@@ -24,7 +21,7 @@ public class PlayerState_Dash : PlayerState
         
         // Enter Logic
         dash.TryDash();
-        posture.TakePosture(postureAmount);
+        posture.TakePosture(dash.GetPosture());
     }
 
     public override void LogicalUpdate()
