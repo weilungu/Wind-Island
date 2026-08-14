@@ -6,11 +6,12 @@ using UnityEngine;
 public class PlayerPosture : MonoBehaviour
 {
     [Header("Debug Show")]
-    [SerializeField] int currPosture = 0;
+    [SerializeField] float currPosture = 0f;
     
     [Header("Values")]
-    [SerializeField] int maxPosture = 100;
-    
+    [SerializeField] float maxPosture = 100f;
+    [SerializeField, Range(0f, 50f)] float timeGap = 10f;
+    [SerializeField] float decreaseRate;  // 每秒下降多少 
     
     // Observer Pattern Part
     public event Action OnPostureChanged;
@@ -22,17 +23,29 @@ public class PlayerPosture : MonoBehaviour
     {
         OnPostureReset?.Invoke();
     }
-    
-    
+
+    void Update()
+    {
+        Invoke("DecreasePosture", timeGap);
+    }
+
     // === Self API === //
-    public void TakePosture(int amount)
+    public void TakePosture(float amount)
     {
         currPosture += amount;
+        OnPostureChanged?.Invoke();
+    }
+
+    public void DecreasePosture()
+    {
+        if (currPosture <= 0) return;
+        
+        currPosture -= decreaseRate * Time.deltaTime;
         OnPostureChanged?.Invoke();
     }
     
     public void ResetPosture() => OnPostureReset?.Invoke();
     
-    public int CurrPosture => currPosture;
-    public int MaxPosture => maxPosture;
+    public float CurrPosture => currPosture;
+    public float MaxPosture => maxPosture;
 }

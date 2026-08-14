@@ -968,6 +968,7 @@ MonoBehaviour:
   dashSpeed: 15
   dashTime: 0.3
   dashCooldown: 0.2
+  postureValue: 10
 --- !u!114 &1410239810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,6 +997,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currPosture: 0
   maxPosture: 100
+  timeGap: 5
+  decreaseRate: 10
 --- !u!114 &1410239812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1008,7 +1011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba772b6e5f17fe446b7a7417d49324cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedPercent: 41.3
+  speedPercent: 50
   isGuardBreak: 0
 --- !u!1 &1412794589
 GameObject:
