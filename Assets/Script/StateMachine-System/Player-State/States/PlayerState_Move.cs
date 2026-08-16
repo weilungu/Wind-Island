@@ -5,30 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/StateMachine/Player_State/Move", fileName = "PlayerState_Move")]
 public class PlayerState_Move : PlayerState
 {
-    PlayerInput input;
-    SpriteRenderer sprite;
-    Animator anim;
-    
-    New_PlayerController player;
-    PlayerMove move;
-    PlayerDash dash;
-    
     private static int MoveX = Animator.StringToHash("MoveX");
     private static int MoveY = Animator.StringToHash("MoveY");
-    
-    public override void Enter()
-    {
-        base.Enter();
-        
-        // Initialize Context
-        input = ctx.Get<PlayerInput>();
-        sprite = ctx.Get<SpriteRenderer>();
-        anim = ctx.Get<Animator>();
-            
-        player = ctx.Get<New_PlayerController>();
-        move = ctx.Get<PlayerMove>();
-        dash = ctx.Get<PlayerDash>();
-    }
     
     public override void LogicalUpdate()
     {

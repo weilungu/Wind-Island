@@ -9,7 +9,21 @@ public class PlayerState : ScriptableObject, IState
     
     protected PlayerStateMachine stateMachine;
     protected PlayerStateContext ctx;
+    
+    
+    // Contexts
+    protected Animator anim;
+    protected SpriteRenderer sprite;
+    
+    protected New_PlayerController player;
+    protected PlayerInput input;
+    
+    protected PlayerMove move;
+    protected PlayerDash dash;
+    protected PlayerPosture posture;
+    protected PlayerGuardBreak guardBreak;
 
+    
     void OnEnable()
     {
         animationHash = Animator.StringToHash(animationName);
@@ -23,7 +37,20 @@ public class PlayerState : ScriptableObject, IState
     
     public virtual void Enter()
     {
-        ctx.Get<Animator>().Play(animationHash);
+        // Init Contexts
+        anim = ctx.Get<Animator>();
+        sprite = ctx.Get<SpriteRenderer>();
+        
+        player = ctx.Get<New_PlayerController>();
+        input = ctx.Get<PlayerInput>();
+        
+        move = ctx.Get<PlayerMove>();
+        dash = ctx.Get<PlayerDash>();
+        posture = ctx.Get<PlayerPosture>();
+        guardBreak = ctx.Get<PlayerGuardBreak>();
+        
+        // Init Logics
+        anim.Play(animationHash);
         Debug.Log(animationName);
     }
 

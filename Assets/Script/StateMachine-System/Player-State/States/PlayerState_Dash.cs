@@ -6,18 +6,10 @@ using UnityEngine.UI;
 [CreateAssetMenu(menuName = "Data/StateMachine/Player_State/Dash", fileName = "PlayerState_Dash")]
 public class PlayerState_Dash : PlayerState
 {
-    PlayerDash dash;
-    PlayerPosture posture;
-    PlayerInput input;
-    
     public override void Enter()
     {
         base.Enter();
         
-        // Initialize Context
-        dash = ctx.Get<PlayerDash>();
-        posture = ctx.Get<PlayerPosture>();
-        input = ctx.Get<PlayerInput>();
         
         // Enter Logic
         dash.TryDash();
