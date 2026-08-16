@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/StateMachine/Player_State/GuardBreak", fileName = "PlayerState_GuardBreak")]
 public class PlayerState_GuardBreak : PlayerState
 {
+    protected override bool CanAttack => true;
+
     public override void Enter()
     {
         base.Enter();
@@ -16,6 +18,6 @@ public class PlayerState_GuardBreak : PlayerState
 
     public override void PhysicalUpdate()
     {
-        move.Move(ctx.Get<New_PlayerController>().MoveDirection);
+        move.Move(player.MoveDirection);
     }
 }

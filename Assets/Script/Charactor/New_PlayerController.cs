@@ -18,7 +18,7 @@ public class New_PlayerController : MonoBehaviour
         input.EnableGameplayInput();
     }
 
-    
+
     // === Self API === //
     public Vector2 MoveDirection
         => new Vector2(input.Horizontal, input.Vertical).normalized;

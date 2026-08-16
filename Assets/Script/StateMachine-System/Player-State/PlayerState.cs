@@ -22,7 +22,10 @@ public class PlayerState : ScriptableObject, IState
     protected PlayerDash dash;
     protected PlayerPosture posture;
     protected PlayerGuardBreak guardBreak;
+    protected PlayerCombat combat;
 
+    // Can be Something
+    protected virtual bool CanAttack => false;
     
     void OnEnable()
     {
@@ -48,6 +51,7 @@ public class PlayerState : ScriptableObject, IState
         dash = ctx.Get<PlayerDash>();
         posture = ctx.Get<PlayerPosture>();
         guardBreak = ctx.Get<PlayerGuardBreak>();
+        combat = ctx.Get<PlayerCombat>();
         
         // Init Logics
         anim.Play(animationHash);
@@ -56,7 +60,11 @@ public class PlayerState : ScriptableObject, IState
 
     public virtual void Exit() {}
 
-    public virtual void LogicalUpdate() {}
+    public virtual void LogicalUpdate()
+    {
+        if (CanAttack && input.Attack)
+            combat.Attack();
+    }
 
     public virtual void PhysicalUpdate() {}
 }

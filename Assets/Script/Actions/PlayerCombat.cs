@@ -21,10 +21,7 @@ public class PlayerCombat : MonoBehaviour
     // === Self API === //
     public void Attack()
     {
-        if (input.Attack)
-        {
-            anim.Play("Attack");
-            print("Attacked");
-        }
+        // anim.Play("Attack");
+        print("Attacked");
     }
 }

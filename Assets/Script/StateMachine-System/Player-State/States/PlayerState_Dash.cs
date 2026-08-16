@@ -10,7 +10,6 @@ public class PlayerState_Dash : PlayerState
     {
         base.Enter();
         
-        
         // Enter Logic
         dash.TryDash();
         
@@ -20,6 +19,8 @@ public class PlayerState_Dash : PlayerState
 
     public override void LogicalUpdate()
     {
+        base.LogicalUpdate();
+        
         if (dash.isDashing) return;
         
         stateMachine.SwitchState(

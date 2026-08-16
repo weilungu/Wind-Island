@@ -20,10 +20,7 @@ public class StateMachine : MonoBehaviour
 
     protected void SwitchOn(IState newState)
     {
-        if (newState is null)
-            throw new ArgumentNullException(nameof(newState));
-
-        currState = newState;
+        currState = newState ?? throw new ArgumentNullException(nameof(newState));
         currState.Enter();
     }
 

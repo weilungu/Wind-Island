@@ -7,9 +7,13 @@ public class PlayerState_Move : PlayerState
 {
     private static int MoveX = Animator.StringToHash("MoveX");
     private static int MoveY = Animator.StringToHash("MoveY");
-    
+
+    protected override bool CanAttack => true;
+
     public override void LogicalUpdate()
     {
+        base.LogicalUpdate();
+        
         if (!input.Move)
             stateMachine.SwitchState(typeof(PlayerState_Idle));
      
