@@ -19,7 +19,7 @@ public class PlayerState_GuardBreak_Idle : PlayerState
     {
         base.LogicalUpdate();
         
-        guardBreak.SetGuardBreakBe(!guardBreak.Less_ThreshPCT);
+        guardBreak.TryExit();
         
         if (input.Move)
             stateMachine.SwitchState(typeof(PlayerState_GuardBreak_Move));

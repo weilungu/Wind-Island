@@ -25,10 +25,16 @@ public class PlayerGuardBreak : MonoBehaviour
     
     // === Self API === //
     public void SetGuardBreakBe(bool enable) => isGuardBreak = enable;
+
+    public void TryExit()
+    {
+        bool LessThan_ThreshPCT
+            = posture.CurrPosture < posture.MaxPosture * (exitThresholdPercent / 100);
+        
+        SetGuardBreakBe(!LessThan_ThreshPCT);
+    }
+    
     
     public float SpeedPCT => speedPercent;
-    public bool Less_ThreshPCT => 
-        posture.CurrPosture < posture.MaxPosture * (exitThresholdPercent / 100);
-    
     public bool IsGuardBreak => isGuardBreak;
 }
