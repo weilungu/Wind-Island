@@ -5,15 +5,21 @@ using UnityEngine;
 
 public class PlayerPosture : MonoBehaviour
 {
-    [Header("Debug Show")]
-    [SerializeField] float currPosture = 0f;
     
-    [Header("Set Posture")]
+    [Header("Posture Values")]
     [SerializeField] float maxPosture = 100f;
     
-    [Header("Set Decrease")]
-    [SerializeField] float decreaseRate = 10f;  // 每秒下降多少 
-    [SerializeField, Range(0f, 10f)] float timeGap = 10f;
+    [Space]
+    [SerializeField, Tooltip("每秒衰減多少")]
+    float decreaseRate = 10f; 
+    
+    [SerializeField, Range(0f, 10f), Tooltip("隔多少時間後衰減")]
+    float timeGap = 1f;
+    
+    
+    [Header("Debug Show")]
+    [SerializeField, Tooltip("目前的 Posture (別動)")]
+    float currPosture = 0f;
     
     // Private Values
     float tempTimeGap;
@@ -27,6 +33,7 @@ public class PlayerPosture : MonoBehaviour
     void Start()
     {
         tempTimeGap = timeGap;
+        timeGap = 0f;
         
         OnReset?.Invoke();
     }

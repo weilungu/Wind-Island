@@ -15998,10 +15998,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a600cb9a4d44a6a49bcfa483085be402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currPosture: 0
   maxPosture: 100
-  decreaseRate: 5
-  timeGap: 1
+  decreaseRate: 10
+  timeGap: 1.2
+  currPosture: 0
 --- !u!114 &1410239812
 MonoBehaviour:
   m_ObjectHideFlags: 0
