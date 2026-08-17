@@ -24,7 +24,7 @@ public class PlayerGuardBreak : MonoBehaviour
 
     
     // === Self API === //
-    public void SetIsGuardBreak(bool enable) => isGuardBreak = enable;
+    public void SetGuardBreakBe(bool enable) => isGuardBreak = enable;
     
     public float SpeedPCT => speedPercent;
     public bool Less_ThreshPCT => 

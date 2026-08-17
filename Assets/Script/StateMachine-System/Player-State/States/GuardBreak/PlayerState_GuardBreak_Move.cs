@@ -8,28 +8,17 @@ using UnityEngine;
 ]
 public class PlayerState_GuardBreak_Move : PlayerState
 {
-    // bool lessThresh;
-    
-    public override void Enter()
-    {
-        base.Enter();
-        
-        // Init
-        // lessThresh = posture.CurrPosture < posture.MaxPosture * (guardBreak.Less_ThreshPCT / 100);
-        
-        // Enter Logic
-        guardBreak.SetIsGuardBreak(true);
-    }
-
     public override void LogicalUpdate()
     {
         base.LogicalUpdate();
+        
+        guardBreak.SetGuardBreakBe(!guardBreak.Less_ThreshPCT);
         
         if (!input.Move)
             stateMachine.SwitchState(typeof(PlayerState_GuardBreak_Idle));
         
         
-        if (guardBreak.Less_ThreshPCT && input.Move)
+        if (!guardBreak.IsGuardBreak && input.Move)
             stateMachine.SwitchState(typeof(PlayerState_Move));
     }
 

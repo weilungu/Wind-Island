@@ -15,11 +15,11 @@ public class PlayerState_Dash : PlayerState
     {
         base.Enter();
         
-        // Enter Logic
         dash.TryDash();
-        
         posture.TakePosture(dash.GetPosture());
         posture.ResetTimeGap();
+        
+        guardBreak.SetGuardBreakBe(posture.CurrPosture >= posture.MaxPosture);
     }
 
     public override void LogicalUpdate()
@@ -29,7 +29,7 @@ public class PlayerState_Dash : PlayerState
         if (dash.isDashing) return;
         
         
-        if (posture.CurrPosture >= posture.MaxPosture)
+        if (guardBreak.IsGuardBreak)
         {
             stateMachine.SwitchState(
                 input.Move
