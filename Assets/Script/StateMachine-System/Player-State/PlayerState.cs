@@ -25,7 +25,7 @@ public class PlayerState : ScriptableObject, IState
     protected PlayerCombat combat;
 
     // Can Be Something
-    protected virtual bool CanAttack => false;
+    protected virtual bool CanBe_Attack => true;
     
     void OnEnable()
     {
@@ -52,7 +52,7 @@ public class PlayerState : ScriptableObject, IState
 
     public virtual void LogicalUpdate()
     {
-        if (CanAttack && input.Attack)
+        if (CanBe_Attack && input.Attack)
             combat.Attack();
     }
 

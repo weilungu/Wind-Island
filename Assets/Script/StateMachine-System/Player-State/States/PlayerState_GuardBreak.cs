@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/StateMachine/Player_State/GuardBreak", fileName = "PlayerState_GuardBreak")]
 public class PlayerState_GuardBreak : PlayerState
 {
-    protected override bool CanAttack => true;
-
     public override void Enter()
     {
         base.Enter();
