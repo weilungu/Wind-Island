@@ -32,7 +32,7 @@ public class New_PlayerController : MonoBehaviour
             sprite.flipX = dir.x < 0f;
     }
 
-    public void PlayerMovement()
+    public void Movement()
     {
         Flip(sprite);
         move.Move();
