@@ -6,11 +6,13 @@ using UnityEngine;
 public class New_PlayerController : MonoBehaviour
 {
     PlayerInput input;
-    
+    PlayerMove move;
     
     void Awake()
     {
         input = GetComponent<PlayerInput>();
+        
+        move = GetComponent<PlayerMove>();
     }
 
     void Start()
@@ -20,12 +22,9 @@ public class New_PlayerController : MonoBehaviour
 
 
     // === Self API === //
-    public Vector2 MoveDirection
-        => new Vector2(input.Horizontal, input.Vertical).normalized;
-
     public void Flip(SpriteRenderer sprite)
     {
-        Vector2 dir = MoveDirection;
+        Vector2 dir = move.Direction;
         if (dir.x != 0f)
             sprite.flipX = dir.x < 0f;
     }

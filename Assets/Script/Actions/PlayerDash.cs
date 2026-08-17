@@ -7,7 +7,7 @@ public class PlayerDash : MonoBehaviour
 {
     // Awake Values
     Rigidbody2D rb;
-    New_PlayerController player;
+    PlayerMove move;
     
     [Header("Show")]
     public bool canDash = true;
@@ -29,7 +29,7 @@ public class PlayerDash : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GetComponent<New_PlayerController>();
+        move = GetComponent<PlayerMove>();
     }
 
     
@@ -39,7 +39,7 @@ public class PlayerDash : MonoBehaviour
         canDash = false;
         isDashing = true;
 
-        dashDir = player.MoveDirection;
+        dashDir = move.Direction;
 
         rb.velocity = dashDir * dashSpeed;
         yield return new WaitForSeconds(dashTime);

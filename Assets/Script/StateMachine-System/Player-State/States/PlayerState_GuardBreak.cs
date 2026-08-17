@@ -16,6 +16,6 @@ public class PlayerState_GuardBreak : PlayerState
 
     public override void PhysicalUpdate()
     {
-        move.Move(player.MoveDirection);
+        move.Movement();
     }
 }
