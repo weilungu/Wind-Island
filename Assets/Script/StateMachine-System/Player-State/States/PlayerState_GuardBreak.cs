@@ -10,12 +10,12 @@ public class PlayerState_GuardBreak : PlayerState
         base.Enter();
         
         // Enter Logic
-        guardBreak.SetActive(true);
+        guardBreak.SetIsGuardBreak(true);
         move.StopMove();
     }
 
     public override void PhysicalUpdate()
     {
-        move.Movement();
+        player.PlayerMovement();
     }
 }

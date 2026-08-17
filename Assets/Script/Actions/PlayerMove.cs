@@ -42,7 +42,7 @@ public class PlayerMove : MonoBehaviour
     // === Self API === //
     public Vector2 Direction => new Vector2(input.Horizontal, input.Vertical).normalized;
     
-    public void Movement()
+    public void Move()
     {
         if (guardBreak.IsGuardBreak)
         {
@@ -54,7 +54,7 @@ public class PlayerMove : MonoBehaviour
     }
     public void StopMove() => rb.velocity = Vector2.zero;
 
-    public void PlayMoveAnimation()
+    public void MoveAnimation()
     {
         anim.SetFloat(MoveX, Direction.x);
         anim.SetFloat(MoveY, Direction.y);

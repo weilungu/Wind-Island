@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class New_PlayerController : MonoBehaviour
 {
+    SpriteRenderer sprite;
+    
     PlayerInput input;
     PlayerMove move;
     
     void Awake()
     {
-        input = GetComponent<PlayerInput>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
         
+        input = GetComponent<PlayerInput>();
         move = GetComponent<PlayerMove>();
     }
 
@@ -27,5 +30,13 @@ public class New_PlayerController : MonoBehaviour
         Vector2 dir = move.Direction;
         if (dir.x != 0f)
             sprite.flipX = dir.x < 0f;
+    }
+
+    public void PlayerMovement()
+    {
+        Flip(sprite);
+        move.Move();
+        
+        move.MoveAnimation();
     }
 }

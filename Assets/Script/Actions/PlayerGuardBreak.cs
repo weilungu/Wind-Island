@@ -11,7 +11,7 @@ public class PlayerGuardBreak : MonoBehaviour
     [SerializeField] bool isGuardBreak;
 
     // === Self API === //
-    public void SetActive(bool enable) => isGuardBreak = enable;
+    public void SetIsGuardBreak(bool enable) => isGuardBreak = enable;
     
     public float SpeedPercent => speedPercent;
     public bool IsGuardBreak => isGuardBreak;
