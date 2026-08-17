@@ -18,8 +18,8 @@ public class PlayerDash : MonoBehaviour
     [SerializeField] float dashTime = 0.5f;
     [SerializeField] float dashCooldown = 0.2f;
 
-    [Header("Posture Values")]
-    [SerializeField] int postureValue = 10;
+    [Space]
+    [SerializeField] int postureIncrease = 10;
     
     // Private Values
     Vector2 dashDir;
@@ -57,5 +57,5 @@ public class PlayerDash : MonoBehaviour
         StartCoroutine(Dash());
     }
     
-    public int GetPosture() => postureValue;
+    public int GetPosture() => postureIncrease;
 }

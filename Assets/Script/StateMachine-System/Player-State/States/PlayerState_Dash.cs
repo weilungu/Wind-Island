@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(menuName = "Data/StateMachine/Player_State/Dash", fileName = "PlayerState_Dash")]
+[CreateAssetMenu(
+    menuName = "Data/StateMachine/Player_State/Dash",
+    fileName = "PlayerState_Dash")
+]
 public class PlayerState_Dash : PlayerState
 {
     protected override bool CanBe_Attack => false;
@@ -25,14 +28,22 @@ public class PlayerState_Dash : PlayerState
         
         if (dash.isDashing) return;
         
+        
+        if (posture.CurrPosture >= posture.MaxPosture)
+        {
+            stateMachine.SwitchState(
+                input.Move
+                ? typeof(PlayerState_GuardBreak_Move)
+                : typeof(PlayerState_GuardBreak_Idle)
+            );
+            
+            return;
+        }
+        
         stateMachine.SwitchState(
             input.Move
             ? typeof(PlayerState_Move)
             : typeof(PlayerState_Idle)
         );
-        
-        
-        if (posture.CurrPosture >= posture.MaxPosture)
-            stateMachine.SwitchState(typeof(PlayerState_GuardBreak));
     }
 }

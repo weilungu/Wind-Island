@@ -42,18 +42,12 @@ public class PlayerMove : MonoBehaviour
     // === Self API === //
     public Vector2 Direction => new Vector2(input.Horizontal, input.Vertical).normalized;
     
-    public void Move()
-    {
-        if (guardBreak.IsGuardBreak)
-        {
-            rb.velocity = Direction * gbSpeed;
-            return;
-        }
-        
-        rb.velocity = Direction * moveSpeed;
-    }
+    public void Move() => rb.velocity = Direction * moveSpeed;
+    public void GuardBreakMove() => rb.velocity = Direction * gbSpeed;
+    
     public void StopMove() => rb.velocity = Vector2.zero;
 
+    
     public void MoveAnimation()
     {
         anim.SetFloat(MoveX, Direction.x);

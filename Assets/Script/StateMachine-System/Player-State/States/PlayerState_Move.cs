@@ -19,6 +19,9 @@ public class PlayerState_Move : PlayerState
 
     public override void PhysicalUpdate()
     {
-        player.Movement();
+        player.Flip(sprite);
+        move.Move();
+        
+        move.MoveAnimation();
     }
 }
