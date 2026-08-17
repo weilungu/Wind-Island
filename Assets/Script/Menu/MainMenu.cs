@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,7 +8,7 @@ public class MainMenu : MonoBehaviour
     MainMenuButton currBtn;
     List<MainMenuButton> buttons;
     
-    public GameObject lastSelect;
+    [HideInInspector] public GameObject lastSelect;
     
     // === Unity Life Cycle === //
     void Awake()
@@ -34,13 +32,13 @@ public class MainMenu : MonoBehaviour
     }
     
     // === Self API === //
-    public void Select(MainMenuButton tg)
+    public void Select(MainMenuButton target)
     {
-        if (currBtn == tg) return;
+        if (currBtn == target) return;
         
         currBtn?.Deselect();
         
-        currBtn = tg;
+        currBtn = target;
         currBtn.Select();
         lastSelect = currBtn.gameObject;
         
