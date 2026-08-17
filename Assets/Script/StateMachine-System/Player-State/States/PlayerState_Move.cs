@@ -5,9 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/StateMachine/Player_State/Move", fileName = "PlayerState_Move")]
 public class PlayerState_Move : PlayerState
 {
-    private static int MoveX = Animator.StringToHash("MoveX");
-    private static int MoveY = Animator.StringToHash("MoveY");
-
     public override void LogicalUpdate()
     {
         base.LogicalUpdate();
@@ -25,7 +22,7 @@ public class PlayerState_Move : PlayerState
         player.Flip(sprite);
         move.Move(player.MoveDirection);
         
-        anim.SetFloat(MoveX, player.MoveDirection.x);
-        anim.SetFloat(MoveY, player.MoveDirection.y);
+        anim.SetFloat(move.MoveX, player.MoveDirection.x);
+        anim.SetFloat(move.MoveY, player.MoveDirection.y);
     }
 }

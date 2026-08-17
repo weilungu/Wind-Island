@@ -28,6 +28,9 @@ public class PlayerMove : MonoBehaviour
 
     
     // === Self API === //
+    [HideInInspector] public int MoveX = Animator.StringToHash("MoveX");
+    [HideInInspector] public int MoveY = Animator.StringToHash("MoveY");
+    
     public void Move(Vector2 dir)
     {
         if (!guardBreak.IsGuardBreak)
@@ -38,6 +41,5 @@ public class PlayerMove : MonoBehaviour
         
         rb.velocity = dir * gbSpeed;
     }
-    
     public void StopMove() => rb.velocity = Vector2.zero;
 }
