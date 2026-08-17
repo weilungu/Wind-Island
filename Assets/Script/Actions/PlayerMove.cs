@@ -35,7 +35,7 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
-        gbSpeed = moveSpeed * (guardBreak.SpeedPercent / 100);
+        gbSpeed = moveSpeed * (guardBreak.SpeedPCT / 100);
     }
 
     

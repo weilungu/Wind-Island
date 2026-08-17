@@ -15954,7 +15954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba6b2d0bce065f143a827f8153ebfbe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 7
 --- !u!114 &1410239809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15972,7 +15972,7 @@ MonoBehaviour:
   dashSpeed: 15
   dashTime: 0.3
   dashCooldown: 0.2
-  postureValue: 10
+  postureIncrease: 17
 --- !u!114 &1410239810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16015,7 +16015,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba772b6e5f17fe446b7a7417d49324cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedPercent: 50
+  speedPercent: 20
+  exitThresholdPercent: 60
   isGuardBreak: 0
 --- !u!61 &1410239813
 BoxCollider2D:

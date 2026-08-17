@@ -41,6 +41,8 @@ public class PlayerPosture : MonoBehaviour
     void Update()
     {
         WaitToDecrease();
+        if (currPosture >= maxPosture)
+            currPosture = maxPosture;
     }
 
     // === Self Method === //
