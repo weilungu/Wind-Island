@@ -27,6 +27,6 @@ public class New_PlayerController : MonoBehaviour
     {
         Vector2 dir = MoveDirection;
         if (dir.x != 0f)
-            sprite.flipX = dir.x < 0;
+            sprite.flipX = dir.x < 0f;
     }
 }

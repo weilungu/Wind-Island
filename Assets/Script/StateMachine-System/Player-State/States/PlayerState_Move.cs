@@ -22,7 +22,6 @@ public class PlayerState_Move : PlayerState
         player.Flip(sprite);
         move.Move(player.MoveDirection);
         
-        anim.SetFloat(move.MoveX, player.MoveDirection.x);
-        anim.SetFloat(move.MoveY, player.MoveDirection.y);
+        move.PlayMoveAnimation();
     }
 }

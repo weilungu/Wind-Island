@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    PlayerInput input;
+    
     Rigidbody2D rb;
+    Animator anim;
+    
     PlayerGuardBreak guardBreak;
     
     [Header("Values")]
@@ -13,11 +17,19 @@ public class PlayerMove : MonoBehaviour
     
     // Private Values
     float gbSpeed;
+    
+    int MoveX = Animator.StringToHash("MoveX");
+    int MoveY = Animator.StringToHash("MoveY");
 
+    
     // === Unity Life Cycle === //
     void Awake()
     {
+        input = GetComponent<PlayerInput>();
+        
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponentInChildren<Animator>();
+        
         guardBreak = GetComponent<PlayerGuardBreak>();
     }
 
@@ -28,8 +40,7 @@ public class PlayerMove : MonoBehaviour
 
     
     // === Self API === //
-    [HideInInspector] public int MoveX = Animator.StringToHash("MoveX");
-    [HideInInspector] public int MoveY = Animator.StringToHash("MoveY");
+    public Vector2 Direction => new Vector2(input.Horizontal, input.Vertical).normalized;
     
     public void Move(Vector2 dir)
     {
@@ -42,4 +53,10 @@ public class PlayerMove : MonoBehaviour
         rb.velocity = dir * gbSpeed;
     }
     public void StopMove() => rb.velocity = Vector2.zero;
+
+    public void PlayMoveAnimation()
+    {
+        anim.SetFloat(MoveX, Direction.x);
+        anim.SetFloat(MoveY, Direction.y);
+    }
 }
