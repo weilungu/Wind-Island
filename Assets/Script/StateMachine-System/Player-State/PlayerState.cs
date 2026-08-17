@@ -24,7 +24,7 @@ public class PlayerState : ScriptableObject, IState
     protected PlayerGuardBreak guardBreak;
     protected PlayerCombat combat;
 
-    // Can be Something
+    // Can Be Something
     protected virtual bool CanAttack => false;
     
     void OnEnable()
@@ -41,17 +41,7 @@ public class PlayerState : ScriptableObject, IState
     public virtual void Enter()
     {
         // Init Contexts
-        anim = ctx.Get<Animator>();
-        sprite = ctx.Get<SpriteRenderer>();
-        
-        player = ctx.Get<New_PlayerController>();
-        input = ctx.Get<PlayerInput>();
-        
-        move = ctx.Get<PlayerMove>();
-        dash = ctx.Get<PlayerDash>();
-        posture = ctx.Get<PlayerPosture>();
-        guardBreak = ctx.Get<PlayerGuardBreak>();
-        combat = ctx.Get<PlayerCombat>();
+        GetContexts();
         
         // Init Logics
         anim.Play(animationHash);
@@ -67,4 +57,21 @@ public class PlayerState : ScriptableObject, IState
     }
 
     public virtual void PhysicalUpdate() {}
+    
+    
+    // Contexts
+    void GetContexts()
+    {
+        anim = ctx.Get<Animator>();
+        sprite = ctx.Get<SpriteRenderer>();
+        
+        player = ctx.Get<New_PlayerController>();
+        input = ctx.Get<PlayerInput>();
+        
+        move = ctx.Get<PlayerMove>();
+        dash = ctx.Get<PlayerDash>();
+        posture = ctx.Get<PlayerPosture>();
+        guardBreak = ctx.Get<PlayerGuardBreak>();
+        combat = ctx.Get<PlayerCombat>();
+    }
 }
