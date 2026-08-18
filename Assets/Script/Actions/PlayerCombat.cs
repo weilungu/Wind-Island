@@ -5,15 +5,25 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
-    PlayerInput input;
+    // === Awake Values === //
     Animator anim;
     
     
+    [Header("Values")]
+    [SerializeField] string animationName = "Attack";
+    
+    // === Private Values === //
+    int animHash;
+    
+    
     // === Unity Life Cycle === //
+    void OnEnable()
+    {
+        animHash = Animator.StringToHash(animationName);
+    }
+
     void Awake()
     {
-        input = GetComponent<PlayerInput>();
-        
         anim = GetComponentInChildren<Animator>();
     }
     
@@ -21,7 +31,8 @@ public class PlayerCombat : MonoBehaviour
     // === Self API === //
     public void Attack()
     {
-        // anim.Play("Attack");
+        anim.Play(animHash);
+        
         print("Attacked");
     }
 }
