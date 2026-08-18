@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81584443ec6b8a349a33aecc5005050f, type: 3}
   m_Name: PlayerState_Attack_GuardBreak
   m_EditorClassIdentifier: 
-  animationName: 
+  animationName: Attack_GuardBreak
