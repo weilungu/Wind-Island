@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttackData", menuName = "Attack/AttackData")]
+[CreateAssetMenu(
+    menuName = "Data/Actions/AttackData",
+    fileName = "AttackData"
+)]
 public class AttackData : ScriptableObject
 {
     [Header("Attack Values")] public float attackRate = 0.3f;

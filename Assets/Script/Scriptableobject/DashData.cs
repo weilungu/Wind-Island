@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DashData", menuName = "Dash/DashData")]
+[CreateAssetMenu(
+    menuName = "Data/Actions/DashData",
+    fileName = "DashData"
+)]
 public class DashData : ScriptableObject
 {
     [Header("Dash Values")]
