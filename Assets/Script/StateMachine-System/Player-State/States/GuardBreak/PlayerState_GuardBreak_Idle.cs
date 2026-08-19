@@ -22,8 +22,7 @@ public class PlayerState_GuardBreak_Idle : PlayerState
         if (input.Move)
             stateMachine.SwitchState(typeof(PlayerState_GuardBreak_Move));
         
-        
-        if (!guardBreak.IsGuardBreak && !input.Move)
+        else if (!guardBreak.IsGuardBreak && !input.Move)
             stateMachine.SwitchState(typeof(PlayerState_Idle));
     }
 }
