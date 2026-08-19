@@ -16,6 +16,10 @@ public class PlayerState_Move : PlayerState
         
         if (input.Dash && dash.canDash)
             stateMachine.SwitchState(typeof(PlayerState_Dash));
+        
+        
+        if (input.Attack)
+            stateMachine.SwitchState(typeof(PlayerState_Attack_Normal));
     }
 
     public override void PhysicalUpdate()

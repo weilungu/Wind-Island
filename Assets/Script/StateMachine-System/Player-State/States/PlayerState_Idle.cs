@@ -19,5 +19,8 @@ public class PlayerState_Idle : PlayerState
     {
         if (input.Move)
             stateMachine.SwitchState(typeof(PlayerState_Move));
+        
+        if (input.Attack)
+            stateMachine.SwitchState(typeof(PlayerState_Attack_Normal));
     }
 }
