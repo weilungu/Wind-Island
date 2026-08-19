@@ -31,10 +31,4 @@ public class PlayerState_Attack_Normal : PlayerState
         else 
             move.Move();
     }
-
-    public override void Exit()
-    {
-        if (!combat.CanAttack)
-            combat.ResetCooldown();
-    }
 }
