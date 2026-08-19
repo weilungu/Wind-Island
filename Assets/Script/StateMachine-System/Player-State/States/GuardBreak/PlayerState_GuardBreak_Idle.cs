@@ -17,8 +17,6 @@ public class PlayerState_GuardBreak_Idle : PlayerState
 
     public override void LogicalUpdate()
     {
-        base.LogicalUpdate();
-        
         guardBreak.TryExit();
         
         if (input.Move)

@@ -10,8 +10,6 @@ public class PlayerState_GuardBreak_Move : PlayerState
 {
     public override void LogicalUpdate()
     {
-        base.LogicalUpdate();
-        
         guardBreak.TryExit();
         
         if (!input.Move)

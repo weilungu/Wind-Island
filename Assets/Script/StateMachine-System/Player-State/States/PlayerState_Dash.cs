@@ -9,8 +9,6 @@ using UnityEngine.UI;
 ]
 public class PlayerState_Dash : PlayerState
 {
-    protected override bool CanBe_Attack => false;
-
     public override void Enter()
     {
         base.Enter();
@@ -24,10 +22,7 @@ public class PlayerState_Dash : PlayerState
 
     public override void LogicalUpdate()
     {
-        base.LogicalUpdate();
-        
         if (dash.isDashing) return;
-        
         
         if (guardBreak.IsGuardBreak)
         {

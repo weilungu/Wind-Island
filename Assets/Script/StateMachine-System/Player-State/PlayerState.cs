@@ -23,10 +23,7 @@ public class PlayerState : ScriptableObject, IState
     protected PlayerPosture posture;
     protected PlayerGuardBreak guardBreak;
     protected PlayerCombat combat;
-
     
-    // Can Be Something
-    protected virtual bool CanBe_Attack => true;
     
     void OnEnable()
     {
@@ -51,11 +48,7 @@ public class PlayerState : ScriptableObject, IState
 
     public virtual void Exit() {}
 
-    public virtual void LogicalUpdate()
-    {
-        if (CanBe_Attack && input.Attack)
-            combat.Attack();
-    }
+    public virtual void LogicalUpdate() {}
 
     public virtual void PhysicalUpdate() {}
     

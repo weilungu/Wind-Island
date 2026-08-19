@@ -10,8 +10,6 @@ public class PlayerState_Move : PlayerState
 {
     public override void LogicalUpdate()
     {
-        base.LogicalUpdate();
-        
         if (!input.Move)
             stateMachine.SwitchState(typeof(PlayerState_Idle));
      

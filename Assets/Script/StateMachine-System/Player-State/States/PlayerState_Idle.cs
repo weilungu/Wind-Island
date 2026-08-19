@@ -17,8 +17,6 @@ public class PlayerState_Idle : PlayerState
 
     public override void LogicalUpdate()
     {
-        base.LogicalUpdate();
-        
         if (input.Move)
             stateMachine.SwitchState(typeof(PlayerState_Move));
     }
