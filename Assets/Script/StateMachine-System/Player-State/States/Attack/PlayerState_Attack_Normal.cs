@@ -35,6 +35,6 @@ public class PlayerState_Attack_Normal : PlayerState
     public override void Exit()
     {
         if (!combat.CanAttack)
-            combat.Reset_AfterDelay(combat.AttackCooldown);
+            combat.ResetCooldown();
     }
 }

@@ -19,9 +19,9 @@ public class PlayerCombat : MonoBehaviour
     // === Self Method === //
     void ResetCurrentStep() => currAttackStep = 0;
 
-    IEnumerator AfterDelayCoroutine(float timesType)
+    IEnumerator AttackCooldownCoroutine()
     {
-        yield return new WaitForSeconds(timesType);
+        yield return new WaitForSeconds(attackCooldown);
         
         ResetCurrentStep();
     }
@@ -35,8 +35,8 @@ public class PlayerCombat : MonoBehaviour
         print("Attacked");
     }
     
-    public void Reset_AfterDelay(float timesType)
-        => StartCoroutine(AfterDelayCoroutine(timesType));
+    public void ResetCooldown()
+        => StartCoroutine(AttackCooldownCoroutine());
     
 
     public bool CanAttack => currAttackStep < maxAttackSteps;

@@ -15969,12 +15969,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af7713869277bb4b9319abbc4d53c77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDash: 1
-  isDashing: 0
   dashSpeed: 15
   dashTime: 0.3
   dashCooldown: 0.2
   postureIncrease: 17
+  canDash: 1
+  isDashing: 0
 --- !u!114 &1410239810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16078,7 +16078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAttackSteps: 3
-  attackResetTime: 0.117
+  attackResetTime: 0.3
   attackCooldown: 2.68
   currAttackStep: 0
 --- !u!1 &1412794589
