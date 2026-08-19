@@ -9,9 +9,6 @@ public class PlayerDash : MonoBehaviour
     Rigidbody2D rb;
     PlayerMove move;
     
-    [Header("Show")]
-    public bool canDash = true;
-    public bool isDashing = false;
     
     [Header("Dash Values")]
     [SerializeField] float dashSpeed = 12f;
@@ -20,6 +17,10 @@ public class PlayerDash : MonoBehaviour
 
     [Space]
     [SerializeField] int postureIncrease = 10;
+    
+    [Header("Debug Show")]
+    public bool canDash = true;
+    public bool isDashing = false;
     
     // Private Values
     Vector2 dashDir;

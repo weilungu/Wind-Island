@@ -15845,8 +15845,8 @@ GameObject:
   - component: {fileID: 1410239808}
   - component: {fileID: 1410239809}
   - component: {fileID: 1410239814}
-  - component: {fileID: 1410239810}
   - component: {fileID: 1410239811}
+  - component: {fileID: 1410239810}
   - component: {fileID: 1410239812}
   - component: {fileID: 1410239807}
   - component: {fileID: 1410239813}
@@ -16002,8 +16002,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPosture: 100
-  decreaseRate: 10
-  timeGap: 1.2
+  decreaseRate: 17
+  timeGap: 0
   currPosture: 0
 --- !u!114 &1410239812
 MonoBehaviour:
@@ -16078,10 +16078,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAttackSteps: 3
-  attackResetTime: 1
-  attackCooldown: 1
+  attackResetTime: 0.117
+  attackCooldown: 2.68
   currAttackStep: 0
-  canATK: 0
 --- !u!1 &1412794589
 GameObject:
   m_ObjectHideFlags: 0
