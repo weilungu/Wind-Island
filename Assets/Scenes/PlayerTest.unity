@@ -16077,6 +16077,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86936ef534ec53148b403b8a6c91a581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxComboStep: 3
+  comboWindow: 0.1
+  currComboStep: 0
 --- !u!1 &1412794589
 GameObject:
   m_ObjectHideFlags: 0
