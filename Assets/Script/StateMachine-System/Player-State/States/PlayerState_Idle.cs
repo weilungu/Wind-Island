@@ -20,7 +20,7 @@ public class PlayerState_Idle : PlayerState
         if (input.Move)
             stateMachine.SwitchState(typeof(PlayerState_Move));
         
-        else if (input.Attack)
+        else if (combat.CanAttack && input.Attack)
             stateMachine.SwitchState(typeof(PlayerState_Attack_Normal));
     }
 }

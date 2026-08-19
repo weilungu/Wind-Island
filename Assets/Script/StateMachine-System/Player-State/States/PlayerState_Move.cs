@@ -13,10 +13,10 @@ public class PlayerState_Move : PlayerState
         if (!input.Move)
             stateMachine.SwitchState(typeof(PlayerState_Idle));
         
-        else if (input.Dash && dash.canDash)
+        else if (dash.canDash && input.Dash)
             stateMachine.SwitchState(typeof(PlayerState_Dash));
         
-        else if (input.Attack)
+        else if (combat.CanAttack && input.Attack)
             stateMachine.SwitchState(typeof(PlayerState_Attack_Normal));
     }
 
