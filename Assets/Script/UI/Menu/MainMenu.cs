@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : Menu
 {
     MainMenuButton currBtn;
     List<MainMenuButton> buttons;
@@ -43,17 +43,5 @@ public class MainMenu : MonoBehaviour
         lastSelect = currBtn.gameObject;
         
         EventSystem.current.SetSelectedGameObject(currBtn.gameObject);
-    }
-
-    
-    // === UI API === //
-    public void StartGame()
-    {
-        SceneManager.LoadScene(1);
-    }
-    public void QuitGame()
-    {
-        Application.Quit();
-        print("Quit Game");
     }
 }
