@@ -43,7 +43,7 @@ public class PlayerState : ScriptableObject, IState
         
         // Init Logics
         anim.Play(animationHash);
-        Debug.Log(animationName);
+        // Debug.Log(animationName);
     }
 
     public virtual void Exit() {}

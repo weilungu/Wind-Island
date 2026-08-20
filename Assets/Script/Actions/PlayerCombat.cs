@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
-    [SerializeField] int maxAttackSteps = 3;
+    [SerializeField] int attackDamage = 10;
     
+    [Space]
     [Header("Attack Detection")]
     [SerializeField] Transform attackPoint;
     [SerializeField] float displacement;
@@ -15,7 +16,10 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] float attackRange;
     [SerializeField] LayerMask enemyLayers;
     
+    
     [Header("Timing Settings")]
+    [SerializeField] int maxAttackSteps = 3;
+    
     [SerializeField, Range(0f, 5f), Tooltip("攻擊達最高次數, 冷卻數秒並重置目前次數")]
     float cooldown = 1f;
     
@@ -43,7 +47,7 @@ public class PlayerCombat : MonoBehaviour
         SetAttackPoint(Vector2.right);
     }
 
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         if (attackPoint is null) return;
         
@@ -62,7 +66,7 @@ public class PlayerCombat : MonoBehaviour
         ResetCurrentStep();
     }
 
-    void ResetCoroutines(ref Coroutine target, float timesType)
+    void ResetCoroutines(ref Coroutine routine, float timesType)
     {
         if (timeoutCoroutine is not null)
             StopCoroutine(timeoutCoroutine);
@@ -71,10 +75,10 @@ public class PlayerCombat : MonoBehaviour
             StopCoroutine(cooldownCoroutine);
         
         
-        if (target is not null)
-            StopCoroutine(target);
+        if (routine is not null)
+            StopCoroutine(routine);
         
-        target = StartCoroutine(CountDownCoroutine(timesType));
+        routine = StartCoroutine(CountDownCoroutine(timesType));
     }
 
     
@@ -91,6 +95,7 @@ public class PlayerCombat : MonoBehaviour
         {
             foreach (Collider2D enemy in hitEnemies)
             {
+                enemy.GetComponent<New_Enemy>().TakeDamage(attackDamage);
                 print($"We hit {enemy.name}");
             }
         }
