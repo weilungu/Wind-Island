@@ -15534,7 +15534,7 @@ Transform:
   m_GameObject: {fileID: 906782417}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16111,12 +16111,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAttackSteps: 3
   attackPoint: {fileID: 906782418}
+  displacement: 0.3
   attackRange: 0.8
   enemyLayers:
     serializedVersion: 2
     m_Bits: 128
-  cooldown: 2.5
-  timeout: 1.5
+  cooldown: 1.7
+  timeout: 0.8
   currAttackStep: 0
   rangeColor: {r: 1, g: 0.21340457, b: 0, a: 1}
 --- !u!1 &1412794589

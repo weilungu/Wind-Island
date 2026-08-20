@@ -10,6 +10,11 @@ public class PlayerState_Move : PlayerState
 {
     public override void LogicalUpdate()
     {
+        if (move.Direction != Vector2.zero)
+            combat.SetAttackPoint(move.Direction);
+        
+        
+        // transition
         if (!input.Move)
             stateMachine.SwitchState(typeof(PlayerState_Idle));
         

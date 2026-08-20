@@ -9,14 +9,17 @@ public class PlayerCombat : MonoBehaviour
     
     [Header("Attack Detection")]
     [SerializeField] Transform attackPoint;
+    [SerializeField] float displacement;
+    
+    [Space]
     [SerializeField] float attackRange;
     [SerializeField] LayerMask enemyLayers;
     
     [Header("Timing Settings")]
-    [SerializeField, Range(0f, 10f), Tooltip("攻擊達最高次數, 冷卻數秒並重置目前次數")]
+    [SerializeField, Range(0f, 5f), Tooltip("攻擊達最高次數, 冷卻數秒並重置目前次數")]
     float cooldown = 1f;
     
-    [SerializeField, Range(0f, 10f), Tooltip("未達最高次數 && 超過時間, 重置目前次數")]
+    [SerializeField, Range(0f, 5f), Tooltip("未達最高次數 && 超過時間, 重置目前次數")]
     float timeout = 1f;
     
     
@@ -35,13 +38,19 @@ public class PlayerCombat : MonoBehaviour
     
     
     // === Life Cycle ===
-    void OnDrawGizmosSelected()
+    void Start()
+    {
+        SetAttackPoint(Vector2.right);
+    }
+
+    void OnDrawGizmos()
     {
         if (attackPoint is null) return;
         
         Gizmos.color = rangeColor;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+    
 
     // === Self Method === //
     void ResetCurrentStep() => currAttackStep = 0;
@@ -98,6 +107,9 @@ public class PlayerCombat : MonoBehaviour
         }
         ResetCoroutines(ref timeoutCoroutine, timeout);
     }
+
+    public void SetAttackPoint(Vector2 direction)
+        => attackPoint.localPosition = direction * displacement;
     
     
     public bool CanAttack => currAttackStep < maxAttackSteps;
