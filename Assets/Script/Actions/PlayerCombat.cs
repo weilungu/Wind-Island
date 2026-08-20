@@ -6,10 +6,14 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] int maxAttackSteps = 3;
-    [SerializeField, Range(0f, 10f)] float attackTimeout = 1f;
     
-    [Header("Cooldown")]
-    [SerializeField, Range(0f, 10f)] float attackCooldown = 1f;
+    [Header("Timing Management")]
+    [Tooltip("攻擊達最高次數, 冷卻數秒並重置目前次數")]
+    [SerializeField, Range(0f, 10f)] float cooldown = 1f;
+    
+    [Tooltip("未達最高次數 && 超過時間, 重置目前次數")]
+    [SerializeField, Range(0f, 10f)] float timeout = 1f;
+    
     
     [Header("Debug Show")]
     [SerializeField] int currAttackStep = 0;
@@ -57,10 +61,10 @@ public class PlayerCombat : MonoBehaviour
 
         if (!CanAttack)
         {
-            ResetCoroutines(ref cooldownCoroutine, attackCooldown);
+            ResetCoroutines(ref cooldownCoroutine, cooldown);
             return;
         }
-        ResetCoroutines(ref timeoutCoroutine, attackTimeout);
+        ResetCoroutines(ref timeoutCoroutine, timeout);
     }
     
     
