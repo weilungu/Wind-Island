@@ -7,22 +7,42 @@ public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] int maxAttackSteps = 3;
     
-    [Header("Timing Management")]
-    [Tooltip("攻擊達最高次數, 冷卻數秒並重置目前次數")]
-    [SerializeField, Range(0f, 10f)] float cooldown = 1f;
+    [Header("Attack Detection")]
+    [SerializeField] Transform attackPoint;
+    [SerializeField] float attackRange;
+    [SerializeField] LayerMask enemyLayers;
     
-    [Tooltip("未達最高次數 && 超過時間, 重置目前次數")]
-    [SerializeField, Range(0f, 10f)] float timeout = 1f;
+    [Header("Timing Settings")]
+    [SerializeField, Range(0f, 10f), Tooltip("攻擊達最高次數, 冷卻數秒並重置目前次數")]
+    float cooldown = 1f;
+    
+    [SerializeField, Range(0f, 10f), Tooltip("未達最高次數 && 超過時間, 重置目前次數")]
+    float timeout = 1f;
     
     
     [Header("Debug Show")]
     [SerializeField] int currAttackStep = 0;
+    
+    [Space]
+    [SerializeField] Color rangeColor = Color.red;
 
+    
     // Private Values
     Coroutine timeoutCoroutine;
     Coroutine cooldownCoroutine;
     
+    Collider2D[] hitEnemies = new Collider2D[1];
     
+    
+    // === Life Cycle ===
+    void OnDrawGizmosSelected()
+    {
+        if (attackPoint is null) return;
+        
+        Gizmos.color = rangeColor;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
     // === Self Method === //
     void ResetCurrentStep() => currAttackStep = 0;
 
@@ -52,7 +72,19 @@ public class PlayerCombat : MonoBehaviour
     // === Self API === //
     public void Attack()
     {
-        print("Attacked");
+        int enemiesNum = Physics2D.OverlapCircleNonAlloc(
+            point: attackPoint.position,
+            radius: attackRange,
+            results: hitEnemies,
+            layerMask: enemyLayers);
+
+        if (enemiesNum > 0)
+        {
+            foreach (Collider2D enemy in hitEnemies)
+            {
+                print($"We hit {enemy.name}");
+            }
+        }
     }
 
     public void AdvanceStep()
