@@ -28,25 +28,20 @@ public class PlayerCombat : MonoBehaviour
         
         ResetCurrentStep();
     }
-    
-    void ResetCooldown()
-    {
-        ResetCoroutines();
-        cooldownCoroutine = StartCoroutine(CountDownCoroutine(attackCooldown));
-    }
-    void ResetTimeout()
-    {
-        ResetCoroutines();
-        timeoutCoroutine = StartCoroutine(CountDownCoroutine(attackTimeout));
-    }
 
-    void ResetCoroutines()
+    void ResetCoroutines(ref Coroutine target, float timesType)
     {
         if (timeoutCoroutine is not null)
             StopCoroutine(timeoutCoroutine);
-    
+        
         if (cooldownCoroutine is not null)
             StopCoroutine(cooldownCoroutine);
+        
+        
+        if (target is not null)
+            StopCoroutine(target);
+        
+        target = StartCoroutine(CountDownCoroutine(timesType));
     }
 
     
@@ -62,11 +57,10 @@ public class PlayerCombat : MonoBehaviour
 
         if (!CanAttack)
         {
-            ResetCooldown();
+            ResetCoroutines(ref cooldownCoroutine, attackCooldown);
             return;
         }
-        
-        ResetTimeout();
+        ResetCoroutines(ref timeoutCoroutine, attackTimeout);
     }
     
     
