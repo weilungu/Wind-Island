@@ -16,7 +16,13 @@ public class New_PlayerController : MonoBehaviour
 
     void Start()
     {
-        input.EnableGameplayInput();
+        input.EnableInputActionMaps();
+    }
+
+    void Update()
+    {
+        if (input.OpenCloseMenu)
+            print("Open Close Menu");
     }
 
 

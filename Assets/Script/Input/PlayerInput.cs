@@ -9,7 +9,7 @@ public class PlayerInput : MonoBehaviour
     PlayerInputActions playerInputActions;
 
     
-    // Gameplay Action Map
+    // === Gameplay Action Map === //
     Vector2 axis => playerInputActions.Gamplay.Axis.ReadValue<Vector2>();
     
     
@@ -24,16 +24,21 @@ public class PlayerInput : MonoBehaviour
     public bool Attack => playerInputActions.Gamplay.Attack.WasPressedThisFrame();
     
     
-    // Unity Life Cycle
+    // === Menu Action Map === //
+    public bool OpenCloseMenu => playerInputActions.Menu.MenuOpenClose.WasPressedThisFrame();
+    
+    
+    // === Unity Life Cycle === //
     void Awake()
     {
         playerInputActions = new PlayerInputActions();
     }
     
     
-    // Self API
-    public void EnableGameplayInput()
+    // === Self API === //
+    public void EnableInputActionMaps()
     {
         playerInputActions.Gamplay.Enable();
+        playerInputActions.Menu.Enable();
     }
 }
