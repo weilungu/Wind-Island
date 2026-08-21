@@ -24,7 +24,7 @@ public class PlayerInput : MonoBehaviour
     public bool Attack => playerInputActions.Gamplay.Attack.WasPressedThisFrame();
     
     
-    // === Menu Action Map === //
+    // Open Close Menu
     public bool OpenCloseMenu => playerInputActions.Menu.MenuOpenClose.WasPressedThisFrame();
     
     
@@ -36,6 +36,12 @@ public class PlayerInput : MonoBehaviour
     
     
     // === Self API === //
+    
+    // Enable Input Actions
     public void EnableGameplay() => playerInputActions.Gamplay.Enable();
     public void EnableMenu() => playerInputActions.Menu.Enable();
+    
+    // Disable Input Actions
+    public void DisableGameplay() => playerInputActions.Gamplay.Disable();
+    public void DisableMenu() => playerInputActions.Menu.Disable();
 }

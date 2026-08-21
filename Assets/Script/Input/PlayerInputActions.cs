@@ -93,15 +93,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""id"": ""7f280169-8b5b-4ed5-83d2-0517f4363adc"",
             ""actions"": [
                 {
-                    ""name"": ""Axis"",
-                    ""type"": ""Value"",
-                    ""id"": ""050894d4-89a9-42cc-9013-4c26faf9b4e8"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""9dc3149d-1fb2-40ae-8835-2ec7e7e8791c"",
@@ -109,6 +100,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Axis"",
+                    ""type"": ""Value"",
+                    ""id"": ""e814a1ce-4a24-485b-b80e-7d38cec8db1f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Attack"",
@@ -121,116 +121,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""b86d470b-3dbd-4bff-9a1f-b4aa4d699a65"",
-                    ""path"": ""2DVector(mode=1)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Axis"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""0ac7bd95-6aa4-4c50-a437-9e6c58a650e4"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Axis"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""0d40f69f-89cf-4696-b310-d79c2df685cf"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Axis"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""6afaab62-b0a3-4b40-8dfd-ba4fd274faf5"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Axis"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""7e2e9640-cae5-4353-a362-08311fe540b5"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Axis"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Arrows"",
-                    ""id"": ""076c36e3-c884-4a77-bd1b-efe3aeedf470"",
-                    ""path"": ""2DVector(mode=1)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Axis"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""c5fe6965-35f1-4116-9d51-3240fb04c62b"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Axis"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""fe66d9d7-1747-46ad-bc9f-48c367edd6d7"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Axis"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""b251053e-ec2f-4a1e-8afe-cadf3eea9657"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Axis"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""a356ba9d-6dfd-4ee9-902b-f52a1c0c4767"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Axis"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
                 {
                     ""name"": """",
                     ""id"": ""8b4144dd-d3f8-4265-8642-2e4c964e7f44"",
@@ -254,6 +144,116 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": ""WASD"",
+                    ""id"": ""26165632-4e9e-4bc8-b524-ed4a7509c48e"",
+                    ""path"": ""2DVector(mode=1)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axis"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""867ccb3e-332e-4b66-9019-5cc4c302b7db"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""e41a4c67-554a-4549-8292-5a4ac63029c6"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""57e1e39f-679a-476e-9050-8f105bead969"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""514a204e-c57e-4b6e-8c70-ac69cf1fbc78"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Arrows"",
+                    ""id"": ""858ff426-b175-424d-bfb8-483f2d1e8ded"",
+                    ""path"": ""2DVector(mode=1)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axis"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""3a9efa96-94c8-43a9-b27a-f4a2839b2c86"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""281d48cb-ded0-4480-a212-0f551f702aaf"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""64e3eadd-04ee-4231-8d3b-11697f22df3a"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""262c2837-d517-464d-9fc8-7e01534b8771"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""40fadaa3-d295-41aa-b4c8-8d82d2199dbd"",
                     ""path"": ""<Mouse>/leftButton"",
@@ -268,12 +268,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         },
         {
             ""name"": ""Menu"",
-            ""id"": ""5b69c087-3c31-4a9e-854d-e6b4a4790ead"",
+            ""id"": ""0f3a7899-5913-453f-9593-57163de00855"",
             ""actions"": [
                 {
                     ""name"": ""MenuOpenClose"",
                     ""type"": ""Button"",
-                    ""id"": ""a5f65970-83cb-431e-9f9c-b3188d51b2d4"",
+                    ""id"": ""5bb64d4b-037e-4db4-b70c-115e59d592be"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -283,7 +283,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""efff8f90-00b2-4c3d-bb1a-2766cf98bb1f"",
+                    ""id"": ""6fd33c0a-0ebd-4fe0-962c-d1a11ed69cc1"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -299,8 +299,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
 }");
         // Gamplay
         m_Gamplay = asset.FindActionMap("Gamplay", throwIfNotFound: true);
-        m_Gamplay_Axis = m_Gamplay.FindAction("Axis", throwIfNotFound: true);
         m_Gamplay_Dash = m_Gamplay.FindAction("Dash", throwIfNotFound: true);
+        m_Gamplay_Axis = m_Gamplay.FindAction("Axis", throwIfNotFound: true);
         m_Gamplay_Attack = m_Gamplay.FindAction("Attack", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
@@ -386,8 +386,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // Gamplay
     private readonly InputActionMap m_Gamplay;
     private List<IGamplayActions> m_GamplayActionsCallbackInterfaces = new List<IGamplayActions>();
-    private readonly InputAction m_Gamplay_Axis;
     private readonly InputAction m_Gamplay_Dash;
+    private readonly InputAction m_Gamplay_Axis;
     private readonly InputAction m_Gamplay_Attack;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gamplay".
@@ -401,13 +401,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public GamplayActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Gamplay/Axis".
-        /// </summary>
-        public InputAction @Axis => m_Wrapper.m_Gamplay_Axis;
-        /// <summary>
         /// Provides access to the underlying input action "Gamplay/Dash".
         /// </summary>
         public InputAction @Dash => m_Wrapper.m_Gamplay_Dash;
+        /// <summary>
+        /// Provides access to the underlying input action "Gamplay/Axis".
+        /// </summary>
+        public InputAction @Axis => m_Wrapper.m_Gamplay_Axis;
         /// <summary>
         /// Provides access to the underlying input action "Gamplay/Attack".
         /// </summary>
@@ -438,12 +438,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_GamplayActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_GamplayActionsCallbackInterfaces.Add(instance);
-            @Axis.started += instance.OnAxis;
-            @Axis.performed += instance.OnAxis;
-            @Axis.canceled += instance.OnAxis;
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @Axis.started += instance.OnAxis;
+            @Axis.performed += instance.OnAxis;
+            @Axis.canceled += instance.OnAxis;
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
@@ -458,12 +458,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="GamplayActions" />
         private void UnregisterCallbacks(IGamplayActions instance)
         {
-            @Axis.started -= instance.OnAxis;
-            @Axis.performed -= instance.OnAxis;
-            @Axis.canceled -= instance.OnAxis;
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @Axis.started -= instance.OnAxis;
+            @Axis.performed -= instance.OnAxis;
+            @Axis.canceled -= instance.OnAxis;
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
@@ -604,19 +604,19 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IGamplayActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Axis" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAxis(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "Dash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDash(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Axis" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAxis(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
