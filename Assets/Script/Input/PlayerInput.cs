@@ -36,9 +36,6 @@ public class PlayerInput : MonoBehaviour
     
     
     // === Self API === //
-    public void EnableInputActionMaps()
-    {
-        playerInputActions.Gamplay.Enable();
-        playerInputActions.Menu.Enable();
-    }
+    public void EnableGameplay() => playerInputActions.Gamplay.Enable();
+    public void EnableMenu() => playerInputActions.Menu.Enable();
 }
