@@ -8,8 +8,8 @@ public class GameState : ScriptableObject, IState
     protected GameStateContext ctx;
     
     // Contexts
-    protected New_GameManager GM;
     protected PlayerInput input;
+    protected GamePause pause;
     
     public void Initialize(GameStateMachine stateMachine, GameStateContext ctx)
     {
@@ -32,7 +32,7 @@ public class GameState : ScriptableObject, IState
     
     void GetContexts()
     {
-        GM = ctx.Get<New_GameManager>();
         input = ctx.Get<PlayerInput>();
+        pause = ctx.Get<GamePause>();
     }
 }

@@ -3,16 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseMenu : MonoBehaviour
+public class GamePause : MonoBehaviour
 {
     // Awake Values
     PlayerInput input;
     
-    // Inspector Values
+    [Header("Inspector Values")]
+    [SerializeField] New_PlayerController player;
     [SerializeField] GameObject pauseMenu;
     
-    // Private Values
-    bool isPaused = false;
     
     // === Unity Life Cycle === //
     void Awake()
@@ -24,21 +23,13 @@ public class PauseMenu : MonoBehaviour
     {
         input.EnableMenu();
     }
-
-    void Update()
-    {
-        if (!input.OpenCloseMenu) return;
-        
-        SetPause(!isPaused);
-    }
-    
     
     // === Self Method === //
-    void SetPause(bool value)
+    public void SetPause(bool enable)
     {
-        isPaused = value;
+        pauseMenu.SetActive(enable);
+        Time.timeScale = enable ? 0f : 1f;
         
-        pauseMenu.SetActive(value);
-        Time.timeScale = value ? 0f : 1f;
+        player.GameplaySetActive(!enable);
     }
 }

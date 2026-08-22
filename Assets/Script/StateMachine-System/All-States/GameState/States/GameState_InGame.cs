@@ -12,9 +12,7 @@ public class GameState_InGame : GameState
     {
         base.Enter();
         
-        Time.timeScale = 1f;
-        GM.player.EnableGameplay();
-        input.EnableMenu();
+        pause.SetPause(false);
         
         Debug.Log("Entered InGame");
     }

@@ -12,8 +12,7 @@ public class GameState_Pause : GameState
     {
         base.Enter();
         
-        Time.timeScale = 0f;
-        GM.player.DisableGameplay();
+        pause.SetPause(true);
         
         Debug.Log("Entered Pause");
     }

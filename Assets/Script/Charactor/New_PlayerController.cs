@@ -14,6 +14,10 @@ public class New_PlayerController : MonoBehaviour
         move = GetComponent<PlayerMove>();
     }
 
+    void Start()
+    {
+        GameplaySetActive(true);
+    }
 
     // === Self API === //
     public void Flip(SpriteRenderer sprite)
@@ -24,6 +28,11 @@ public class New_PlayerController : MonoBehaviour
     }
     
     // Pause and Unpause
-    public void EnableGameplay() => input.EnableGameplay();
-    public void DisableGameplay() => input.DisableGameplay();
+    public void GameplaySetActive(bool enable)
+    {
+        if (enable)
+            input.EnableGameplay();
+        else 
+            input.DisableGameplay();
+    }
 }
