@@ -18485,6 +18485,7 @@ GameObject:
   - component: {fileID: 1410239808}
   - component: {fileID: 1410239809}
   - component: {fileID: 1410239814}
+  - component: {fileID: 1410239815}
   - component: {fileID: 1410239811}
   - component: {fileID: 1410239810}
   - component: {fileID: 1410239812}
@@ -18728,11 +18729,23 @@ MonoBehaviour:
   maxAttackSteps: 3
   cooldown: 0.83
   timeout: 0.7
+  currAttackStep: 0
+  rangeColor: {r: 1, g: 0.21340457, b: 0, a: 1}
+--- !u!114 &1410239815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410239802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2080e240d988a7d4e95eb5db529642bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   swordSlash: {fileID: 8977312890619684216, guid: a935389a552aa884cb1919bdfa8326bc,
     type: 3}
   showSlashTime: 0.15
-  currAttackStep: 0
-  rangeColor: {r: 1, g: 0.21340457, b: 0, a: 1}
 --- !u!1 &1412794589
 GameObject:
   m_ObjectHideFlags: 0

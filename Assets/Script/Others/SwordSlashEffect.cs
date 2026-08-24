@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwordSlash : MonoBehaviour
+public class SwordSlashEffect : MonoBehaviour
 {
     public void Show(Vector2 direction)
     {

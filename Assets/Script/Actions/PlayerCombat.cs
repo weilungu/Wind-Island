@@ -28,9 +28,9 @@ public class PlayerCombat : MonoBehaviour
     float timeout = 1f;
     
     
-    [Header("Sword Slash")]
-    [SerializeField] SwordSlash swordSlash;
-    [SerializeField, Range(0f, 1f)] float showSlashTime = 0.5f;
+    // [Header("Sword Slash")]
+    // [SerializeField] SwordSlashEffect swordSlash;
+    // [SerializeField, Range(0f, 1f)] float showSlashTime = 0.5f;
     
     
     [Header("Debug Show")]
@@ -42,6 +42,7 @@ public class PlayerCombat : MonoBehaviour
     
     // Awake Values
     PlayerMove move;
+    PlayerSwordSlash swordSlash;
     
     // Private Values
     Coroutine timeoutCoroutine;
@@ -53,12 +54,12 @@ public class PlayerCombat : MonoBehaviour
     // === Life Cycle ===
     void Awake()
     {
-        move = GetComponent<PlayerMove>();
+        swordSlash = GetComponentInChildren<PlayerSwordSlash>();
     }
+    
     void Start()
     {
         SetAttackPoint(Vector2.right);
-        CreateSwordSlash();
     }
 
     void OnDrawGizmosSelected()
@@ -72,14 +73,6 @@ public class PlayerCombat : MonoBehaviour
 
     // === Self Method === //
     void ResetCurrentStep() => currAttackStep = 0;
-
-    void CreateSwordSlash()
-    {
-        if (GetComponentInChildren<SwordSlash>() is null)
-            swordSlash = Instantiate(swordSlash, transform);
-        
-        swordSlash.gameObject.SetActive(false);
-    }
     
     
     // Coroutine Methods
@@ -116,8 +109,8 @@ public class PlayerCombat : MonoBehaviour
             layerMask: enemyLayers
         );
 
-        swordSlash.Show(move.facingDirection);
-        StartCoroutine(CountDownCoroutine(showSlashTime, swordSlash.Hide));
+        swordSlash.Slash();
+        
         
         if (enemiesNum > 0)
         {
