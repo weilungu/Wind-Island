@@ -18726,8 +18726,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   maxAttackSteps: 3
-  cooldown: 1.7
-  timeout: 0.8
+  cooldown: 0.83
+  timeout: 0.7
   currAttackStep: 0
   rangeColor: {r: 1, g: 0.21340457, b: 0, a: 1}
 --- !u!1 &1412794589

@@ -10,7 +10,8 @@ public class PlayerCombat : MonoBehaviour
     [Space]
     [Header("Attack Detection")]
     [SerializeField] Transform attackPoint;
-    [SerializeField] float displacement;
+    [SerializeField, Tooltip("Distance of Attack Point with Player \n(Need Dynamic Adjustment)")]
+    float displacement;
     
     [Space]
     [SerializeField] float attackRange;
