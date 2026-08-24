@@ -41,6 +41,18 @@ public class PlayerMove : MonoBehaviour
     
     // === Self API === //
     public Vector2 Direction => new Vector2(input.Horizontal, input.Vertical).normalized;
+    public Vector2 facingDirection
+    {
+        get
+        {
+            Vector2 dir = Vector2.right;
+            if (Direction == Vector2.zero) return dir;
+            
+            // if Direction != 0
+            dir = Direction;
+            return Direction;
+        }
+    }
     
     public void Move() => rb.velocity = Direction * moveSpeed;
     public void GuardBreakMove() => rb.velocity = Direction * gbSpeed;

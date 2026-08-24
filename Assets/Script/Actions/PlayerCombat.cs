@@ -18,7 +18,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] LayerMask enemyLayers;
     
     
-    [Header("Timing Settings")]
+    [Header("Attack Times")]
     [SerializeField] int maxAttackSteps = 3;
     
     [SerializeField, Range(0f, 5f), Tooltip("攻擊達最高次數, 冷卻數秒並重置目前次數")]
@@ -28,12 +28,20 @@ public class PlayerCombat : MonoBehaviour
     float timeout = 1f;
     
     
+    [Header("Sword Slash")]
+    [SerializeField] SwordSlash swordSlash;
+    [SerializeField, Range(0f, 1f)] float showSlashTime = 0.5f;
+    
+    
     [Header("Debug Show")]
     [SerializeField] int currAttackStep = 0;
     
     [Space]
     [SerializeField] Color rangeColor = Color.red;
 
+    
+    // Awake Values
+    PlayerMove move;
     
     // Private Values
     Coroutine timeoutCoroutine;
@@ -43,6 +51,10 @@ public class PlayerCombat : MonoBehaviour
     
     
     // === Life Cycle ===
+    void Awake()
+    {
+        move = GetComponent<PlayerMove>();
+    }
     void Start()
     {
         SetAttackPoint(Vector2.right);
@@ -60,11 +72,11 @@ public class PlayerCombat : MonoBehaviour
     // === Self Method === //
     void ResetCurrentStep() => currAttackStep = 0;
 
-    IEnumerator CountDownCoroutine(float timesType)
+    IEnumerator CountDownCoroutine(float timesType, Action method)
     {
         yield return new WaitForSeconds(timesType);
         
-        ResetCurrentStep();
+        method?.Invoke();
     }
 
     void ResetCoroutines(ref Coroutine routine, float timesType)
@@ -79,7 +91,7 @@ public class PlayerCombat : MonoBehaviour
         if (routine is not null)
             StopCoroutine(routine);
         
-        routine = StartCoroutine(CountDownCoroutine(timesType));
+        routine = StartCoroutine(CountDownCoroutine(timesType, ResetCurrentStep));
     }
 
     
@@ -92,6 +104,9 @@ public class PlayerCombat : MonoBehaviour
             results: hitEnemies,
             layerMask: enemyLayers);
 
+        swordSlash.Show(move.facingDirection);
+        StartCoroutine(CountDownCoroutine(showSlashTime, swordSlash.Hide));
+        
         if (enemiesNum > 0)
         {
             foreach (Collider2D enemy in hitEnemies)
