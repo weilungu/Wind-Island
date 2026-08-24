@@ -58,6 +58,7 @@ public class PlayerCombat : MonoBehaviour
     void Start()
     {
         SetAttackPoint(Vector2.right);
+        CreateSwordSlash();
     }
 
     void OnDrawGizmosSelected()
@@ -72,6 +73,16 @@ public class PlayerCombat : MonoBehaviour
     // === Self Method === //
     void ResetCurrentStep() => currAttackStep = 0;
 
+    void CreateSwordSlash()
+    {
+        if (GetComponentInChildren<SwordSlash>() is null)
+            swordSlash = Instantiate(swordSlash, transform);
+        
+        swordSlash.gameObject.SetActive(false);
+    }
+    
+    
+    // Coroutine Methods
     IEnumerator CountDownCoroutine(float timesType, Action method)
     {
         yield return new WaitForSeconds(timesType);
@@ -102,7 +113,8 @@ public class PlayerCombat : MonoBehaviour
             point: attackPoint.position,
             radius: attackRange,
             results: hitEnemies,
-            layerMask: enemyLayers);
+            layerMask: enemyLayers
+        );
 
         swordSlash.Show(move.facingDirection);
         StartCoroutine(CountDownCoroutine(showSlashTime, swordSlash.Hide));
