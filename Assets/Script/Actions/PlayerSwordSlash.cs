@@ -24,6 +24,11 @@ public class PlayerSwordSlash : MonoBehaviour
         CreateSwordSlash();
     }
 
+    void Update()
+    {
+        print($"dir {move.FacingDirection}");
+    }
+
 
     // === Self Method === //
     IEnumerator CountDownCoroutine(float times, Action method)
@@ -45,7 +50,7 @@ public class PlayerSwordSlash : MonoBehaviour
     // === Self API === //
     public void Slash()
     {
-        swordSlash.Show(move.facingDirection);
+        swordSlash.Show(move.FacingDirection);
         StartCoroutine(CountDownCoroutine(showSlashTime, swordSlash.Hide));
     }
 }

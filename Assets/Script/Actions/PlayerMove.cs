@@ -17,6 +17,7 @@ public class PlayerMove : MonoBehaviour
     
     // Private Values
     float gbSpeed;
+    Vector2 facingDirection = Vector2.right;
     
     int MoveX = Animator.StringToHash("MoveX");
     int MoveY = Animator.StringToHash("MoveY");
@@ -41,16 +42,14 @@ public class PlayerMove : MonoBehaviour
     
     // === Self API === //
     public Vector2 Direction => new Vector2(input.Horizontal, input.Vertical).normalized;
-    public Vector2 facingDirection
+    public Vector2 FacingDirection
     {
         get
         {
-            Vector2 dir = Vector2.right;
-            if (Direction == Vector2.zero) return dir;
+            if (Direction != Vector2.zero)
+                facingDirection = Direction;
             
-            // if Direction != 0
-            dir = Direction;
-            return Direction;
+            return facingDirection;
         }
     }
     
