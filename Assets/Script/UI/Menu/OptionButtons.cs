@@ -5,10 +5,10 @@ using UnityEngine;
 public class OptionButtons : MonoBehaviour
 {
     [Header("Audio Buttons")]
-    [SerializeField] GameObject audioPressedButton;
-    [SerializeField] GameObject audioUnpressedButton;
+    public GameObject Audio_Pressed_Button;
+    public GameObject Audio_Unpressed_Button;
     
     [Header("Screen Buttons")]
-    [SerializeField] GameObject screenPressedButton;
-    [SerializeField] GameObject screenUnpressedButton;
+    public GameObject Screen_Pressed_Button;
+    public GameObject Screen_Unpressed_Button;
 }

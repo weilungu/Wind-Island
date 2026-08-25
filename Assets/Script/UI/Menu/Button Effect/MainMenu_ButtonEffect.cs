@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MainMenuButtonEffect : ButtonEffect
+public class MainMenu_ButtonEffect : ButtonEffect
 {
     [SerializeField] float scale = 1.1f;
 

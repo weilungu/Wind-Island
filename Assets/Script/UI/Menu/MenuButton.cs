@@ -40,7 +40,7 @@ public class MenuButton : MonoBehaviour,
         effect.SelectEffect();
         navigation.lastSelect = gameObject;
         
-        print($"Select: '{button.name}'");
+        // print($"Select: '{button.name}'");
     }
     public void Deselect()
     {
