@@ -11,7 +11,9 @@ public class PlayerState_Move : PlayerState
     public override void LogicalUpdate()
     {
         if (move.Direction != Vector2.zero)
-            combat.SetAttackPoint(move.Direction);
+            move.FacingDirection = move.Direction;
+        
+        combat.SetAttackPoint(move.FacingDirection);
         
         
         // transition

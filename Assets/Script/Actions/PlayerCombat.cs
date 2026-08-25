@@ -49,6 +49,7 @@ public class PlayerCombat : MonoBehaviour
     // === Life Cycle ===
     void Awake()
     {
+        move =  GetComponent<PlayerMove>();
         swordSlash = GetComponentInChildren<PlayerSwordSlash>();
     }
     

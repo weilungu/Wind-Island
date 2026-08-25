@@ -44,12 +44,11 @@ public class PlayerMove : MonoBehaviour
     public Vector2 Direction => new Vector2(input.Horizontal, input.Vertical).normalized;
     public Vector2 FacingDirection
     {
-        get
+        get => facingDirection;
+        set
         {
-            if (Direction != Vector2.zero)
-                facingDirection = Direction;
-            
-            return facingDirection;
+            if (value != Vector2.zero)
+                facingDirection = value;
         }
     }
     
