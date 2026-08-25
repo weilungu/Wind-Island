@@ -1,26 +1,26 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MainMenuButton : MonoBehaviour,
+public class MenuButton : MonoBehaviour,
     ISelectHandler,
     IDeselectHandler,
     IPointerEnterHandler,
     IPointerClickHandler
 {
-    MainMenu controller;
-    MainMenuButtonEffect effect;
+    MenuNavigation navigation;
     Button button;
+    
+    ButtonEffect effect;
 
     // === Unity Life Cycle === //
     private void Awake()
     {
-        controller = GetComponentInParent<MainMenu>();
-        effect = GetComponent<MainMenuButtonEffect>();
+        navigation = GetComponentInParent<MenuNavigation>();
         button = GetComponent<Button>();
+        
+        effect = GetComponent<ButtonEffect>();
     }
 
     
@@ -29,7 +29,7 @@ public class MainMenuButton : MonoBehaviour,
     
     public void OnDeselect(BaseEventData eventData) => Deselect();
 
-    public void OnPointerEnter(PointerEventData eventData) => controller.Select(this);
+    public void OnPointerEnter(PointerEventData eventData) => navigation.Select(this);
     
     public void OnPointerClick(PointerEventData eventData) => button.onClick.Invoke();
     
@@ -38,11 +38,12 @@ public class MainMenuButton : MonoBehaviour,
     public void Select()
     {
         effect.SelectEffect();
-        controller.lastSelect = gameObject;
+        navigation.lastSelect = gameObject;
     }
     public void Deselect()
     {
-        if (EventSystem.current.currentSelectedGameObject is null) return;
+        if (EventSystem.current.currentSelectedGameObject is null)
+            return;
         
         effect.DeselectEffect();
     }

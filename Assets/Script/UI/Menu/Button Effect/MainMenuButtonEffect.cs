@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MainMenuButtonEffect : MonoBehaviour
+public class MainMenuButtonEffect : ButtonEffect
 {
     [SerializeField] float scale = 1.1f;
 
@@ -19,12 +19,13 @@ public class MainMenuButtonEffect : MonoBehaviour
     }
     
     
-    // === Self Method === //
-    public void SelectEffect()
+    // === API === //
+    public override void SelectEffect()
     {
         target.localScale = Vector3.one * scale;
     }
-    public void DeselectEffect()
+    
+    public override void DeselectEffect()
     {
         target.localScale = Vector3.one;
     }
