@@ -21,16 +21,11 @@ public class PlayerCombat : MonoBehaviour
     [Header("Attack Times")]
     [SerializeField] int maxAttackSteps = 3;
     
-    [SerializeField, Range(0f, 5f), Tooltip("攻擊達最高次數, 冷卻數秒並重置目前次數")]
+    [SerializeField, Range(0f, 2f), Tooltip("攻擊達最高次數, 冷卻數秒並重置目前次數")]
     float cooldown = 1f;
     
-    [SerializeField, Range(0f, 5f), Tooltip("未達最高次數 && 超過時間, 重置目前次數")]
+    [SerializeField, Range(0f, 2f), Tooltip("未達最高次數 && 超過時間, 重置目前次數")]
     float timeout = 1f;
-    
-    
-    // [Header("Sword Slash")]
-    // [SerializeField] SwordSlashEffect swordSlash;
-    // [SerializeField, Range(0f, 1f)] float showSlashTime = 0.5f;
     
     
     [Header("Debug Show")]
@@ -109,7 +104,7 @@ public class PlayerCombat : MonoBehaviour
             layerMask: enemyLayers
         );
 
-        swordSlash.Slash();
+        swordSlash.Effect(displacement, attackRange);
         
         
         if (enemiesNum > 0)

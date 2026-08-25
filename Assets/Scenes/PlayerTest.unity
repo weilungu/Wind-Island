@@ -18743,9 +18743,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2080e240d988a7d4e95eb5db529642bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swordSlash: {fileID: 8977312890619684216, guid: a935389a552aa884cb1919bdfa8326bc,
+  slashEffect: {fileID: 8977312890619684216, guid: a935389a552aa884cb1919bdfa8326bc,
     type: 3}
   showSlashTime: 0.15
+  offset: -0.15
 --- !u!1 &1412794589
 GameObject:
   m_ObjectHideFlags: 0

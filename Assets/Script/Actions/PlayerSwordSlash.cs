@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class PlayerSwordSlash : MonoBehaviour
 {
-    [SerializeField] SwordSlashEffect swordSlash;
+    [SerializeField] SwordSlashEffect slashEffect;
     [SerializeField, Range(0f, 1f)] float showSlashTime = 0.5f;
-    
+
+    [Space]
+    [SerializeField, Range(-1f, 1f)] float offset = 0f;
     
     // Awake
     PlayerMove move;
@@ -24,11 +26,6 @@ public class PlayerSwordSlash : MonoBehaviour
         CreateSwordSlash();
     }
 
-    void Update()
-    {
-        print($"dir {move.FacingDirection}");
-    }
-
 
     // === Self Method === //
     IEnumerator CountDownCoroutine(float times, Action method)
@@ -41,16 +38,16 @@ public class PlayerSwordSlash : MonoBehaviour
     void CreateSwordSlash()
     {
         if (GetComponentInChildren<SwordSlashEffect>() is null)
-            swordSlash = Instantiate(swordSlash, transform);
+            slashEffect = Instantiate(slashEffect, transform);
         
-        swordSlash.gameObject.SetActive(false);
+        slashEffect.gameObject.SetActive(false);
     }
     
     
-    // === Self API === //
-    public void Slash()
+    // === API === //
+    public void Effect(float displacement, float range)
     {
-        swordSlash.Show(move.FacingDirection);
-        StartCoroutine(CountDownCoroutine(showSlashTime, swordSlash.Hide));
+        slashEffect.Show(move.FacingDirection, displacement, range, offset);
+        StartCoroutine(CountDownCoroutine(showSlashTime, slashEffect.Hide));
     }
 }
