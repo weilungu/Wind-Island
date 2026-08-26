@@ -23,7 +23,7 @@ public class MenuInteraction : MonoBehaviour,
 
         if (button is null) return;
 
-        navigation.Select(button);
+        navigation?.Select(button);
     }
 
     public void OnPointerClick(PointerEventData eventData)

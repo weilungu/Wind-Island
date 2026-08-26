@@ -1,6 +1,16 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    // Main Menu-specific behavior belongs here.
+    // === UI API === //
+    public void StartGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
+        print("Quit Game");
+    }
 }
