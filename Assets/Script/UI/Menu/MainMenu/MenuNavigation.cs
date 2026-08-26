@@ -4,35 +4,35 @@ using UnityEngine.EventSystems;
 
 public class MenuNavigation : MonoBehaviour
 {
-    private List<MainMenuButton> buttons;
-    private MainMenuButton currentButton;
-    private GameObject lastSelected;
+    List<MainMenuButton> buttons;
+    MainMenuButton currentButton;
+    GameObject lastSelected;
 
     // === Unity Life Cycle === //
-    private void Awake()
+    void Awake()
     {
         buttons = new List<MainMenuButton>(
             GetComponentsInChildren<MainMenuButton>(true)
         );
     }
 
-    private void Start()
+    void Start()
     {
         if (buttons.Count == 0) return;
 
         Select(buttons[0]);
     }
 
-    private void Update()
+    void Update()
     {
-        if (EventSystem.current == null) return;
+        if (EventSystem.current is null) return;
 
         GameObject currentSelected =
             EventSystem.current.currentSelectedGameObject;
 
-        if (currentSelected == null)
+        if (currentSelected is null)
         {
-            if (lastSelected != null)
+            if (lastSelected is null)
                 EventSystem.current.SetSelectedGameObject(lastSelected);
 
             return;
@@ -41,7 +41,7 @@ public class MenuNavigation : MonoBehaviour
         MainMenuButton button =
             currentSelected.GetComponent<MainMenuButton>();
 
-        if (button == null || button == currentButton) return;
+        if (button is null || button == currentButton) return;
 
         Select(button);
     }
@@ -49,7 +49,7 @@ public class MenuNavigation : MonoBehaviour
     // === Selection API === //
     public void Select(MainMenuButton target)
     {
-        if (target == null || target == currentButton) return;
+        if (target is null || target == currentButton) return;
 
         currentButton?.Deselect();
 
@@ -58,7 +58,7 @@ public class MenuNavigation : MonoBehaviour
 
         lastSelected = currentButton.gameObject;
 
-        if (EventSystem.current != null)
+        if (EventSystem.current is not null)
             EventSystem.current.SetSelectedGameObject(
                 currentButton.gameObject
             );

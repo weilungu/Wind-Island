@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MainMenu : Menu
+public class MainMenu : MonoBehaviour
 {
     // Main Menu-specific behavior belongs here.
 }

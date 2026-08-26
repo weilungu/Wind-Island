@@ -5,11 +5,11 @@ public class MenuInteraction : MonoBehaviour,
     IPointerEnterHandler,
     IPointerClickHandler
 {
-    private MenuNavigation navigation;
+    MenuNavigation navigation;
 
     
     // === Unity Life Cycle === //
-    private void Awake()
+    void Awake()
     {
         navigation = GetComponent<MenuNavigation>();
     }
@@ -21,7 +21,7 @@ public class MenuInteraction : MonoBehaviour,
             eventData.pointerEnter?
                 .GetComponentInParent<MainMenuButton>();
 
-        if (button == null) return;
+        if (button is null) return;
 
         navigation.Select(button);
     }
@@ -32,8 +32,6 @@ public class MenuInteraction : MonoBehaviour,
             eventData.pointerClick?
                 .GetComponentInParent<MainMenuButton>();
 
-        if (button == null) return;
-
-        button.Invoke();
+        button?.Invoke();
     }
 }

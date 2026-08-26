@@ -3,11 +3,11 @@ using UnityEngine.UI;
 
 public class MainMenuButton : MonoBehaviour
 {
-    private MainMenuButtonEffect effect;
-    private Button button;
+    MainMenuButtonEffect effect;
+    Button button;
 
     // === Unity Life Cycle === //
-    private void Awake()
+    void Awake()
     {
         effect = GetComponent<MainMenuButtonEffect>();
         button = GetComponent<Button>();
